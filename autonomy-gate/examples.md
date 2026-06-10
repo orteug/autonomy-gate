@@ -17,18 +17,19 @@ This file contains 14 adversarial test workflows. Each demonstrates the complete
 
 ```
 Name:              Weekly Ops KPI Report
-Initiator:         Human (ops team member, Monday morning) — or schedule if unattended
-Actions:           Pull pipeline data from Salesforce, pull revenue data from Stripe,
-                   pull support volume from Zendesk, generate narrative summary,
-                   post formatted report to ops Slack channel
-Systems touched:   Salesforce (CRM), Stripe (payments), Zendesk (support), Slack (delivery)
+Initiator:         Human (ops team member, Monday morning)
+Actions:           Human exports pipeline data from Salesforce, revenue summary from Stripe,
+                   and support volume from Zendesk; pastes exports into session; operator
+                   generates narrative summary and delivers a Slack-ready report in session
+Systems touched:   Salesforce, Stripe, Zendesk (data sources — human exports; no direct
+                   integration); Slack (delivery — human posts the report)
 Data sensitivity:  Internal business metrics — not regulated, no customer PII in output
-Frequency:         Weekly, Monday morning
+Frequency:         Weekly, Monday morning; human-initiated
 Exception rate:    Low — structured data sources, stable schema, no judgment required
 Failure consequence: Internal report is delayed or contains stale data; no external commitment made
 Reversibility:     Fully reversible — send corrected report; Slack messages can be edited or deleted
-Terminal action:   Slack message delivery (internal channel)
-Audit trail:       Slack message timestamp; data pull timestamps from source systems
+Terminal action:   Slack-ready report produced in session (human posts to channel)
+Audit trail:       Claude Project session history; data export timestamps from source systems
 
 Evidence gaps: None — all required fields populated
 ```
@@ -37,12 +38,13 @@ Evidence gaps: None — all required fields populated
 
 ```
 Autonomy:          AUTONOMOUS (AUT-1)
-Surface:           PROJECT (SURFACE-1) — human-initiated cadence
+Surface:           PROJECT (SURFACE-1) — human-initiated cadence; human provides data exports
 Confidence:        HIGH
 Justification:     RULE-03 (all four criteria pass: reversible, observable, low exception rate,
                    low failure consequence); no GATE conditions triggered; RULE-05 adversarial
-                   check passed without revision
-Controls required: Read-only API keys; data pull timestamps logged; output version retained 30 days
+                   check passed without revision; PROJECT surface confirmed appropriate —
+                   no external API calls; human pastes data exports; operator formats output
+Controls required: Data export timestamps retained; report version retained in session history
 Evidence gaps:     None
 Conservative route: Not applied
 Artifact required: template-project-setup.md
@@ -1476,7 +1478,7 @@ Evidence gaps: Data source systems not named; ideal surface (COWORK) confirmed u
 ```
 Autonomy:          AUTONOMOUS (AUT-1)
 Surface:           PROJECT (SURFACE-1) — fallback from COWORK (SURFACE-2)
-Confidence:        HIGH
+Confidence:        MEDIUM
 Justification:     RULE-03 (all four criteria pass: reversible, observable, low exception rate,
                    low failure consequence); no GATE conditions; RULE-06 surface fallback
                    applied — COWORK is the recommended surface for a scheduled daily workflow
@@ -1484,14 +1486,15 @@ Justification:     RULE-03 (all four criteria pass: reversible, observable, low 
                    alternative with the adjustments listed below
 Controls required: Read-only API or export access; output retained per session; human
                    initiates each morning
-Evidence gaps:     Data source systems not named — listed in information gaps section below
+Evidence gaps:     Data source systems not named — cannot confirm read-only access scope
+                   without knowing source platforms; COWORK unavailability confirmed
 Conservative route: Not applied
 Artifact required: template-project-setup.md
 ```
 
 **━━ PROJECT SETUP BRIEF ━━━━━━━━━━━━━━━━━━━━━━━━━━**
 
-**Daily Ops Report · AUTONOMOUS / PROJECT · HIGH**
+**Daily Ops Report · AUTONOMOUS / PROJECT · MEDIUM**
 
 This workflow produces the previous day's ops summary by pulling data from connected systems and delivering a formatted report to the Slack ops channel. The ideal surface for a daily scheduled report is COWORK, which can run unattended on a timer. Because COWORK is unavailable, this workflow runs on a human-initiated cadence inside a Claude Project: someone triggers the report each morning. The verdict (AUTONOMOUS) does not change with the surface fallback; the format of the artifact does. All four autonomy criteria pass cleanly and no GATE conditions apply.
 

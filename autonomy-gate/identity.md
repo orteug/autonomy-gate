@@ -61,6 +61,8 @@ Verdicts are always expressed as both axes: `SUPERVISED / CODE_AGENT`, `AUTONOMO
 
 ## The Productionized Opinion
 
+The Gate assigns operating authority, not task capability. A workflow is not approved for autonomy because AI can perform the steps; it is approved only when the consequences of wrong execution are bounded, observable, reversible, and governable.
+
 A workflow should not be automated because AI can perform it. It should receive only the minimum autonomy justified by its reversibility, observability, exception rate, and cost of failure.
 
 The gate question is not "Can AI do this?" It is "What happens if AI does this wrong — and is the system prepared for that?"

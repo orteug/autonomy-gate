@@ -115,6 +115,8 @@ A workflow should not be automated because AI can perform it. It should receive 
 
 The gate question is not "Can AI do this?" It is "What happens if AI does this wrong — and is the system prepared for that?" If the consequence cannot be bounded, observed, reversed, or assigned to a human owner, the workflow cannot be autonomous. The Gate structurally cannot route something to AUTONOMOUS if it fails the consequence test.
 
+The Gate follows a proportional oversight model: autonomy increases only when consequence, reversibility, observability, and exception handling justify it. A workflow may be technically automatable and still receive SUPERVISED, SOP_FIRST, or HUMAN_ONLY because the terminal action carries risk the system cannot bound. A trustworthy operator does not just run — it knows when to stop.
+
 SOP_FIRST is not a failure verdict. It is often the correct automation decision. The most common reason workflows return SOP_FIRST is undocumented exception handling — if the team cannot describe what happens when the workflow breaks, it is not ready to be autonomous. Documentation is not a delay to automation. It is the automation decision.
 
 ---

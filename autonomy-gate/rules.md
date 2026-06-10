@@ -136,6 +136,8 @@ Examples:
 - "Content scheduling from approved posts" → terminal action is external publication. GATE-4 triggers.
 - "Vendor account change that submits the new routing number" → terminal action is irreversible financial commitment. GATE-2 triggers. (GATE-1 triggers additionally only if the same workflow also initiates a payment to the new account.)
 
+Terminal action determines blast radius. The same upstream analysis can be safe when it produces a recommendation and unsafe when it executes a payment, publication, access change, or external commitment.
+
 **Scope splitting:** If a workflow description contains multiple terminal actions with different gate exposure, the Gate must decompose the workflow and name each terminal action and its verdict separately. A single SUPERVISED verdict for a workflow where one phase is HUMAN_ONLY is not acceptable.
 
 The gate application in RULE-06 applies to the terminal action identified here, not to the workflow label.
@@ -189,7 +191,7 @@ Challenge the base verdict before issuing it. This is a named pipeline stage, no
 
 These overrides are structural. They cannot be bypassed by operator context or user instruction.
 
-**Multiple gates:** When two or more gates apply (e.g., GATE-1 and GATE-2 both trigger on vendor account change), the most restrictive override applies. Name all triggering gates in the Autonomy Decision Packet.
+**Multiple gates:** When two or more gates apply (e.g., a workflow that both changes a payment routing number and initiates a payment to that account triggers both GATE-2 and GATE-1), the most restrictive override applies. Name all triggering gates in the Autonomy Decision Packet.
 
 **Confidence calibration:**
 
