@@ -321,23 +321,24 @@ Application record, scoring rationale per candidate, shortlist version and date,
 ```
 Name:              Weekly Ops KPI Report
 Initiator:         Human (ops team member, Monday morning)
-Actions:           Pull pipeline data from Salesforce, pull revenue data from Stripe,
-                   pull support volume from Zendesk, generate narrative summary with
-                   week-over-week commentary, post formatted report to ops Slack channel
-Systems touched:   Salesforce (CRM / pipeline), Stripe (revenue / payments),
-                   Zendesk (support tickets), Slack (delivery)
+Actions:           Human exports pipeline data from Salesforce, revenue summary from Stripe,
+                   and support volume from Zendesk; pastes exports into session; operator
+                   generates narrative summary with week-over-week commentary; Slack-ready
+                   report delivered in session (human posts to ops channel)
+Systems touched:   Salesforce, Stripe, Zendesk (data sources — human exports; no direct
+                   API connection); Slack (human posts)
 Data sensitivity:  Internal business metrics — not regulated; no customer PII in output;
                    revenue and pipeline data is confidential but not externally sensitive
 Frequency:         Weekly, Monday morning; human-initiated
-Exception rate:    Low — structured data sources, stable schema; narrative generation
+Exception rate:    Low — structured export format, stable schema; narrative generation
                    from structured data has low variance
 Failure consequence: Internal report is delayed or contains a data error; no external
                      commitment is made; correctable with a follow-up report
 Reversibility:     Fully reversible — Slack messages can be edited or deleted; corrected
                    report can be reposted without downstream consequence
-Terminal action:   Slack message delivery to internal ops channel
-Audit trail:       Slack message timestamp; data pull timestamps from source systems;
-                   report retained in Slack history
+Terminal action:   Slack-ready report delivered in session (human posts to ops channel)
+Audit trail:       Slack post timestamp; session retained in Claude Project; no automated
+                   pull logs
 
 Evidence gaps: None — all required fields populated
 ```
@@ -358,8 +359,8 @@ Justification:     RULE-03 (all four criteria pass: reversible — Slack message
                    revision — no pressure to over-automate detected; failure mode FAIL-3
                    (Silent Failure) assessed and mitigated by Slack visibility; no GATE
                    conditions missed
-Controls required: Read-only API keys for all three data sources; output retained in
-                   Claude Project session history; data pull timestamps logged
+Controls required: Human provides data exports; no API keys required; output retained
+                   in Claude Project session history
 Evidence gaps:     None
 Conservative route: Not applied
 Artifact required: template-project-setup.md
@@ -369,20 +370,20 @@ Artifact required: template-project-setup.md
 
 **Weekly Ops KPI Report · AUTONOMOUS / PROJECT · HIGH**
 
-This workflow pulls the previous week's pipeline, revenue, and support metrics from Salesforce, Stripe, and Zendesk and delivers a formatted narrative summary to the ops Slack channel. It runs on a human-initiated Monday cadence inside a Claude Project. The operator has read-only access to source data systems, produces an internal document, makes no external commitment, moves no money, and delivers output that is fully observable and correctable. All four autonomy criteria pass cleanly. No hard gate conditions apply. This is the baseline case for what a well-governed AUTONOMOUS workflow looks like: internal, reversible, observable, low-consequence.
+This workflow receives last week's pipeline, revenue, and support exports — pasted by the user at the start of each session — and produces a formatted narrative summary ready to post to the ops Slack channel. It runs on a human-initiated Monday cadence inside a Claude Project. The operator reads structured data, generates analysis, and returns Slack-ready text — no external system connections, no money movement, no regulatory exposure. All four autonomy criteria pass cleanly. No hard gate conditions apply. This is the baseline case for what a well-governed AUTONOMOUS workflow looks like: internal, reversible, observable, low-consequence.
 
 **SURFACE NOTE**
 This workflow is run human-initiated inside a Claude Project (SURFACE-1). If a scheduled, unattended version is needed (run automatically at 7:00 AM every Monday without human initiation), re-submit for surface upgrade to COWORK (SURFACE-2). The autonomy verdict (AUTONOMOUS) will not change; the artifact format will change to a Cowork Project Config.
 
 **PURPOSE**
-Eliminate the manual Monday reporting task by automating data retrieval, narrative generation, and Slack delivery for the ops team's weekly performance summary.
+Eliminate the manual formatting and narrative work on Monday mornings. The user exports data, pastes it in, and receives a Slack-ready summary in one session — no manual writing required.
 
 **RUN CADENCE**
 Human-initiated, Monday morning. A designated ops team member opens the Claude Project, pastes the trigger prompt, and receives the formatted report in the session. Not scheduled. Not unattended. Target: complete before 9:00 AM standup.
 
 **KNOWLEDGE FILES**
 - `reporting-template.md` · Defines the output format, section headers, metric labels, and Slack formatting conventions the ops team expects; prevents format drift
-- `data-sources.md` · Documents the exact Salesforce reports, Stripe dashboard views, and Zendesk query parameters that contain the correct weekly data; prevents wrong-data pulls
+- `data-sources.md` · Documents the exact Salesforce reports, Stripe dashboard views, and Zendesk views to export for the weekly report; ensures user exports from the correct source for each metric
 - `alert-thresholds.md` · Defines what constitutes a notable variance for each metric (e.g., pipeline change >15% WoW, revenue vs. forecast deviation >10%); enables the operator to call out outliers rather than just report raw numbers
 
 **CUSTOM INSTRUCTIONS**

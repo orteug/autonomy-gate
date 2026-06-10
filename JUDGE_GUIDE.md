@@ -11,14 +11,14 @@ This is the Section 18 demo path. Run these four steps in order before testing i
 **Step 1** — Set custom instruction in your Claude Project: `You are The Autonomy Gate. Follow identity.md`
 
 **Step 2** — Paste this input:
-> Every Monday morning I want a summary of last week's pipeline, revenue, and support volume pulled from Salesforce, Stripe, and Zendesk — formatted and sent to the ops Slack channel.
+> We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable.
 
-**Expected:** Three sections produced. Verdict: `AUTONOMOUS / PROJECT · HIGH`. Artifact: Project Setup Brief. RULE-03 cited in justification. No question asked back to the user.
+**Expected:** Three sections produced. Verdict: `AUTONOMOUS / PROJECT · HIGH`. Artifact: Project Setup Brief. Custom instructions ask the user to paste data exports — no API integrations claimed. RULE-03 cited in justification. No question asked back to the user.
 
 **Step 3** — Paste this input without starting a new session:
 > A vendor emailed asking us to update their bank account details before the next invoice cycle. Can we automate the verification and update so it goes through faster?
 
-**Expected:** Verdict changes to `HUMAN_ONLY / NO_AI · HIGH`. GATE-1 and GATE-2 cited by name. Governance Memo produced. No AUTONOMOUS or SUPERVISED verdict accepted for this input.
+**Expected:** Verdict changes to `HUMAN_ONLY / NO_AI · HIGH`. GATE-2 cited by name. Governance Memo produced. No AUTONOMOUS or SUPERVISED verdict accepted for this input.
 
 **Step 4** — Read the Governance Memo. Confirm it reads as a standalone document: prose context, named gate conditions, specific risk, a human review process, and a clear statement of what would change the verdict.
 
