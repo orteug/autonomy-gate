@@ -1458,17 +1458,17 @@ Turnaround:    Review complete 5 business days before auditor submission deadlin
 Name:              Daily Ops Report (Scheduled)
 Initiator:         Ideally: schedule (each morning, before team arrives); confirmed:
                    human-initiated (user has no scheduled automation access)
-Actions:           Pull prior day's metrics from connected systems, generate formatted
-                   ops report, deliver to Slack ops channel
-Systems touched:   Data sources (CRM, support tool, financial platform — specifics not stated);
-                   Slack
+Actions:           User pastes prior-day metric exports into session; operator generates
+                   formatted ops report; user posts Slack-ready output to ops channel
+Systems touched:   Data sources (CRM, support tool, financial platform — specifics not stated;
+                   user exports manually); Slack (user posts)
 Data sensitivity:  Internal business metrics; not regulated; no customer PII in output
 Frequency:         Daily — every morning
-Exception rate:    Low — structured data pull, stable format
+Exception rate:    Low — structured export format, stable reporting template
 Failure consequence: Internal report delayed or missing; team makes decisions without prior-day data
 Reversibility:     Fully reversible — corrected report can be reposted
-Terminal action:   Slack message (internal ops channel)
-Audit trail:       Slack post timestamp; data pull logs if available
+Terminal action:   Slack-ready report delivered in session (user posts to ops channel)
+Audit trail:       Slack post timestamp; session retained by user if needed
 
 Evidence gaps: Data source systems not named; ideal surface (COWORK) confirmed unavailable
 ```
@@ -1484,8 +1484,8 @@ Justification:     RULE-03 (all four criteria pass: reversible, observable, low 
                    applied — COWORK is the recommended surface for a scheduled daily workflow
                    but user has confirmed it is unavailable; PROJECT is the nearest viable
                    alternative with the adjustments listed below
-Controls required: Read-only API or export access; output retained per session; human
-                   initiates each morning
+Controls required: Export access only (user provides data; no API connection); output
+                   retained per session; human initiates and posts each morning
 Evidence gaps:     Data source systems not named — cannot confirm read-only access scope
                    without knowing source platforms; COWORK unavailability confirmed
 Conservative route: Not applied
