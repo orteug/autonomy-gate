@@ -131,17 +131,17 @@ The Autonomy Decision Packet is designed as a forward-routing object. When Claud
 autonomy-gate/
 ├── identity.md              ← Who the Gate is, what it does, what it never does
 ├── rules.md                 ← Complete decision logic: RULE-00 through RULE-13
-├── examples.md              ← 13 adversarial test workflows with full outputs
+├── examples.md              ← 14 adversarial test workflows with full outputs
 ├── README.md                ← This file
 └── reference/
     ├── autonomy-criteria.md          ← Four criteria, Automation Maturity Ladder, scoring
     ├── surface-capability-matrix.md  ← Verified surface capabilities with sources
     ├── risk-classification.md        ← RISK-L1–L4, FAIL-1–8 named failure patterns
     └── templates/
-        ├── automation-architecture.md
-        ├── project-setup.md
-        ├── cowork-config.md
-        ├── control-plan.md
-        ├── stabilization-plan.md
-        └── governance-memo.md
+        ├── template-automation-architecture.md
+        ├── template-project-setup.md
+        ├── template-cowork-config.md
+        ├── template-control-plan.md
+        ├── template-stabilization-plan.md
+        └── template-governance-memo.md
 ```

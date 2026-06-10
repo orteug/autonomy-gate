@@ -22,15 +22,15 @@ These three inputs are copy-paste ready. Each produces a materially different ve
 
 **Test 1 — Clean autonomous case:**
 ```
-Every Monday morning I want a summary of last week's pipeline, revenue, and support volume pulled from Salesforce, Stripe, and Zendesk — formatted and sent to the ops Slack channel.
+We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable.
 ```
-Expected: `AUTONOMOUS / PROJECT · HIGH` → Project Setup Brief
+Expected: `AUTONOMOUS / PROJECT · HIGH` → Project Setup Brief (PROJECT surface: human provides the data exports; operator formats and delivers a Slack-ready report in session)
 
 **Test 2 — Hard gate case:**
 ```
 A vendor emailed asking us to update their bank account details before the next invoice cycle. Can we automate the verification and update so it goes through faster?
 ```
-Expected: `HUMAN_ONLY / NO_AI · HIGH` → Governance Memo citing GATE-1 and GATE-2
+Expected: `HUMAN_ONLY / NO_AI · HIGH` → Governance Memo citing GATE-2
 
 **Test 3 — Terminal action distinction:**
 ```
@@ -115,7 +115,7 @@ A workflow should not be automated because AI can perform it. It should receive 
 
 The gate question is not "Can AI do this?" It is "What happens if AI does this wrong — and is the system prepared for that?" If the consequence cannot be bounded, observed, reversed, or assigned to a human owner, the workflow cannot be autonomous. The Gate structurally cannot route something to AUTONOMOUS if it fails the consequence test.
 
-SOP_FIRST is not a failure verdict. It is often the correct automation decision — 84% of companies have not documented their workflows before trying to automate them. The documentation work is not a delay to automation. It is the automation decision.
+SOP_FIRST is not a failure verdict. It is often the correct automation decision. The most common reason workflows return SOP_FIRST is undocumented exception handling — if the team cannot describe what happens when the workflow breaks, it is not ready to be autonomous. Documentation is not a delay to automation. It is the automation decision.
 
 ---
 
@@ -131,23 +131,17 @@ The Autonomy Decision Packet is designed as a forward-routing object. When Claud
 autonomy-gate/
 ├── identity.md              ← Who the Gate is, what it does, what it never does
 ├── rules.md                 ← Complete decision logic: RULE-00 through RULE-13
-├── examples.md              ← 13 adversarial test workflows with full outputs
-├── README.md                ← autonomy-gate/README.md (same content as repo root)
+├── examples.md              ← 14 adversarial test workflows with full outputs
+├── README.md                ← This file
 └── reference/
     ├── autonomy-criteria.md          ← Four criteria, Automation Maturity Ladder, scoring
     ├── surface-capability-matrix.md  ← Verified surface capabilities with sources
     ├── risk-classification.md        ← RISK-L1–L4, FAIL-1–8 named failure patterns
     └── templates/
-        ├── automation-architecture.md
-        ├── project-setup.md
-        ├── cowork-config.md
-        ├── control-plan.md
-        ├── stabilization-plan.md
-        └── governance-memo.md
-
-JUDGE_GUIDE.md               ← Falsifiable prompts per RULE-NN and GATE-NN
-OPERATOR_GUIDE.md            ← How ops leaders use this day-to-day
-WRITEUP.md                   ← Context, opinion, limitations
-examples/
-└── trial-audit-output.md    ← 3 committed Gate runs on source-backed workflows
+        ├── template-automation-architecture.md
+        ├── template-project-setup.md
+        ├── template-cowork-config.md
+        ├── template-control-plan.md
+        ├── template-stabilization-plan.md
+        └── template-governance-memo.md
 ```

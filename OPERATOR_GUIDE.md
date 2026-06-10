@@ -187,3 +187,63 @@ No. Surface availability does not change the autonomy verdict. The artifact will
 
 **"How do I know when to re-run the Gate on an existing automation?"**
 Check its AUTONOMY EXPIRES WHEN section. If any condition in that list has been met — workflow change, model change, policy change, incident, error rate threshold crossed, recertification date passed — re-run the Gate. If you cannot find the AUTONOMY EXPIRES WHEN section, the automation has not been governed by the Gate and should be re-submitted.
+
+---
+
+## Taking the Packet to Execution Surfaces
+
+The Gate is the decision layer. The Autonomy Decision Packet it produces is a portable work order — the same packet is consumed differently depending on which surface runs the workflow.
+
+**The principle:** Do not send raw intent to an execution surface. Send the governed packet. The packet contains the terminal action, allowed actions, prohibited actions, approval checkpoints, audit requirements, and expiration conditions. An execution surface that receives this runs better work than one that receives a plain description.
+
+---
+
+### AUTONOMOUS / PROJECT (Claude Project or ChatGPT Project)
+
+The artifact is the setup document. Take the Project Setup Brief and:
+1. Create a new Claude Project (or ChatGPT Project)
+2. Paste the artifact's custom instructions as the project's system prompt
+3. Upload the knowledge files named in the artifact
+4. The workflow runs on human-initiated cadence — no scheduling needed
+
+**What the surface can do:** Human-initiated sessions, document and analysis outputs, multi-turn context within a session. **What it cannot do:** External API calls, local file access, scheduled or unattended execution. If the workflow requires those, re-submit for a COWORK or CODE_AGENT surface upgrade.
+
+---
+
+### AUTONOMOUS / COWORK (Claude Cowork)
+
+The artifact is the Cowork Project Config. Take it and:
+1. Create the folder structure named in the artifact (`/inputs`, `/outputs`, `/logs`)
+2. Set the Cowork project instructions from the artifact's custom instructions block
+3. Configure the run schedule from the artifact's cadence field
+4. Confirm the terminal status schema — the artifact names the valid terminal statuses the Cowork run must emit
+
+**What the surface can do:** Scheduled unattended execution, local file read/write, multi-step pipelines, structured folder I/O. The fallback note in the artifact tells you what to adjust if Cowork is unavailable.
+
+---
+
+### AUTONOMOUS or SUPERVISED / CODE_AGENT (Claude Code or Codex)
+
+The artifact is the Automation Architecture or Control Plan. Use it to govern the agent:
+
+**For Claude Code:** Add a `CLAUDE.md` to your repo that imports or summarizes the Autonomy Decision Packet. Include the prohibited actions list and the approval checkpoint requirement verbatim. The `CLAUDE.md` is context for Claude Code — it shapes behavior but is not hard enforcement. For true blocking, implement approval gates as code.
+
+**For Codex:** Add an `AGENTS.md` to your repo with the same content. Name the allowed actions, prohibited actions, and required audit log format. Codex receives governed work orders, not raw intent.
+
+**For SUPERVISED verdicts:** The approval checkpoint in the Control Plan must be implemented as a blocking step before the terminal action executes. The approval checkpoint is not a review of the output after the fact — it must block execution.
+
+---
+
+### SUPERVISED or AUTONOMOUS / ChatGPT Project (OpenAI)
+
+The Gate's files are portable. Upload the same folder to a ChatGPT Project and set the project instructions to: `You are The Autonomy Gate. Follow identity.md and rules.md.`
+
+The output — Workflow Intake Snapshot, Autonomy Decision Packet, artifact — is identical. The packet produced by ChatGPT Projects is consumed by Codex the same way the Claude-produced packet is consumed by Claude Code.
+
+---
+
+### HUMAN_ONLY / NO_AI
+
+Do not implement this workflow on any execution surface. The Governance Memo is the implementation. Distribute it to the named approvers, use the Human Review Process section as the SOPs for the manual workflow, and schedule the recertification review named in AUTONOMY EXPIRES WHEN.
+
+The preparation steps described in WHAT WOULD CHANGE THIS VERDICT are candidates for re-submission as a separate, scoped workflow with the terminal action excluded.
