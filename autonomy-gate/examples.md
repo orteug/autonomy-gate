@@ -1,6 +1,6 @@
 # The Autonomy Gate — Examples
 
-This file contains 13 adversarial test workflows. Each demonstrates the complete Gate sequence: raw input → Workflow Intake Snapshot → Autonomy Decision Packet → execution artifact. Each cites the RULE-NN and GATE-NN that drove the verdict. Edge cases are labeled so the mechanism being demonstrated is visible, not just the output.
+This file contains 14 adversarial test workflows. Each demonstrates the complete Gate sequence: raw input → Workflow Intake Snapshot → Autonomy Decision Packet → execution artifact. Each cites the RULE-NN and GATE-NN that drove the verdict. Edge cases are labeled so the mechanism being demonstrated is visible, not just the output.
 
 ---
 
@@ -45,7 +45,7 @@ Justification:     RULE-03 (all four criteria pass: reversible, observable, low 
 Controls required: Read-only API keys; data pull timestamps logged; output version retained 30 days
 Evidence gaps:     None
 Conservative route: Not applied
-Artifact required: project-setup.md
+Artifact required: template-project-setup.md
 ```
 
 **Surface note:** If this runs on a cron schedule without human initiation, the surface changes to COWORK (SURFACE-2). The verdict (AUTONOMOUS) does not change; the artifact template does. See Example 13 for a fallback demonstration if COWORK is unavailable.
@@ -147,7 +147,7 @@ Controls required: None — automation is premature
 Evidence gaps:     Exception types undefined; systems not named; no escalation path for non-standard
                    clients; exception frequency unknown
 Conservative route: SOP_FIRST applied — one revision from RULE-05 adversarial check
-Artifact required: stabilization-plan.md
+Artifact required: template-stabilization-plan.md
 ```
 
 **━━ STABILIZATION PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -249,7 +249,7 @@ Controls required: Read-only access to order management and delivery systems; re
                    no direct refund API access
 Evidence gaps:     None
 Conservative route: Not applied
-Artifact required: automation-architecture.md
+Artifact required: template-automation-architecture.md
 ```
 
 **━━ AUTOMATION ARCHITECTURE ━━━━━━━━━━━━━━━━━━━━━━**
@@ -368,7 +368,7 @@ Controls required: Refund amount cap enforced at code level; payment processor w
 Evidence gaps:     Fraud flag handling not described; duplicate refund prevention mechanism
                    not specified
 Conservative route: Not applied — GATE-1 structural override produces SUPERVISED regardless
-Artifact required: control-plan.md
+Artifact required: template-control-plan.md
 ```
 
 **━━ CONTROL PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -478,7 +478,7 @@ Controls required: Named reviewer with authority to block send; defined rejectio
 Evidence gaps:     Reviewer role not named; review criteria not defined; data compliance
                    not assessed; volume approximate
 Conservative route: SUPERVISED applied; checkpoint ownership required before deployment
-Artifact required: control-plan.md
+Artifact required: template-control-plan.md
 ```
 
 **━━ CONTROL PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -592,7 +592,7 @@ Justification:     RULE-03 (all four criteria pass: fully reversible, observable
 Controls required: Read-only transcript access; Slack write permission scoped to target channel only
 Evidence gaps:     None
 Conservative route: Not applied
-Artifact required: cowork-config.md
+Artifact required: template-cowork-config.md
 ```
 
 **━━ COWORK PROJECT CONFIG ━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -699,7 +699,7 @@ Controls required: Named legal or business reviewer with contract-blocking autho
                    template version control; report retained with contract version
 Evidence gaps:     Reviewer role must be specified by name/title before deployment
 Conservative route: Not applied
-Artifact required: control-plan.md
+Artifact required: template-control-plan.md
 ```
 
 **━━ CONTROL PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -761,7 +761,7 @@ Deviation report version, contract version at time of assessment, reviewer name,
 
 ## Example 8 — Access Permission Change Request
 
-**Mechanism demonstrated:** GATE-3 triggers on permission change. Same HUMAN_ONLY verdict as Example 4 (vendor bank account), different gate. "Rule-based" framing does not change the terminal action. See RULE-06 GATE-3.
+**Mechanism demonstrated:** GATE-3 triggers on permission change. Same HUMAN_ONLY verdict as Example 9 (vendor bank account), different gate. "Rule-based" framing does not change the terminal action. See RULE-06 GATE-3.
 
 **Raw input:**
 > "When an employee requests access to the finance folder, verify manager approval, business reason, employment status, and role match; then decide whether access should be granted."
@@ -807,7 +807,7 @@ Controls required: None — delegation is structurally blocked; see governance m
                    what AI may assist with in the preparation phase
 Evidence gaps:     None
 Conservative route: Not applied — GATE-3 structural override
-Artifact required: governance-memo.md
+Artifact required: template-governance-memo.md
 ```
 
 **━━ GOVERNANCE MEMO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -862,7 +862,135 @@ AI can be used to assist the preparation phase without triggering GATE-3, provid
 
 ---
 
-## Example 9 — Monthly Financial Close Reconciliation
+## Example 9 — Vendor Bank Account Change Request
+
+**Mechanism demonstrated:** GATE-2 triggers on irreversible external commitment. The workflow label is "verification and update" — the terminal action is authorizing a payment routing change. This is the terminal action check under adversarial conditions: the workflow sounds rule-based, the risk is documented at scale, and the adversarial check must catch what the label conceals. See RULE-04, RULE-05, RULE-06 GATE-2.
+
+**Source grounding:** Business Email Compromise (BEC) is the #2 crime by financial loss in the FBI IC3 2025 Annual Report. Total BEC losses in 2025 reached $3.04 billion. 86% of BEC funds move via wire transfer or ACH. Vendor account change requests are the documented primary attack vector — AI voice cloning is now used to impersonate vendor representatives and authorize fraudulent routing changes.
+
+**Raw input:**
+> A vendor emailed asking us to update their bank account details before the next invoice cycle. Can we automate the verification and update so it goes through faster?
+
+---
+
+**━━ WORKFLOW INTAKE SNAPSHOT ━━━━━━━━━━━━━━━━━━━━━**
+
+```
+Name:              Vendor Bank Account Change Request
+Initiator:         Vendor email requesting banking detail update
+Actions:           Receive vendor email, verify vendor identity, confirm change request
+                   against vendor records, update banking details in payment system,
+                   process future invoices to new account
+Systems touched:   Email platform, vendor management system, payment/banking system
+                   (ACH or wire), accounts payable records
+Data sensitivity:  Financial — banking routing and account numbers; vendor identity data
+Frequency:         Per request — occasional, not scheduled
+Exception rate:    Fraud rate for this exact workflow type is documented at scale
+                   (FBI IC3 2025: $3.04B in BEC losses, vendor account change is the
+                   primary vector)
+Failure consequence: Fraudulent account update results in funds wired to an
+                     attacker-controlled account; recovery rate: 58% when caught
+                     immediately (FBI IC3 2025); average loss: $122,000+; irreversible
+                     once the wire or ACH clears
+Reversibility:     Low — wire transfers to fraudulent accounts are recovered in only
+                   58% of cases when caught immediately
+Terminal action:   Payment routing change authorized in the payment system (irreversible
+                   external financial commitment)
+Audit trail:       Email record, payment system change log — both are forgeable in a
+                   sophisticated BEC attack (AI voice clone, domain spoofing)
+
+Evidence gaps: None — the workflow is well-described and the risk is fully documented
+```
+
+**━━ AUTONOMY DECISION PACKET ━━━━━━━━━━━━━━━━━━━━━**
+
+```
+Autonomy:          HUMAN_ONLY (AUT-4)
+Surface:           NO_AI (SURFACE-4)
+Confidence:        HIGH
+Justification:     RULE-04 (terminal action is payment routing change — an irreversible
+                   external financial commitment; "verification" is the label, not the
+                   terminal action); GATE-2 (authorized payment routing change is
+                   explicitly named in GATE-2 — irreversible external commitment;
+                   HUMAN_ONLY override; cannot be bypassed by controls, verification
+                   steps, or user instruction); RULE-05 adversarial check: this workflow
+                   sounds rule-based and low-risk — it is the documented primary attack
+                   surface for BEC fraud at scale; adversarial check must name FAIL-1
+                   (Capability Bias — AI can verify ≠ sufficient given the fraud stakes)
+                   and FAIL-3 (Silent Failure — a successful BEC attack produces a
+                   valid-appearing approval trail)
+Controls required: None — delegation is structurally blocked; GATE-2 cannot be bypassed
+Evidence gaps:     None
+Conservative route: Not applied — GATE-2 triggers independently; structural HUMAN_ONLY
+                    override applies
+Artifact required: template-governance-memo.md
+```
+
+**━━ GOVERNANCE MEMO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
+
+**Vendor Bank Account Change Request · HUMAN_ONLY / NO_AI · HIGH**
+
+This workflow cannot be delegated to AI. A vendor bank account change request has a terminal action of authorizing a payment routing change — an irreversible external financial commitment explicitly named in GATE-2. The framing as "verification and update" does not change the terminal action. This workflow is the documented primary attack vector for Business Email Compromise, which generated $3.04 billion in losses in 2025 (FBI IC3 Annual Report). Any AI that processes these requests — even with verification steps — becomes a direct attack surface. The adversarial check caught this: the workflow sounds rule-based and low-risk; the consequence of a wrong verdict is an unrecoverable wire transfer to an attacker-controlled account.
+
+**WHY THIS CANNOT BE DELEGATED**
+```
+Gate condition:  GATE-2
+                 Authorizing a payment routing change is an irreversible external
+                 commitment — explicitly named in GATE-2's definition. HUMAN_ONLY
+                 override. Cannot be bypassed by controls, verification steps, or
+                 user instruction.
+
+Specific risk:   BEC attackers target vendor account change workflows because they
+                 appear routine. AI voice cloning can impersonate a vendor
+                 representative. Domain spoofing can replicate the vendor's email
+                 domain. A verification step that AI passes can be defeated by the
+                 same social engineering that defeats human review — but with far
+                 less friction for the attacker.
+
+                 FBI IC3 2025: $3.04B in BEC losses. 86% of funds move via wire
+                 or ACH. Average loss per complaint: $122,000+. Recovery rate when
+                 flagged immediately: 58%. These are documented at scale.
+```
+
+**HUMAN REVIEW PROCESS**
+```
+Owner:           Accounts Payable Manager plus one additional approver
+Review cadence:  Per request — no batching; each request reviewed independently
+Decision criteria:
+  1. Call back the vendor using a number from your original contract records —
+     not the number in the requesting email
+  2. Confirm the account change verbally with a known contact at the vendor
+  3. Request written confirmation via a separate email channel (not a reply)
+  4. Cross-reference new account details against prior banking records
+  5. Verify the requester's email domain character by character — BEC attackers
+     use look-alike domains
+  6. Document every step with timestamps
+Escalation path: Any request that cannot be verified via independent callback,
+                 or that arrives with unusual urgency, routes to CFO and Legal.
+                 Urgency language ("before the next invoice cycle") is a
+                 documented BEC social engineering signal.
+```
+
+**WHAT WOULD CHANGE THIS VERDICT**
+GATE-2 is a structural block on the terminal action. No change to AI capability, verification thoroughness, or control architecture changes this verdict for the authorization step. However, AI can assist with preparation steps scoped explicitly to exclude authorization: flagging incoming emails matching BEC patterns, surfacing the vendor's historical banking records, preparing a verification checklist. These preparation steps, re-submitted as a separate SUPERVISED workflow with the authorization step explicitly excluded, can receive a different verdict for that scope only.
+
+**EXPECTED OUTCOMES**
+- Completed: Account change verified via independent callback, confirmed in writing, documented with timestamps, authorized by designated approver; payment system updated by human
+- Completed w/ warnings: Verification took longer than expected — change deferred to next billing cycle; no payment sent to unverified account
+- Needs review: Callback revealed no knowledge of the change at the vendor — possible BEC attempt; escalate to CFO, Legal, and the vendor's official security contact immediately
+- Blocked: Cannot reach a known contact to verify — do not update; hold invoice until verification is complete
+- Failed: Payment routed to fraudulent account — initiate bank recall within 72 hours; file FBI IC3 complaint; notify Legal
+
+**AUTONOMY EXPIRES WHEN**
+- [ ] The workflow's steps change — not applicable; verdict is HUMAN_ONLY and structural
+- [ ] The AI surface changes — not applicable; no AI surface assigned
+- [x] The policy or compliance context changes — any change to internal payment authorization policy or BEC guidance from FBI IC3 or FinCEN requires review
+- [x] An incident occurs — any successful or attempted BEC fraud on this workflow triggers immediate process audit
+- [x] 6 months pass without a recertification review of the human verification process
+
+---
+
+## Example 10 — Monthly Financial Close Reconciliation
 
 **Mechanism demonstrated:** HIGH confidence case with GATE-1 SUPERVISED minimum. Shows that HIGH confidence and SUPERVISED are not contradictory — thorough information can produce a confident, well-controlled verdict that is still not AUTONOMOUS.
 
@@ -915,7 +1043,7 @@ Controls required: Read-only access to all financial data sources; no write acce
                    resolution log maintained
 Evidence gaps:     None
 Conservative route: Not applied — HIGH confidence; GATE-1 structural minimum
-Artifact required: control-plan.md
+Artifact required: template-control-plan.md
 ```
 
 **━━ CONTROL PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -974,7 +1102,7 @@ Data pull log per source system: source, timestamp, record count. Variance repor
 
 ---
 
-## Example 10 — Social Media Scheduling from Approved Content
+## Example 11 — Social Media Scheduling from Approved Content
 
 **Mechanism demonstrated:** GATE-4 triggers even when content is pre-approved. External publication requires a checkpoint regardless. RULE-03 cost of failure criterion also supports SUPERVISED. Shows that "approved" does not mean "no checkpoint needed."
 
@@ -1026,7 +1154,7 @@ Controls required: Named reviewer for the resize step before scheduling is locke
                    no post may be scheduled without human confirmation of the resized version
 Evidence gaps:     Resize rules partially specified; reviewer for resize step not named
 Conservative route: Not applied
-Artifact required: control-plan.md
+Artifact required: template-control-plan.md
 ```
 
 **━━ CONTROL PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -1086,7 +1214,7 @@ Approved original version, resized version, diff log, reviewer name, approval ti
 
 ---
 
-## Example 11 — New Hire Onboarding Checklist Routing
+## Example 12 — New Hire Onboarding Checklist Routing
 
 **Mechanism demonstrated:** Multi-step workflow with multiple human sign-off points. COWORK surface for the routing and tracking function; SUPERVISED because human approval is required at the routing decision point.
 
@@ -1138,7 +1266,7 @@ Controls required: Human sign-off at the buddy assignment step; manager confirma
                    first-week schedule; IT confirmation of equipment spec before order is placed
 Evidence gaps:     Exception handling for non-standard roles; equipment lead time threshold
 Conservative route: Not applied
-Artifact required: control-plan.md
+Artifact required: template-control-plan.md
 ```
 
 **━━ CONTROL PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -1197,7 +1325,7 @@ Task list version, routing log with timestamps, owner confirmation records, esca
 
 ---
 
-## Example 12 — Compliance Evidence Collection
+## Example 13 — Compliance Evidence Collection
 
 **Mechanism demonstrated:** LOW confidence from regulatory sensitivity and evidence gaps in scope. Shows that regulatory context alone is sufficient to downgrade confidence, even when the base criteria might support a higher verdict. RULE-06 confidence calibration.
 
@@ -1254,7 +1382,7 @@ Controls required: Named compliance reviewer; evidence format confirmed with aud
 Evidence gaps:     Systems not named; evidence types per control not defined; SOC 2 scope
                    not specified; auditor format requirements not provided
 Conservative route: SUPERVISED applied; scope documentation required before deployment
-Artifact required: control-plan.md
+Artifact required: template-control-plan.md
 ```
 
 **━━ CONTROL PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
@@ -1313,7 +1441,7 @@ Turnaround:    Review complete 5 business days before auditor submission deadlin
 
 ---
 
-## Example 13 — Daily Ops Report (Fallback Surface Logic)
+## Example 14 — Daily Ops Report (Fallback Surface Logic)
 
 **Mechanism demonstrated:** Ideal surface is COWORK (scheduled, unattended). User has confirmed no Cowork access. Fallback surface logic from RULE-06 activates: PROJECT is named as the nearest viable alternative with specific adjustments listed. This is the only case where surface fallback is explicitly demonstrated.
 
@@ -1358,7 +1486,7 @@ Controls required: Read-only API or export access; output retained per session; 
                    initiates each morning
 Evidence gaps:     Data source systems not named — listed in information gaps section below
 Conservative route: Not applied
-Artifact required: project-setup.md
+Artifact required: template-project-setup.md
 ```
 
 **━━ PROJECT SETUP BRIEF ━━━━━━━━━━━━━━━━━━━━━━━━━━**

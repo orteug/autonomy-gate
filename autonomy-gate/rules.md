@@ -134,7 +134,7 @@ Examples:
 - "Refund eligibility assessment that issues the refund automatically" → terminal action is financial transaction issuance. GATE-1 triggers.
 - "Access review that updates permissions if approved" → terminal action is permission change. GATE-3 triggers.
 - "Content scheduling from approved posts" → terminal action is external publication. GATE-4 triggers.
-- "Vendor account change that submits the new routing number" → terminal action is irreversible financial commitment. GATE-1 and GATE-2 both trigger.
+- "Vendor account change that submits the new routing number" → terminal action is irreversible financial commitment. GATE-2 triggers. (GATE-1 triggers additionally only if the same workflow also initiates a payment to the new account.)
 
 **Scope splitting:** If a workflow description contains multiple terminal actions with different gate exposure, the Gate must decompose the workflow and name each terminal action and its verdict separately. A single SUPERVISED verdict for a workflow where one phase is HUMAN_ONLY is not acceptable.
 
@@ -226,7 +226,7 @@ Justification:     [RULE-NN and/or GATE-NN that drove the verdict]
 Controls required: [audit log / rollback / exception queue / approval record]
 Evidence gaps:     [if LOW — specific missing fields]
 Conservative route:[if LOW — fallback verdict applied]
-Artifact required: [template name from reference/templates/]
+Artifact required: [template filename — see RULE-10 table]
 ```
 
 ---
@@ -297,12 +297,12 @@ Read the Autonomy Decision Packet produced by Phase 1. Select the artifact templ
 
 | Verdict | Template |
 |---------|---------|
-| AUTONOMOUS / CODE_AGENT | `reference/templates/automation-architecture.md` |
-| AUTONOMOUS / PROJECT | `reference/templates/project-setup.md` |
-| AUTONOMOUS / COWORK | `reference/templates/cowork-config.md` |
-| SUPERVISED / [any surface] | `reference/templates/control-plan.md` |
-| SOP_FIRST / NO_AI | `reference/templates/stabilization-plan.md` |
-| HUMAN_ONLY / NO_AI | `reference/templates/governance-memo.md` |
+| AUTONOMOUS / CODE_AGENT | `template-automation-architecture.md` |
+| AUTONOMOUS / PROJECT | `template-project-setup.md` |
+| AUTONOMOUS / COWORK | `template-cowork-config.md` |
+| SUPERVISED / [any surface] | `template-control-plan.md` |
+| SOP_FIRST / NO_AI | `template-stabilization-plan.md` |
+| HUMAN_ONLY / NO_AI | `template-governance-memo.md` |
 
 If the RULE-06 surface fallback was applied, note the fallback in the artifact under "If [primary surface] is unavailable."
 

@@ -149,6 +149,6 @@ For a workflow to receive an AUTONOMOUS verdict, all of the following must be tr
 - [ ] All four RULE-02 required fields fully populated (no confidence cap)
 - [ ] Adversarial check passed without revision
 - [ ] No GATE condition triggered by the terminal action
-- [ ] Surface with autonomous execution capability assigned (SURFACE-2 or SURFACE-3)
+- [ ] No approval checkpoint required during execution — PROJECT (SURFACE-1) qualifies when the workflow completes in a single session without mid-run human sign-off; COWORK (SURFACE-2) and CODE_AGENT (SURFACE-3) qualify by design
 
 If any prerequisite is not met, the verdict is SUPERVISED or below.

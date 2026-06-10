@@ -29,7 +29,7 @@ Specific risk:   [What would happen if AI executed this autonomously. Concrete a
                  a spoofed vendor email, payment would route to a fraudulent account. Per FBI IC3 2025,
                  86% of BEC funds move via wire or ACH — average per-complaint loss exceeds $122,000.
                  Funds are recovered in only 58% of flagged cases."]
-Failure pattern: [FAIL-NN from reference/risk-classification.md most likely to materialize.
+Failure pattern: [FAIL-NN from risk-classification.md most likely to materialize.
                  State why this failure pattern is particularly dangerous for this specific workflow.]
 
 HUMAN REVIEW PROCESS

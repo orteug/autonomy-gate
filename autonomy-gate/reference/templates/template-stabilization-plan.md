@@ -27,7 +27,7 @@ Observed instability:  [Specific: what phrase or pattern in the description trig
                        signals undocumented exception handling; "we handle edge cases manually"
                        means the exception path is not defined.]
 Risk if automated now: [What would happen if this workflow were automated in its current state.
-                       Concrete. Name the failure pattern from reference/risk-classification.md.]
+                       Concrete. Name the failure pattern from risk-classification.md.]
 
 STABILIZATION CHECKLIST
 Complete in order. Do not advance to the next item until the current one is done.

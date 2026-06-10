@@ -1,8 +1,8 @@
-# Trial Audit Output — Three Committed Gate Runs
+# Committed Gate Runs — Three Source-Backed Assessments
 
 This file contains the complete Gate output for three source-backed real-world workflows. Each run produces the full three-section sequence: Workflow Intake Snapshot, Autonomy Decision Packet, and execution artifact. Each output cites the specific RULE-NN and GATE-NN that drove the verdict. Stakes are sourced.
 
-These are not synthetic examples. Each workflow is grounded in a documented real-world automation context with cited sources.
+Each run uses a documented real-world workflow scenario. All three are grounded in published industry sources and are not drawn from any specific client engagement. Each cites the source grounding the scenario.
 
 ---
 
@@ -58,11 +58,10 @@ Surface:           NO_AI (SURFACE-4)
 Confidence:        HIGH
 Justification:     RULE-04 (terminal action is payment routing change — an irreversible
                    external financial commitment; the label "verification" does not change
-                   the terminal action); GATE-1 (moves money — initiates a change that
-                   directly governs where financial transactions are sent; SUPERVISED minimum);
-                   GATE-2 (makes an irreversible external commitment — authorized payment
-                   routing change triggers GATE-2; HUMAN_ONLY override; cannot be bypassed
-                   by controls or user instruction); RULE-05 adversarial check: this workflow
+                   the terminal action); GATE-2 (makes an irreversible external commitment —
+                   authorized payment routing change is explicitly named in GATE-2;
+                   HUMAN_ONLY override; cannot be bypassed by controls or user instruction);
+                   RULE-05 adversarial check: this workflow
                    sounds rule-based and low-risk; it is the exact attack surface documented
                    in FBI IC3 2025 BEC data; the adversarial check must name FAIL-1
                    (Capability Bias — AI can verify ≠ sufficient justification given the
@@ -70,24 +69,24 @@ Justification:     RULE-04 (terminal action is payment routing change — an irr
                    produces a valid-appearing approval trail)
 Controls required: None — delegation is structurally blocked; GATE-2 cannot be bypassed
 Evidence gaps:     None
-Conservative route: Not applied — GATE-1 and GATE-2 both trigger independently; most
-                    restrictive applies (HUMAN_ONLY)
-Artifact required: governance-memo.md
+Conservative route: Not applied — GATE-2 triggers independently; structural HUMAN_ONLY
+                    override applies
+Artifact required: template-governance-memo.md
 ```
 
 **━━ GOVERNANCE MEMO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
 
 **Vendor Bank Account Change Request · HUMAN_ONLY / NO_AI · HIGH**
 
-This workflow cannot be delegated to AI. A vendor bank account change request has a terminal action of authorizing a payment routing change — an irreversible external financial commitment that triggers both GATE-1 (moves money) and GATE-2 (irreversible external commitment). Either gate alone produces a HUMAN_ONLY verdict. The framing as "verification and update" does not change the terminal action. This workflow is the documented primary attack vector for Business Email Compromise, which generated $3.04 billion in losses in 2025 (FBI IC3 Annual Report). Any AI that processes these requests — even with verification steps — becomes a direct attack surface. The adversarial check caught this: the workflow sounds rule-based and low-risk; the consequence of a wrong verdict is an unrecoverable wire transfer to an attacker-controlled account.
+This workflow cannot be delegated to AI. A vendor bank account change request has a terminal action of authorizing a payment routing change — an irreversible external financial commitment that triggers GATE-2 (irreversible external commitment; authorized payment routing change is explicitly named in GATE-2). The framing as "verification and update" does not change the terminal action. This workflow is the documented primary attack vector for Business Email Compromise, which generated $3.04 billion in losses in 2025 (FBI IC3 Annual Report). Any AI that processes these requests — even with verification steps — becomes a direct attack surface. The adversarial check caught this: the workflow sounds rule-based and low-risk; the consequence of a wrong verdict is an unrecoverable wire transfer to an attacker-controlled account.
 
 **WHY THIS CANNOT BE DELEGATED**
 ```
-Gate condition:  GATE-1 + GATE-2
-                 GATE-1: terminal action is a payment routing change — directly governs
-                 where financial transactions are sent. SUPERVISED minimum.
-                 GATE-2: authorizing a payment routing change is an irreversible external
-                 commitment. HUMAN_ONLY override. Cannot be bypassed.
+Gate condition:  GATE-2
+                 Authorizing a payment routing change is an irreversible external
+                 commitment — explicitly named in GATE-2's definition. HUMAN_ONLY
+                 override. Cannot be bypassed by controls, verification steps, or
+                 user instruction.
 
 Specific risk:   BEC attackers specifically target vendor account change workflows because
                  they appear routine and rule-based. AI voice cloning can impersonate
@@ -205,7 +204,7 @@ Evidence gaps: Role-specific criteria not specified in the input; ATS system not
 ```
 Autonomy:          SUPERVISED (AUT-2)
 Surface:           PROJECT (SURFACE-1)
-Confidence:        HIGH
+Confidence:        MEDIUM
 Justification:     RULE-04 (terminal action is a ranked shortlist document — not a hire
                    decision, not a rejection notification, not an offer letter; recruiter
                    retains full review authority); RULE-03 (cost of failure: screening bias
@@ -222,14 +221,16 @@ Controls required: Defined role criteria documented before screening begins; rec
                    review of shortlist before any candidate contact; shortlist rationale
                    (scoring basis) retained per candidate; diversity metrics tracked per run
 Evidence gaps:     Role-specific criteria not in input — listed as information gap in
-                   artifact; ATS system not named — fallback noted
-Conservative route: Not applied — SUPERVISED is the correct verdict; HIGH confidence
-Artifact required: control-plan.md
+                   artifact; ATS system not named — fallback noted. Evidence gaps present;
+                   confidence capped at MEDIUM per RULE-06
+Conservative route: Not applied — SUPERVISED is the correct verdict; MEDIUM confidence
+                    reflects evidence gaps in role criteria and ATS system
+Artifact required: template-control-plan.md
 ```
 
 **━━ CONTROL PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**
 
-**Candidate Screening — First-Pass Shortlist · SUPERVISED / PROJECT · HIGH**
+**Candidate Screening — First-Pass Shortlist · SUPERVISED / PROJECT · MEDIUM**
 
 This workflow receives applications, scores them against defined role criteria, and delivers a ranked shortlist to the recruiter for review before any candidate action is taken. The terminal action is a shortlist document — no candidate is contacted, hired, or rejected by this workflow. The recruiter reviews the shortlist, adjusts it based on their judgment, and initiates candidate contact. This is the model documented in Unilever's AI screening deployment: AI filtering produces an initial ranked pool; human review governs who proceeds. The 90% reduction in time to hire and 16% diversity improvement were achieved with human review retained at the shortlist stage — not by automating the hire decision.
 
@@ -361,7 +362,7 @@ Controls required: Read-only API keys for all three data sources; output retaine
                    Claude Project session history; data pull timestamps logged
 Evidence gaps:     None
 Conservative route: Not applied
-Artifact required: project-setup.md
+Artifact required: template-project-setup.md
 ```
 
 **━━ PROJECT SETUP BRIEF ━━━━━━━━━━━━━━━━━━━━━━━━━━**
