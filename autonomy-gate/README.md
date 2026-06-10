@@ -139,6 +139,7 @@ autonomy-gate/
     ├── autonomy-criteria.md          ← Four criteria, Automation Maturity Ladder, scoring
     ├── surface-capability-matrix.md  ← Verified surface capabilities with sources
     ├── risk-classification.md        ← RISK-L1–L4, FAIL-1–8 named failure patterns
+    ├── precedents.md                 ← External governance patterns the Gate implements
     └── templates/
         ├── template-automation-architecture.md
         ├── template-project-setup.md

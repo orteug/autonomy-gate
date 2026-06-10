@@ -56,17 +56,17 @@ Artifact required: template-project-setup.md
 
 **Weekly Ops KPI Report · AUTONOMOUS / PROJECT · HIGH**
 
-This workflow pulls last week's pipeline, revenue, and support metrics from Salesforce, Stripe, and Zendesk and delivers a formatted narrative summary to the ops Slack channel. It runs on a human-initiated Monday cadence inside a Claude Project. The operator reads structured data, generates analysis, and posts to Slack — no external commitments, no money movement, no regulatory exposure. All four autonomy criteria pass cleanly, and no hard gate conditions apply.
+This workflow receives last week's pipeline, revenue, and support exports — pasted by the user at the start of each session — and produces a formatted narrative summary ready to post to the ops Slack channel. It runs on a human-initiated Monday cadence inside a Claude Project. The operator reads the pasted data, generates analysis, and returns Slack-ready text — no external system connections, no money movement, no regulatory exposure. All four autonomy criteria pass cleanly, and no hard gate conditions apply.
 
 **PURPOSE**
-Eliminate the manual Monday reporting task by automating data retrieval, narrative generation, and Slack delivery for the ops team's weekly performance summary.
+Eliminate the manual formatting and narrative work on Monday mornings. The user exports data, pastes it in, and receives a Slack-ready summary in one session — no manual writing required.
 
 **RUN CADENCE**
 Human-initiated, Monday morning. Operator does not schedule or run unattended. The person running the report pastes the prompt into the Claude Project and receives output within the session.
 
 **KNOWLEDGE FILES**
 - `reporting-template.md` · Defines the output format, section headers, and metric labeling convention the ops team expects
-- `data-sources.md` · Documents which Salesforce reports, Stripe dashboards, and Zendesk views contain the correct weekly data — prevents wrong data pulls
+- `data-sources.md` · Documents which Salesforce reports, Stripe dashboards, and Zendesk views to export for the weekly report — ensures user exports from the correct source for each metric
 - `baseline-benchmarks.md` · Prior week and month averages so the operator can surface "up 8% WoW" commentary rather than raw numbers
 
 **CUSTOM INSTRUCTIONS**
@@ -78,7 +78,7 @@ You are the Weekly Ops KPI Report operator. When activated, follow this sequence
 3. Write a narrative summary with these sections: Revenue · Pipeline · Support · Notable Trends. Each section: two to four sentences, one key number called out, one observation stated plainly.
 4. Flag any number that differs by more than 15% from the prior week and label it: "Notable variance — [metric]: [value] vs [prior week value]."
 5. Format for Slack: no markdown tables, use plain text lists, keep under 400 words.
-6. Post or provide copy ready to paste into the #ops-weekly Slack channel.
+6. Provide formatted copy ready to paste into the #ops-weekly Slack channel.
 ```
 
 **OUTPUT FORMAT**
@@ -1496,7 +1496,7 @@ Artifact required: template-project-setup.md
 
 **Daily Ops Report · AUTONOMOUS / PROJECT · MEDIUM**
 
-This workflow produces the previous day's ops summary by pulling data from connected systems and delivering a formatted report to the Slack ops channel. The ideal surface for a daily scheduled report is COWORK, which can run unattended on a timer. Because COWORK is unavailable, this workflow runs on a human-initiated cadence inside a Claude Project: someone triggers the report each morning. The verdict (AUTONOMOUS) does not change with the surface fallback; the format of the artifact does. All four autonomy criteria pass cleanly and no GATE conditions apply.
+This workflow produces the previous day's ops summary from data the user pastes at the start of each session and delivers a Slack-ready report for the user to post to the ops channel. The ideal surface for a daily scheduled report is COWORK, which can run unattended on a timer and pull directly from connected systems. Because COWORK is unavailable, this workflow runs on a human-initiated cadence inside a Claude Project: someone pastes the prior-day exports and triggers the report each morning. The verdict (AUTONOMOUS) does not change with the surface fallback; the execution model does. All four autonomy criteria pass cleanly and no GATE conditions apply.
 
 **SURFACE FALLBACK NOTE**
 The recommended surface for this workflow is COWORK (SURFACE-2), which supports unattended scheduled execution. The user has confirmed COWORK access is unavailable. PROJECT is the nearest viable alternative with the following adjustments:
