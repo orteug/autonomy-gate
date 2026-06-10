@@ -93,10 +93,10 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable / Not applicable — rationale]
 - [ ] An incident occurs — any output that caused unintended harm or required correction
       [Applicable — always.]
-- [ ] Error rate exceeds [threshold — to be specified at re-assessment]
-      [Applicable — threshold will be set during re-assessment based on baseline data.]
-- [ ] [N] months pass without a recertification review — [to be specified at re-assessment]
-      [Applicable — recertification date to be set at re-assessment.]
+- [ ] Error rate exceeds threshold — Not specified — threshold to be defined when re-assessment produces an AUTONOMOUS or SUPERVISED verdict
+      [Applicable — do not invent a percentage; value is set during re-assessment based on observed baseline data]
+- [ ] Recertification interval passes — Not specified — interval to be defined when re-assessment produces an AUTONOMOUS or SUPERVISED verdict
+      [Applicable — do not invent a date or cadence; value is set during re-assessment]
 - [ ] The reviewer role changes or becomes vacant
       [Applicable if re-assessment produces SUPERVISED verdict.]
 ```

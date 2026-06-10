@@ -91,8 +91,8 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 - [ ] Error rate exceeds threshold
       [Not applicable — HUMAN_ONLY workflows have no automation error rate to monitor.
       Human decision error rate is tracked separately under the review process.]
-- [ ] [N] months pass without a recertification review of this memo — [specify date]
-      [Applicable — governance documents should be reviewed annually or when the workflow changes.
+- [ ] Recertification interval passes — [if the workflow description names a date or interval, use it exactly; if not, write: Not specified — operator must define before deployment. Do not invent a cadence or date.]
+      [Applicable — governance documents should be reviewed periodically or when the workflow changes.
       Specify next review date and responsible role.]
 - [ ] The reviewer role changes or becomes vacant
       [Applicable — if the named Owner role changes or becomes vacant, the Governance Memo must be

@@ -209,7 +209,7 @@ Select the surface that matches the workflow's execution profile:
 
 | ID | Surface | Assign when |
 |----|---------|------------|
-| SURFACE-1 | PROJECT | Human-initiated recurring work in a Claude Project; no scheduled or unattended execution |
+| SURFACE-1 | PROJECT | Human-initiated recurring work in a Claude Project or ChatGPT Project; no scheduled or unattended execution |
 | SURFACE-2 | COWORK | Multi-step local work with files, schedules, or connectors; Claude Cowork; may run unattended |
 | SURFACE-3 | CODE_AGENT | Deterministic workflows, scripts, integrations, system-to-system enforcement; Claude Code or Codex |
 | SURFACE-4 | NO_AI | No surface assigned; pairs only with SOP_FIRST (AUT-3) and HUMAN_ONLY (AUT-4) |
@@ -357,6 +357,15 @@ The standard expiration conditions are:
 - [ ] Error rate exceeds [threshold — specified per workflow]
 - [ ] [N] months pass without a recertification review — date specified
 - [ ] The reviewer role changes or becomes vacant (SUPERVISED verdicts only)
+
+**Evidence requirement for threshold and interval fields:** The error-rate threshold and recertification interval fields must only be filled from values the operator has explicitly stated or that are directly derivable from the workflow description. The Gate does not invent these values.
+
+When the workflow input does not specify a numeric threshold or recertification interval:
+- Do not invent a percentage, time interval, date, owner name, or approval requirement.
+- Apply RULE-11 (Evidence Integrity): name the field as an evidence gap.
+- Output the condition as prose without brackets: `Error rate threshold: not specified — operator must define before deployment` or `Recertification interval: not specified — operator must define before deployment`.
+
+This output satisfies RULE-12 (no brackets in final output) while preserving the integrity of the governance document. An invented threshold or interval is not a production rule — it is a FAIL-7 (Bad Data Becomes Authority) violation embedded in an artifact that operators will treat as authoritative. Every numeric field in an expiration condition must be traceable to the workflow input or explicitly named as a gap.
 
 Naming the expiration conditions is what separates a governance document from a recommendation.
 

@@ -96,8 +96,8 @@ Every run produces: one Slack-ready text block, under 400 words, organized by Re
 - [x] The AI surface or tool used changes (model upgrade, platform migration)
 - [ ] The policy or compliance context changes — not applicable; this workflow handles internal business metrics only
 - [x] An incident occurs — any output that caused unintended harm or required correction
-- [x] Error rate exceeds 10% of weekly runs requiring manual correction — review and re-submit to Gate
-- [x] 6 months pass without a recertification review — review by [date: December 2026]
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [ ] The reviewer role changes or becomes vacant — not applicable; AUTONOMOUS verdict, no reviewer required
 
 ---
@@ -311,8 +311,8 @@ Claude Code with read-only API integrations to your OMS and ticketing system. Al
 - [x] The AI surface or tool used changes (model upgrade, OMS migration)
 - [x] The policy or compliance context changes — store return policy changes immediately expire this verdict; update policy document and re-test
 - [x] An incident occurs — any recommendation that led to an incorrect approval or denial requiring correction
-- [x] Error rate exceeds 5% of recommendations requiring support lead override — review and re-submit to Gate
-- [x] 6 months pass without a recertification review — review by [date: December 2026]
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [ ] The reviewer role changes or becomes vacant — not applicable; AUTONOMOUS verdict for this workflow (support lead reviews outputs, not the operator)
 
 ---
@@ -426,8 +426,8 @@ Every transaction records: order ID, request ID, policy check results, fraud fla
 - [x] The AI surface or tool used changes
 - [x] The policy or compliance context changes — any change to return policy immediately triggers re-review
 - [x] An incident occurs — any incorrect, duplicate, or fraudulent refund processed
-- [x] Error rate exceeds 2% of transactions requiring post-issuance correction — re-submit to Gate immediately
-- [x] 3 months pass without a recertification review — review by [date: September 2026]
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [x] The reviewer role changes or becomes vacant — workflow must be paused until a new reviewer is designated
 
 ---
@@ -544,8 +544,8 @@ Draft log: contact ID, draft content, data sources used, reviewer decision, time
 - [x] The AI surface or tool used changes
 - [x] The policy or compliance context changes — any change to CAN-SPAM, GDPR enforcement, or LinkedIn ToS
 - [x] An incident occurs — any complaint, bounce issue, or compliance flag
-- [x] Error rate exceeds 10% of drafts requiring revision — re-submit to Gate
-- [x] 3 months pass without a recertification review
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [x] The reviewer role changes or becomes vacant — workflow must pause until new reviewer is named
 
 ---
@@ -646,8 +646,8 @@ Trigger: new file in /inputs folder. Expected runtime: under 60 seconds per tran
 - [x] The AI surface or tool used changes (model upgrade, Cowork platform migration)
 - [ ] The policy or compliance context changes — not applicable; internal summaries of internal meetings
 - [x] An incident occurs — any digest that was materially incorrect and caused a task to be missed
-- [x] Error rate exceeds 15% of runs requiring manual correction
-- [x] 6 months pass without a recertification review — review by [date: December 2026]
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [ ] The reviewer role changes or becomes vacant — not applicable; AUTONOMOUS verdict
 
 ---
@@ -755,8 +755,8 @@ Deviation report version, contract version at time of assessment, reviewer name,
 - [x] The AI surface or tool used changes
 - [x] The policy or compliance context changes — any change to standard template or company contracting policy
 - [x] An incident occurs — any contract signed with an undetected material deviation
-- [x] Error rate exceeds 5% of reports missing a material deviation
-- [x] 6 months pass without recertification review
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [x] The reviewer role changes or becomes vacant — workflow paused until new reviewer designated
 
 ---
@@ -988,7 +988,7 @@ GATE-2 is a structural block on the terminal action. No change to AI capability,
 - [ ] The AI surface changes — not applicable; no AI surface assigned
 - [x] The policy or compliance context changes — any change to internal payment authorization policy or BEC guidance from FBI IC3 or FinCEN requires review
 - [x] An incident occurs — any successful or attempted BEC fraud on this workflow triggers immediate process audit
-- [x] 6 months pass without a recertification review of the human verification process
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 
 ---
 
@@ -1210,8 +1210,8 @@ Approved original version, resized version, diff log, reviewer name, approval ti
 - [x] The AI surface or tool used changes
 - [x] The policy or compliance context changes — any regulated advertising or financial services disclosure requirements
 - [x] An incident occurs — any incorrect post published externally
-- [x] Error rate exceeds 5% of resized posts requiring significant revision by reviewer
-- [x] 6 months pass without a recertification review
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [x] The reviewer role changes or becomes vacant — workflow paused until new content lead is named
 
 ---
@@ -1321,8 +1321,8 @@ Task list version, routing log with timestamps, owner confirmation records, esca
 - [x] The AI surface or tool used changes
 - [ ] The policy or compliance context changes — monitor for regulatory onboarding requirements
 - [x] An incident occurs — any new hire who arrived without a required item or access
-- [x] Error rate exceeds 10% of tasks requiring manual intervention to complete
-- [x] 6 months pass without a recertification review
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [x] Any reviewer role changes — workflow must be re-mapped with the new owner's name and capacity confirmed
 
 ---
@@ -1542,6 +1542,6 @@ One Slack-ready text block per run, under 300 words, organized by Revenue / Pipe
 - [x] The AI surface or tool used changes — including if COWORK becomes available; re-submit for surface upgrade
 - [ ] The policy or compliance context changes — not applicable; internal metrics only
 - [x] An incident occurs — any report that contained incorrect data and was used for a business decision
-- [x] Error rate exceeds 10% of runs requiring manual correction
-- [x] 6 months pass without a recertification review — review by [date: December 2026]
+- [x] Error rate exceeds threshold — Not specified — operator must define before deployment
+- [x] Recertification interval passes — Not specified — operator must define before deployment
 - [ ] The reviewer role changes — not applicable; AUTONOMOUS verdict

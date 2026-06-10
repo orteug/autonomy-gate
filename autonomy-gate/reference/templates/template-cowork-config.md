@@ -81,10 +81,10 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable / Not applicable — rationale]
 - [ ] An incident occurs — any output that caused unintended harm or required correction
       [Applicable — always. Any incident triggers reassessment.]
-- [ ] Error rate exceeds [threshold — specify: e.g., >5% of runs emit FAILED or COMPLETED_WITH_WARNINGS]
-      [Applicable — specify threshold]
-- [ ] [N] months pass without a recertification review — [specify date]
-      [Applicable — specify recertification date and responsible role]
+- [ ] Error rate exceeds threshold — [if the workflow description names a threshold, use it exactly; if not, write: Not specified — operator must define before deployment. Do not invent a percentage.]
+      [Applicable — use threshold from input only; do not invent a value]
+- [ ] Recertification interval passes — [if the workflow description names a date or interval, use it exactly; if not, write: Not specified — operator must define before deployment. Do not invent a date or cadence.]
+      [Applicable — recertification date and responsible role if provided in input; otherwise Not specified]
 - [ ] The reviewer role changes or becomes vacant
       [Not applicable — AUTONOMOUS / COWORK has no approval checkpoint.]
 ```
