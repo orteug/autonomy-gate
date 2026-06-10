@@ -121,27 +121,47 @@ SOP_FIRST is not a failure verdict. It is often the correct automation decision.
 
 ## Forward Note
 
-The Autonomy Decision Packet is designed as a forward-routing object. When Claude Cowork, Claude Code, or Codex surfaces are available, the packet can be pasted directly into those environments to initiate execution without requiring platform memory to transfer. The judgment layer (this operator) and the execution layer (Cowork, Code, Codex) are separate by design. Governance decisions should not be embedded inside execution environments.
+The Autonomy Decision Packet is a portable work order. It is produced by the Gate (Decision Layer) and consumed by any execution surface without requiring platform memory to transfer. The judgment layer and the execution layer are separate by design — governance decisions should not be embedded inside execution environments.
+
+The `adapters/` folder contains setup templates and specifications for taking the packet to each execution surface: Claude Cowork, Claude Code, ChatGPT Projects, and Codex. Each adapter answers: what this surface can do, how to configure it from the packet, what remains prohibited, and how to emit the terminal status that keeps the audit trail intact.
 
 ---
 
-## File Map
+## Repository Structure
 
 ```
-autonomy-gate/
-├── identity.md              ← Who the Gate is, what it does, what it never does
-├── rules.md                 ← Complete decision logic: RULE-00 through RULE-13
-├── examples.md              ← 14 adversarial test workflows with full outputs
-├── README.md                ← This file
-└── reference/
-    ├── autonomy-criteria.md          ← Four criteria, Automation Maturity Ladder, scoring
-    ├── surface-capability-matrix.md  ← Verified surface capabilities with sources
-    ├── risk-classification.md        ← RISK-L1–L4, FAIL-1–8 named failure patterns
-    └── templates/
-        ├── template-automation-architecture.md
-        ├── template-project-setup.md
-        ├── template-cowork-config.md
-        ├── template-control-plan.md
-        ├── template-stabilization-plan.md
-        └── template-governance-memo.md
+repo-root/
+├── README.md                ← This file (GitHub landing page)
+├── WRITEUP.md               ← Origin story and architectural rationale
+├── JUDGE_GUIDE.md           ← Falsifiable test prompts per RULE-NN and GATE-NN
+├── OPERATOR_GUIDE.md        ← Field guide for ops leaders using the Gate day-to-day
+├── examples/
+│   └── trial-audit-output.md  ← Three complete Gate runs with sources
+│
+├── autonomy-gate/           ← Upload this folder to Claude Project or ChatGPT Project
+│   ├── identity.md
+│   ├── rules.md
+│   ├── examples.md
+│   ├── README.md
+│   └── reference/
+│       ├── autonomy-criteria.md
+│       ├── surface-capability-matrix.md
+│       ├── risk-classification.md
+│       └── templates/
+│           ├── template-automation-architecture.md
+│           ├── template-project-setup.md
+│           ├── template-cowork-config.md
+│           ├── template-control-plan.md
+│           ├── template-stabilization-plan.md
+│           └── template-governance-memo.md
+│
+└── adapters/                ← Execution surface setup — use after the Gate issues a verdict
+    ├── decision-packet-contract.md   ← Packet spec: all fields, definitions, integrity rules
+    ├── claude/
+    │   ├── claude-project-setup.md  ← Deploy Gate or governed workflow in Claude Projects
+    │   ├── cowork-handoff.md        ← Configure Cowork from a COWORK verdict + artifact
+    │   └── claude-code-CLAUDE.md    ← Template CLAUDE.md for Claude Code governed repos
+    └── openai/
+        ├── chatgpt-project-setup.md ← Port the Gate or a governed workflow to ChatGPT Projects
+        └── codex-AGENTS.md          ← Template AGENTS.md for Codex governed repos
 ```
