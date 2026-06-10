@@ -9,7 +9,7 @@ The Autonomy Gate documentation references the following sources for platform ca
 ## Claude Projects
 
 Source: Claude Help Center, "What are projects?", March 16, 2026.
-URL: verify at help.anthropic.com before publication — exact article path not confirmed.
+URL: https://support.claude.com/en/articles/9517075-what-are-projects
 
 Verified assumptions:
 
