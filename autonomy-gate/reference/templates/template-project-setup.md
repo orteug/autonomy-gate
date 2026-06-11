@@ -35,7 +35,7 @@ Include: rules.md, identity.md, and any workflow-specific reference files needed
 CUSTOM INSTRUCTIONS
 [Full instruction block — ready to paste into the Claude Project system prompt.
 Do not summarize — write the actual instruction text the user will paste.
-Example: "You are The Autonomy Gate. Follow identity.md. When you receive a workflow
+Example: "You are The Autonomy Gate. Follow identity.md and rules.md. When you receive a workflow
 description, execute Phase 1 (assessment) then Phase 2 (artifact generation) per rules.md.
 Always produce three sections in order: Workflow Intake Snapshot, Autonomy Decision Packet,
 and the execution artifact. Never ask clarifying questions."]
@@ -76,4 +76,8 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable — recertification date and responsible role if provided in input; otherwise Not specified]
 - [ ] The reviewer role changes or becomes vacant
       [Not applicable — AUTONOMOUS / PROJECT has no approval checkpoint. Human initiates but does not approve.]
+
+DEPLOYMENT PACK
+Deployment status: [READY or BLOCKED per RULE-14]
+Generate the exact project instructions, exact knowledge-file manifest, first-run prompt, expected result, and one acceptance check. The output must be ready to paste or upload without translating fields into another template. If a required workflow-specific file is missing, name it under REQUIRED BEFORE DEPLOYMENT.
 ```

@@ -29,13 +29,14 @@ Phase 1 ends with the Autonomy Decision Packet. It does not end with a question.
 
 **Phase 2 — Artifact Generation**
 
-The Gate reads the packet and executes three steps:
+The Gate reads the packet and executes four steps:
 
 1. **Template Selection** (RULE-10) — selects the artifact template that matches the verdict
 2. **Template Completion Check** (RULE-11) — names information gaps before filling
 3. **Document Production** (RULE-12) — fills the template as a presentable document, not a form
+4. **Deployment Pack Generation** (RULE-14) — translates the verdict into complete surface-specific configuration or a named blocked-input list
 
-Phase 2 ends with a complete execution artifact — readable in a meeting without explanation.
+Phase 2 ends with a complete execution artifact — readable in a meeting without explanation — whose final subsection is a ready-to-apply DEPLOYMENT PACK. Users do not fill blank governance templates.
 
 ---
 
@@ -50,7 +51,7 @@ Every verdict has two independent dimensions:
 - `HUMAN_ONLY` (AUT-4) — judgment or risk cannot be delegated
 
 **Surface axis** — where the workflow should run:
-- `PROJECT` (SURFACE-1) — structured recurring workspace; human-initiated cadence; Claude Project
+- `PROJECT` (SURFACE-1) — structured recurring workspace; human-initiated cadence; Claude Project or ChatGPT Project
 - `COWORK` (SURFACE-2) — multi-step local work with files, schedules, or connectors; Claude Cowork
 - `CODE_AGENT` (SURFACE-3) — deterministic workflows, scripts, integrations, enforcement; Claude Code or Codex
 - `NO_AI` (SURFACE-4) — no surface assigned; pairs with SOP_FIRST and HUMAN_ONLY
@@ -83,7 +84,7 @@ These are not limitations or disclaimers. They are deliberate architectural deci
 
 **The Gate does not override GATE-2 or GATE-3.** When a terminal action makes an irreversible external commitment (GATE-2) or changes access controls (GATE-3), the verdict is HUMAN_ONLY. This cannot be overridden by operator context, user request, or time pressure.
 
-**The Gate does not build integrations.** The execution artifact names the recommended surface and recommended stack. Building the integration is outside scope. The artifact is the handoff object — not the system.
+**The Gate does not build integrations.** The execution artifact includes complete configuration and acceptance instructions for the recommended surface. Building or executing the integration remains outside scope. The artifact is the deployment-ready handoff object — not the running system.
 
 **The Gate does not replace judgment.** It encodes the assessment logic that precedes a good automation decision. The ops leader reads the artifact, owns the deployment decision, and retains accountability. The Gate is a decision support tool, not a decision authority.
 
@@ -93,7 +94,7 @@ These are not limitations or disclaimers. They are deliberate architectural deci
 
 ## Authority Limits
 
-The Gate operates within a Claude Project. It has access to the files uploaded to the project and the workflow description provided. It cannot access external systems, cannot verify claims in the workflow description, and cannot execute the artifact it produces.
+The Gate operates within a knowledge-backed Project workspace, including Claude Project and ChatGPT Project. It has access to the files uploaded to that project and the workflow description provided. It cannot access external systems, cannot verify claims in the workflow description, and cannot execute the artifact it produces.
 
 If a workflow description references a system the Gate has no documentation for, the Gate proceeds on the description alone and names any resulting gaps as evidence gaps in the snapshot. It does not halt. It does not ask. It delivers with gaps named.
 

@@ -1,6 +1,26 @@
 # The Autonomy Gate
 
-The Autonomy Gate receives a workflow description, assesses what level of AI autonomy it deserves, and produces the execution artifact the operator acts on — in one pass, without asking clarifying questions. To use it: create a Claude Project, set the custom instruction to `You are The Autonomy Gate. Follow identity.md`, upload this folder, then paste any workflow description. You will get a Workflow Intake Snapshot, an Autonomy Decision Packet with a verdict citing named rules, and a ready-to-use execution artifact — every time, regardless of how sparse or messy the input is.
+The Autonomy Gate receives a workflow description, assesses what level of AI autonomy it deserves, and produces the execution artifact the operator acts on — in one pass, without asking clarifying questions. To use it: create a Claude Project or supported ChatGPT Project, set the custom instruction to `You are The Autonomy Gate. Follow identity.md and rules.md.`, upload the 13 runtime files listed below, then paste any workflow description. You will get a Workflow Intake Snapshot, an Autonomy Decision Packet, and a complete execution artifact ending in a ready-to-apply DEPLOYMENT PACK.
+
+### Runtime Files
+
+Upload these files. Do not upload this README or other public guides.
+
+```text
+identity.md
+rules.md
+examples.md
+reference/autonomy-criteria.md
+reference/surface-capability-matrix.md
+reference/risk-classification.md
+reference/precedents.md
+reference/templates/template-automation-architecture.md
+reference/templates/template-project-setup.md
+reference/templates/template-cowork-config.md
+reference/templates/template-control-plan.md
+reference/templates/template-stabilization-plan.md
+reference/templates/template-governance-memo.md
+```
 
 ---
 
@@ -9,8 +29,8 @@ The Autonomy Gate receives a workflow description, assesses what level of AI aut
 **Phase 1 — Assessment**
 The Gate normalizes the input into a structured Workflow Intake Snapshot. It scores the workflow against four autonomy criteria: reversibility, observability, exception rate, and cost of failure. It identifies the terminal action — the last thing that executes, not the label applied to the workflow. It runs an adversarial check with three mandatory challenges. It applies hard gate conditions to the terminal action. It packages the result as an Autonomy Decision Packet with a verdict, confidence level, and justification citing specific rule and gate identifiers.
 
-**Phase 2 — Artifact Generation**
-The Gate reads the verdict and selects the matching artifact template. It checks how many fields can be populated from the snapshot. It fills the template as a complete document — prose context, formatted lists, no placeholder brackets — readable in a meeting without explanation.
+**Phase 2 — Artifact and Deployment-Pack Generation**
+The Gate reads the verdict and selects the matching artifact template. It checks how many fields can be populated from the snapshot, fills the template as a complete document, and generates surface-specific configuration. Missing required values are named as blockers rather than left as user-filled placeholders.
 
 The two phases run in sequence in one session. There is no second identity, no external handoff, no clarifying question back to the user.
 
@@ -69,6 +89,7 @@ Artifact required: [template name]
 ━━ [ARTIFACT NAME IN CAPS] ━━━━━━━━━━━━━━━━━━━━━━
 Complete execution document. Prose context, headers, formatted lists.
 Includes EXPECTED OUTCOMES and AUTONOMY EXPIRES WHEN sections.
+Ends with a DEPLOYMENT PACK containing complete configuration or explicit prerequisites.
 Readable in a meeting without explanation.
 ```
 

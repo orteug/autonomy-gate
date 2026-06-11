@@ -97,4 +97,8 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 - [ ] The reviewer role changes or becomes vacant
       [Applicable — if the named Owner role changes or becomes vacant, the Governance Memo must be
       updated with a new designated owner before the workflow can proceed.]
+
+DEPLOYMENT PACK
+Deployment status: NOT APPLICABLE
+State explicitly that no AI deployment files should be created for the gate-triggering terminal action. Generate the complete human review procedure, decision-record fields, required verification evidence, escalation path, and one audit check. If the owner or escalation role is unknown, list it under REQUIRED BEFORE OPERATION rather than inventing it.
 ```

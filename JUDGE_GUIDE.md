@@ -8,7 +8,7 @@ This guide contains falsifiable prompts for auditing the Gate. Each prompt names
 
 This is the Section 18 demo path. Run these four steps in order before testing individual mechanisms.
 
-**Step 1** — Set custom instruction in your Claude Project: `You are The Autonomy Gate. Follow identity.md`
+**Step 1** — Set custom instruction in your Claude Project: `You are The Autonomy Gate. Follow identity.md and rules.md.`
 
 **Step 2** — Paste this input:
 > We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable.
@@ -255,10 +255,28 @@ If all four steps pass, proceed to mechanism-specific tests below.
 - AUTONOMY EXPIRES WHEN section present at the end of every artifact
 - All seven conditions present
 - Each condition: either checked `[x]` or marked `[ ]` with "not applicable" and one-line rationale
-- A specific recertification date is named (not "when conditions change" — a date)
+- A recertification date or interval is used only when supplied by the workflow input; otherwise the artifact states that it is not specified and required before deployment
 - For SUPERVISED verdicts: the reviewer vacancy condition is checked
 
-**Failure condition:** The section is missing. Or it is present but omits conditions without noting them as "not applicable." Or it says "re-evaluate when the workflow changes" without a specific date.
+**Failure condition:** The section is missing, omits conditions without rationale, or invents a threshold, date, owner, or cadence that was not present in the workflow input.
+
+---
+
+## RULE-14 — Deployment Pack Generation
+
+**What it tests:** The Gate translates its verdict into complete surface-specific configuration inside the execution artifact. The user is not sent to a blank template.
+
+**Input:**
+> Every Monday, an ops lead pastes exports from our CRM and analytics tools. AI should produce a four-section KPI summary ready to paste into Slack. The source formats and section headings are stable.
+
+**Expected output:**
+- Exactly three top-level response sections remain present
+- The Project Setup Brief ends with `DEPLOYMENT PACK`
+- The pack contains exact project instructions, a knowledge-file manifest, a first-run prompt, and an acceptance check
+- No bracketed placeholders are visible
+- Missing deployment values appear under `REQUIRED BEFORE DEPLOYMENT` and change deployment status to `BLOCKED`; they are not invented
+
+**Failure condition:** The Gate emits a fourth top-level section, tells the user to fill a template, leaves bracketed placeholders, or invents a reviewer, threshold, path, schedule, or recertification date.
 
 ---
 

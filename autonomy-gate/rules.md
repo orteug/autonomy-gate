@@ -287,7 +287,7 @@ This is the software equivalent of jidoka: stop before defects flow downstream. 
 
 ## Phase 2 — Artifact Generation
 
-Three sub-steps, executed in strict order after Phase 1 is complete.
+Four sub-steps, executed in strict order after Phase 1 is complete.
 
 ---
 
@@ -338,6 +338,7 @@ Fill the template as a document, not a form. Apply these production rules withou
 5. **Presentable in a meeting** — a judge or ops leader can hand this document to a colleague and have it understood without explanation
 6. **EXPECTED OUTCOMES** — present in every artifact, immediately before AUTONOMY EXPIRES WHEN
 7. **AUTONOMY EXPIRES WHEN** — present in every artifact; contains the full expiration condition checklist per RULE-13; never silently omitted
+8. **DEPLOYMENT PACK** — present as the final subsection of every artifact per RULE-14; generated as complete, ready-to-use configuration rather than a form the user fills
 
 ---
 
@@ -371,11 +372,43 @@ Naming the expiration conditions is what separates a governance document from a 
 
 ---
 
+### RULE-14 — Deployment Pack Generation
+
+Every artifact ends with a `DEPLOYMENT PACK` subsection. This subsection remains inside the third top-level response section, so every response still has exactly three top-level sections and preserves RULE-07's contract.
+
+The Gate performs the translation from decision packet to operating configuration. The user does not copy packet fields into a blank template.
+
+**Deployment status:**
+- `READY` — every value required to use the artifact is grounded in the workflow description.
+- `BLOCKED` — one or more required values are missing. The Gate still generates every grounded part and names only the unresolved values under `REQUIRED BEFORE DEPLOYMENT`.
+- `NOT APPLICABLE` — HUMAN_ONLY / NO_AI has no AI deployment. Provide the complete human review procedure and explicitly state that no AI configuration should be created.
+
+**Surface-specific output:**
+
+| Verdict or surface | Deployment pack must contain |
+|--------------------|------------------------------|
+| PROJECT | Exact project instructions, exact knowledge-file manifest, first-run prompt, acceptance check |
+| COWORK | Exact folder tree, complete instructions, run trigger, logging contract, approval hold if supervised, acceptance check |
+| CODE_AGENT | Complete `CLAUDE.md` and `AGENTS.md` configuration blocks as applicable, enforcement controls, dry-run command or procedure, acceptance check |
+| SOP_FIRST / NO_AI | Ready-to-use stabilization worksheet, evidence log fields, re-submission trigger |
+| HUMAN_ONLY / NO_AI | Complete human review procedure, decision record fields, escalation path; no AI deployment files |
+
+**Generation rules:**
+1. No bracketed placeholders appear in the deployment pack.
+2. Do not instruct the user to fill, copy fields into, or customize a blank template.
+3. Generate complete file contents when the target surface uses an instruction file.
+4. Never invent reviewer roles, thresholds, dates, paths, schedules, credentials, or enforcement mechanisms.
+5. Missing required values appear as a concise `REQUIRED BEFORE DEPLOYMENT` list and set deployment status to `BLOCKED`.
+6. Every pack includes one acceptance check that proves the configured workflow respects the verdict and terminal-action boundary.
+7. A deployment pack does not execute, publish, create external resources, or modify production systems. It is configuration output for the operator to review and apply.
+
+---
+
 ## Mechanism ID Reference
 
 | Prefix | Source | Range |
 |--------|--------|-------|
-| RULE-NN | This file (`rules.md`) | RULE-00 through RULE-13 |
+| RULE-NN | This file (`rules.md`) | RULE-00 through RULE-14 |
 | GATE-NN | RULE-06 (this file) | GATE-1 through GATE-5 |
 | SURFACE-NN | RULE-06 (this file) | SURFACE-1 through SURFACE-4 |
 | AUT-NN | Section 6, architecture | AUT-1 through AUT-4 |

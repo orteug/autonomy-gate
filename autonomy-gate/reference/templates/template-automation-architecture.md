@@ -89,4 +89,8 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable — recertification date and responsible role if provided in input; otherwise Not specified]
 - [ ] The reviewer role changes or becomes vacant
       [Not applicable — AUTONOMOUS / CODE_AGENT has no reviewer role]
+
+DEPLOYMENT PACK
+Deployment status: [READY or BLOCKED per RULE-14]
+Generate complete `CLAUDE.md` and `AGENTS.md` configuration blocks appropriate to the named code-agent surface. Include allowed actions, prohibited actions, audit requirements, dry-run procedure, and one acceptance test. Do not leave placeholders. If a required value is absent, list it under REQUIRED BEFORE DEPLOYMENT and generate the remaining grounded configuration.
 ```

@@ -92,4 +92,8 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 - [ ] The reviewer role changes or becomes vacant
       [Applicable — SUPERVISED workflows depend on a named reviewer. If the reviewer role changes
       or becomes vacant, the Control Plan must be updated with the new reviewer before execution resumes.]
+
+DEPLOYMENT PACK
+Deployment status: [READY or BLOCKED per RULE-14]
+Generate the complete configuration for the assigned surface, including the approval hold, named reviewer contract, approval record, prohibited terminal action before approval, and one acceptance test proving the checkpoint blocks execution. Do not leave placeholders. Missing reviewer or threshold values appear only under REQUIRED BEFORE DEPLOYMENT.
 ```

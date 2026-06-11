@@ -87,4 +87,8 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable — recertification date and responsible role if provided in input; otherwise Not specified]
 - [ ] The reviewer role changes or becomes vacant
       [Not applicable — AUTONOMOUS / COWORK has no approval checkpoint.]
+
+DEPLOYMENT PACK
+Deployment status: [READY or BLOCKED per RULE-14]
+Generate the exact folder tree, complete project instructions, run trigger, terminal-status log format, failure behavior, and one non-production acceptance run. Do not leave placeholders. If schedule, path, or connector details are missing, name them under REQUIRED BEFORE DEPLOYMENT and configure manual trigger as the conservative fallback.
 ```
