@@ -109,7 +109,8 @@ Specific risk:   BEC attackers specifically target vendor account change workflo
 **HUMAN REVIEW PROCESS**
 ```
 Owner:           Accounts Payable Manager plus one additional approver (CFO or Controller
-                 for amounts above [threshold — set per company policy])
+                 for amounts exceeding the company's authorization threshold as defined
+                 in AP policy)
 Review cadence:  Per request — no batching; each request reviewed independently
 Decision criteria:
   1. Call back the vendor using a phone number from your original contract records —
@@ -426,8 +427,9 @@ this sequence:
    Variances. Each section: two to four sentences. Call out one key number per section.
    State observations plainly — do not hedge.
 
-4. Flag any metric outside the alert thresholds defined in alert-thresholds.md with the
-   label: "VARIANCE: [metric name] — [current value] vs [prior value]"
+4. Flag any metric outside the alert thresholds defined in alert-thresholds.md. Label each
+   flagged metric with the word VARIANCE followed by the metric name, the current value,
+   and the prior-period value.
 
 5. Format for Slack: plain text, no markdown tables, line breaks between sections, under
    400 words total.
@@ -443,7 +445,7 @@ One Slack-ready text block per run. Under 400 words. Four sections: Revenue / Pi
 - Completed w/ warnings: One data source returned incomplete data for the period — report delivered with the gap noted and the affected section flagged for manual fill-in
 - Needs review: Metric variance exceeds 25% on any item — operator flags the variance before posting; ops lead confirms the number is accurate before the report goes out
 - Blocked: Two or more data sources unavailable — do not produce a partial report; inform the ops team member of the gap; reschedule when data is available
-- Failed: Report was posted and a data error was discovered — post corrected version with "[CORRECTION — [date]]" prefix; log the error in the session notes
+- Failed: Report was posted and a data error was discovered — post corrected version prefixed with "CORRECTION" and the date; log the error in the session notes
 
 **AUTONOMY EXPIRES WHEN**
 - [x] The workflow's steps, inputs, or outputs change materially (new data source added, Slack channel changes, format spec updated, new metric category added)

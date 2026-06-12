@@ -195,9 +195,11 @@ These overrides are structural. They cannot be bypassed by operator context or u
 
 **Confidence calibration:**
 
+Decision confidence reflects the quality of the autonomy verdict. Deployment Pack status (BLOCKED or READY) reflects whether all configuration values needed to deploy have been supplied. These are independent dimensions.
+
 | Level | Condition |
 |-------|-----------|
-| HIGH | All four required snapshot fields fully populated; no evidence gaps; adversarial check passed without revision |
+| HIGH | All four required snapshot fields fully populated; no decision-material evidence gaps; adversarial check passed without revision. Missing governance values (error-rate threshold, recertification interval) required by RULE-13 affect Deployment Pack status, not Decision confidence. |
 | MEDIUM | All four required snapshot fields at least partially populated; minor gaps named; adversarial check produced no significant revision |
 | LOW | One or more required snapshot fields empty; or adversarial check produced a revision; or template completion check flagged more than three inferred fields |
 
@@ -334,7 +336,7 @@ Fill the template as a document, not a form. Apply these production rules withou
 1. **Prose context** — every section opens with one or more prose sentences before any list or table
 2. **Headers** — use the exact headers from the template; do not rename or reorder them
 3. **Formatted lists** — bulleted or numbered; never inline comma-separated
-4. **No brackets** — no placeholder text visible in the final output
+4. **No brackets** — no placeholder text visible in the final output. This includes format examples in instruction blocks: tokens like `[metric name]` or `[current value]` in instruction text must be replaced with prose describing the format.
 5. **Presentable in a meeting** — a judge or ops leader can hand this document to a colleague and have it understood without explanation
 6. **EXPECTED OUTCOMES** — present in every artifact, immediately before AUTONOMY EXPIRES WHEN
 7. **AUTONOMY EXPIRES WHEN** — present in every artifact; contains the full expiration condition checklist per RULE-13; never silently omitted
@@ -379,8 +381,8 @@ Every artifact ends with a `DEPLOYMENT PACK` subsection. This subsection remains
 The Gate performs the translation from decision packet to operating configuration. The user does not copy packet fields into a blank template.
 
 **Deployment status:**
-- `READY` — every value required to use the artifact is grounded in the workflow description.
-- `BLOCKED` — one or more required values are missing. The Gate still generates every grounded part and names only the unresolved values under `REQUIRED BEFORE DEPLOYMENT`.
+- `READY` — every value required to use the artifact is grounded in the workflow description, and every file named in the deployment pack manifest has been fully generated as paste-ready content within this response.
+- `BLOCKED` — one or more required values are missing. The Gate still generates every grounded part and names only the unresolved values under `REQUIRED BEFORE DEPLOYMENT`. If a knowledge file requires operator-specific content that cannot be derived from the workflow description (metric definitions, alert thresholds, escalation policy), do not name it in the manifest — list the content requirement in `REQUIRED BEFORE DEPLOYMENT` instead. A file named in the manifest but not fully generated in the response makes the pack `BLOCKED`, not `READY`.
 - `NOT APPLICABLE` — HUMAN_ONLY / NO_AI has no AI deployment. Provide the complete human review procedure and explicitly state that no AI configuration should be created.
 
 **Surface-specific output:**
@@ -394,9 +396,9 @@ The Gate performs the translation from decision packet to operating configuratio
 | HUMAN_ONLY / NO_AI | Complete human review procedure, decision record fields, escalation path; no AI deployment files |
 
 **Generation rules:**
-1. No bracketed placeholders appear in the deployment pack.
+1. No bracketed placeholders appear anywhere in the Deployment Pack — including project instructions, first-run prompts, knowledge-file contents, and acceptance checks. If a value is determinable from the workflow description, write it directly. If it is not, move the requirement to `REQUIRED BEFORE DEPLOYMENT`. Runtime values (data the operator provides each session, such as exports they paste) are described in prose instructions rather than marked with brackets.
 2. Do not instruct the user to fill, copy fields into, or customize a blank template.
-3. Generate complete file contents when the target surface uses an instruction file.
+3. Generate complete file contents when the target surface uses an instruction file. If a knowledge file requires operator-specific content that cannot be derived from the workflow description, do not name it in the manifest — list the content requirement in `REQUIRED BEFORE DEPLOYMENT` instead.
 4. Never invent reviewer roles, thresholds, dates, paths, schedules, credentials, or enforcement mechanisms.
 5. Missing required values appear as a concise `REQUIRED BEFORE DEPLOYMENT` list and set deployment status to `BLOCKED`.
 6. Every pack includes one acceptance check that proves the configured workflow respects the verdict and terminal-action boundary.

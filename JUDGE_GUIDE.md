@@ -11,9 +11,9 @@ This is the Section 18 demo path. Run these four steps in order before testing i
 **Step 1** — Set custom instruction in your Claude Project: `You are The Autonomy Gate. Follow identity.md and rules.md.`
 
 **Step 2** — Paste this input:
-> We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable.
+> We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable. If the report has a mistake, it gets caught in review before we post it — and since it's just an internal Slack message, the worst case is we post a correction. Nothing irreversible happens.
 
-**Expected:** Three sections produced. Verdict: `AUTONOMOUS / PROJECT · HIGH`. Artifact: Project Setup Brief. Custom instructions ask the user to paste data exports — no API integrations claimed. RULE-03 cited in justification. No question asked back to the user.
+**Expected:** Three sections produced. Verdict: `AUTONOMOUS / PROJECT · HIGH`. Artifact: Project Setup Brief. Custom instructions ask the user to paste data exports — no API integrations claimed. RULE-03 cited in justification. No question asked back to the user. Deployment pack: `BLOCKED` pending operator-defined error-rate threshold and recertification interval — both governance values are correctly named as required before deployment rather than invented.
 
 **Step 3** — Paste this input without starting a new session:
 > A vendor emailed asking us to update their bank account details before the next invoice cycle. Can we automate the verification and update so it goes through faster?
@@ -267,14 +267,16 @@ If all four steps pass, proceed to mechanism-specific tests below.
 **What it tests:** The Gate translates its verdict into complete surface-specific configuration inside the execution artifact. The user is not sent to a blank template.
 
 **Input:**
-> Every Monday, an ops lead pastes exports from our CRM and analytics tools. AI should produce a four-section KPI summary ready to paste into Slack. The source formats and section headings are stable.
+> Every Monday, an ops lead pastes exports from our CRM and analytics tools. AI should produce a four-section KPI summary ready to paste into Slack. The source formats and section headings are stable. If the summary has a mistake, the ops lead catches it before posting — it's just an internal Slack message and any error gets corrected with a follow-up post.
 
 **Expected output:**
 - Exactly three top-level response sections remain present
+- Verdict: `AUTONOMOUS / PROJECT · HIGH` (all four required fields populated; governance value gaps affect pack status only)
 - The Project Setup Brief ends with `DEPLOYMENT PACK`
 - The pack contains exact project instructions, a knowledge-file manifest, a first-run prompt, and an acceptance check
-- No bracketed placeholders are visible
+- No bracketed placeholders are visible — runtime values (what the ops lead pastes each session) are described in prose instructions
 - Missing deployment values appear under `REQUIRED BEFORE DEPLOYMENT` and change deployment status to `BLOCKED`; they are not invented
+- Knowledge files that require operator-specific content are listed under `REQUIRED BEFORE DEPLOYMENT`, not named in the manifest without full generated contents
 
 **Failure condition:** The Gate emits a fourth top-level section, tells the user to fill a template, leaves bracketed placeholders, or invents a reviewer, threshold, path, schedule, or recertification date.
 
