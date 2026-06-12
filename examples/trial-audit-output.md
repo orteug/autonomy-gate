@@ -56,6 +56,7 @@ Evidence gaps: None — the workflow is well-described and the risk is fully doc
 Autonomy:          HUMAN_ONLY (AUT-4)
 Surface:           NO_AI (SURFACE-4)
 Confidence:        HIGH
+Terminal action:   Authorize a vendor payment routing change — an irreversible external financial commitment
 Justification:     RULE-04 (terminal action is payment routing change — an irreversible
                    external financial commitment; the label "verification" does not change
                    the terminal action); GATE-2 (makes an irreversible external commitment —
@@ -231,6 +232,7 @@ Evidence gaps: Role-specific criteria not specified in the input; ATS system not
 Autonomy:          SUPERVISED (AUT-2)
 Surface:           PROJECT (SURFACE-1)
 Confidence:        MEDIUM
+Terminal action:   Deliver a ranked candidate shortlist document to the recruiter for review before any candidate contact
 Justification:     RULE-04 (terminal action is a ranked shortlist document — not a hire
                    decision, not a rejection notification, not an offer letter; recruiter
                    retains full review authority); RULE-03 (cost of failure: screening bias
@@ -401,6 +403,7 @@ Evidence gaps: None — all required fields populated
 Autonomy:          AUTONOMOUS (AUT-1)
 Surface:           PROJECT (SURFACE-1) — human-initiated cadence
 Confidence:        HIGH
+Terminal action:   Deliver a formatted Slack-ready report in session; human posts to the ops channel
 Justification:     RULE-03 (all four criteria pass: reversible — Slack message deletable
                    and correctable; observable — Slack delivery is visible and readable
                    by the whole ops team; exception rate low — structured data sources

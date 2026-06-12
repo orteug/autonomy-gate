@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "decision-packet.schema.json",
+  "title": "Autonomy Decision Packet",
+  "description": "Machine-checkable schema for the Autonomy Decision Packet produced by The Autonomy Gate (RULE-06).",
+  "type": "object",
+  "required": [
+    "autonomy",
+    "surface",
+    "confidence",
+    "terminal_action",
+    "justification",
+    "controls_required",
+    "artifact_required",
+    "build_handoff_pack",
+    "operator_disposition"
+  ],
+  "properties": {
+    "autonomy": {
+      "type": "string",
+      "enum": ["AUTONOMOUS", "SUPERVISED", "SOP_FIRST", "HUMAN_ONLY"],
+      "description": "Autonomy verdict from RULE-06."
+    },
+    "surface": {
+      "type": "string",
+      "enum": ["PROJECT", "COWORK", "CODE_AGENT", "NO_AI"],
+      "description": "Execution surface from RULE-06."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"],
+      "description": "Decision confidence level. Independent of Build Handoff Pack status."
+    },
+    "terminal_action": {
+      "type": "string",
+      "minLength": 10,
+      "description": "The last action the workflow executes. Must be descriptive — not a label."
+    },
+    "justification": {
+      "type": "string",
+      "minLength": 5,
+      "description": "RULE-NN and GATE-NN citations that drove the verdict."
+    },
+    "controls_required": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 5},
+      "description": "Controls that must be in place before the workflow runs."
+    },
+    "evidence_gaps": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Named gaps. Required when confidence is MEDIUM or LOW."
+    },
+    "conservative_route": {
+      "type": "string",
+      "description": "Present when adversarial check revised the base verdict."
+    },
+    "artifact_required": {
+      "type": "string",
+      "description": "Template filename for the execution document produced in Phase 2."
+    },
+    "build_handoff_pack": {
+      "type": "string",
+      "enum": ["READY", "BLOCKED", "NOT_APPLICABLE"],
+      "description": "Status of the generated Build Handoff Pack. Independent of confidence."
+    },
+    "operator_disposition": {
+      "type": "string",
+      "enum": ["PENDING", "APPROVE_FOR_BUILD", "REVISE", "HOLD_FOR_EVIDENCE", "REJECT"],
+      "description": "Operator disposition. Always PENDING when issued by the Gate."
+    }
+  },
+  "allOf": [
+    {
+      "description": "Evidence gaps required when confidence is not HIGH",
+      "if": {
+        "properties": {"confidence": {"enum": ["MEDIUM", "LOW"]}}
+      },
+      "then": {
+        "required": ["evidence_gaps"],
+        "properties": {
+          "evidence_gaps": {"minItems": 1}
+        }
+      }
+    },
+    {
+      "description": "NO_AI surface pairs only with SOP_FIRST or HUMAN_ONLY",
+      "if": {
+        "properties": {"surface": {"const": "NO_AI"}}
+      },
+      "then": {
+        "properties": {
+          "autonomy": {"enum": ["SOP_FIRST", "HUMAN_ONLY"]}
+        }
+      }
+    },
+    {
+      "description": "NOT_APPLICABLE pack pairs only with HUMAN_ONLY or SOP_FIRST",
+      "if": {
+        "properties": {"build_handoff_pack": {"const": "NOT_APPLICABLE"}}
+      },
+      "then": {
+        "properties": {
+          "autonomy": {"enum": ["HUMAN_ONLY", "SOP_FIRST"]}
+        }
+      }
+    },
+    {
+      "description": "Gate-issued packets always have PENDING disposition",
+      "properties": {
+        "operator_disposition": {"const": "PENDING"}
+      }
+    }
+  ]
+}
