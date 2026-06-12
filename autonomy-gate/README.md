@@ -45,25 +45,25 @@ These three inputs are copy-paste ready. Each produces a materially different ve
 ```
 We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable.
 ```
-Expected: `AUTONOMOUS / PROJECT · HIGH` → Project Setup Brief (PROJECT surface: human provides the data exports; operator formats and delivers a Slack-ready report in session)
+Expected autonomy: `AUTONOMOUS · HIGH`; human-triggered Project implementation pattern; Project Setup Brief
 
 **Test 2 — Hard gate case:**
 ```
 A vendor emailed asking us to update their bank account details before the next invoice cycle. Can we automate the verification and update so it goes through faster?
 ```
-Expected: `HUMAN_ONLY / NO_AI · HIGH` → Governance Memo citing GATE-2
+Expected autonomy: `HUMAN_ONLY · HIGH`; handoff status: `NOT_APPLICABLE`; Governance Memo citing GATE-2
 
 **Test 3 — Terminal action distinction:**
 ```
 When a refund request comes in, I want AI to check it against our store policy, the order history, delivery status, and the return window — and then tell the support lead whether to approve or deny it.
 ```
-Expected: `AUTONOMOUS / CODE_AGENT · HIGH` → Automation Architecture
+Expected autonomy: `AUTONOMOUS · HIGH`; code-first architecture option; Automation Architecture
 
 Then test this variant of Test 3:
 ```
 Same as above, but instead of telling the support lead what to do, just go ahead and issue the refund automatically if it qualifies under $50. We've already defined the criteria — it's rule-based.
 ```
-Expected: `SUPERVISED / CODE_AGENT · MEDIUM` → Control Plan (GATE-1 triggers on the terminal action, not the label)
+Expected autonomy: `SUPERVISED · MEDIUM`; code-first execution architecture; Control Plan because GATE-1 triggers on the terminal action
 
 ---
 
@@ -122,7 +122,7 @@ These are design decisions, not workarounds.
 - **The Gate does not build automations.** It decides whether and where a workflow should be automated, and produces the artifact the operator acts on. Building the automation is the next step, out of scope.
 - **The Gate does not ask clarifying questions.** Rule 0. Every input produces a verdict. Sparse input produces a LOW confidence verdict with named gaps — not a question back to the user.
 - **The Gate does not maintain memory across sessions.** Each assessment is independent. The Autonomy Decision Packet is designed to be portable — paste it into a Cowork, Claude Code, or Codex session when those surfaces are available.
-- **The Gate does not implement live integrations.** It routes to CODE_AGENT, COWORK, or PROJECT surfaces. It does not execute API calls, trigger webhooks, or connect to external systems. That is the runtime layer.
+- **The Gate does not implement live integrations.** It designs an execution architecture and names an appropriate builder, which may use Project, Cowork, code-agent, low-code, or service patterns. It does not execute API calls, trigger webhooks, or connect to external systems. That is the runtime layer.
 - **The Gate does not replace legal, compliance, or security review.** HUMAN_ONLY verdicts on regulated workflows (GATE-2, GATE-3) are structural governance decisions. They require human authority regardless of what the Gate produces.
 - **Verdicts expire.** Every artifact includes an AUTONOMY EXPIRES WHEN section. A verdict issued today is not valid after a workflow change, model upgrade, policy change, or incident. Recertification is required.
 

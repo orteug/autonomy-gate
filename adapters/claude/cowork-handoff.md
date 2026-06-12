@@ -1,6 +1,6 @@
 # Cowork Handoff — Autonomy Gate Adapter
 
-Use this after the Gate has issued an `AUTONOMOUS / COWORK` or `SUPERVISED / COWORK` verdict. The artifact's BUILD HANDOFF PACK already contains the exact configuration; this adapter explains how to apply and verify it without translating fields manually.
+Use this when the operator-selected execution architecture uses a Cowork implementation pattern. The artifact's BUILD HANDOFF PACK already contains the exact configuration and autonomy controls; this adapter explains how to apply and verify it without translating fields manually.
 
 ---
 

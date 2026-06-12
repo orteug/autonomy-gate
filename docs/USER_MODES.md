@@ -1,262 +1,84 @@
-# User Modes — Starter Prompts and Paths
+# User Modes
 
-Ten modes. Each has one exact starter prompt. Copy, fill in the brackets, and submit.
+Use five primary commands for normal work. Describe facts in plain language; do not choose a template or translate packet fields.
 
----
+## 1. ASSESS
 
-## Mode 1 — Full Assessment (ASSESS)
+Use for a new workflow.
 
-Use when you have a workflow to evaluate.
-
-**Starter prompt:**
-```
-[Describe the workflow in plain language. Include: what initiates it, what it does step by step, 
-what systems or data it touches, how often it runs, what happens if it produces a wrong output, 
-and whether the output can be corrected or undone.]
+```text
+ASSESS
+Every Monday an operations analyst exports CRM and analytics data, checks that both exports cover the same reporting period, and produces an internal KPI narrative. A human reviews and posts it. If the narrative is wrong, it can be corrected before posting. The workflow has no system write access.
 ```
 
-**What you get:**
-- Workflow Intake Snapshot
-- Autonomy Decision Packet with verdict, surface, and confidence level
-- Full execution artifact with Build Handoff Pack
-- OPERATOR DISPOSITION section for you to complete
+The Gate returns the intake snapshot, autonomy decision, architecture options, completed artifact, handoff status, and exact next action.
 
-**Evidence that produces HIGH confidence:**
-Include failure consequence and reversibility in your description. Example additions:
-- "If the output is wrong, we post a correction the next day — nothing is permanent."
-- "The worst case is a delayed payment notice — reversible within 24 hours."
+## 2. RESOLVE EVIDENCE
 
-**Evidence-poor descriptions get LOW confidence and conservative routing. That is correct behavior — not a problem with the Gate.**
+Use when the pack names missing organizational facts.
 
----
-
-## Mode 2 — Quick Triage (TRIAGE)
-
-Use when you want to know if a workflow is worth a full governance assessment.
-
-**Starter prompt:**
-```
-Quick triage: [one or two sentences describing the workflow]. Is this worth a full assessment?
+```text
+RESOLVE EVIDENCE for Weekly KPI Narrative, packet v1
+The output owner is the operations lead. The approved retention policy is 12 months. The error-rate threshold is 2 percent per monthly review.
 ```
 
-**What you get:**
-- Preliminary verdict (autonomy level + surface)
-- One-line rationale
-- What a full assessment would add
+The Gate records the facts as `STATED`, creates a new packet version, reruns affected rules, and invalidates any stale selection or disposition when material content changes.
 
-**Does not produce:** Full artifact, Build Handoff Pack, or operator disposition section.
+## 3. SELECT ARCHITECTURE
 
-To proceed from triage to full assessment: submit the workflow as a full ASSESS prompt.
+Use after the Gate generates architecture options. This is the operator-facing selection action within the `COMPARE_ARCHITECTURE` lifecycle mode.
 
----
-
-## Mode 3 — Resolve Missing Evidence (RESOLVE_EVIDENCE)
-
-Use when a prior assessment returned `BLOCKED_FOR_EVIDENCE` or LOW confidence because of a specific missing value.
-
-**Starter prompt:**
-```
-Evidence update for [workflow name]:
-- [Field name]: [value]
-- [Field name]: [value]
+```text
+SELECT ARCHITECTURE for Weekly KPI Narrative, packet v1
+Select OPT-1. Selected by Operations owner on 2026-06-12. We accept the stated operating and maintenance burden.
 ```
 
-Example:
-```
-Evidence update for Weekly KPI Report:
-- Error rate: under 2% per weekly run
-- Recertification interval: 12 months
-- Owner: ops team lead (Jamie Chen)
-```
+The option ID must already exist. The Gate does not select on the operator's behalf. A material tool substitution later triggers review and may invalidate this selection.
 
-**What you get:**
-- Updated snapshot with new provenance (`STATED`)
-- Revised packet (new version)
-- Updated Build Handoff Pack (`BLOCKED_FOR_EVIDENCE` → `BUILD_READY` only after affected-rule reassessment and architecture selection)
+## 4. APPROVE
 
-**Does not:** Restart the full assessment. Change the verdict unless new evidence directly affects scoring.
+Use only after the selected architecture and Build Handoff Pack are `BUILD_READY`.
 
----
-
-## Mode 4 — Compare Architecture Options (COMPARE_ARCHITECTURE)
-
-Use when you want to understand why a specific surface was assigned, or evaluate an alternative.
-
-**Precondition:** A packet must already exist for this workflow.
-
-**Starter prompt:**
-```
-Architecture comparison for [workflow name]:
-Compare [Surface A] vs [Surface B] for this workflow. What would each require?
+```text
+APPROVE_FOR_BUILD for Weekly KPI Narrative, packet v1
+Approved by Operations owner on 2026-06-12. The terminal action, controls, selected architecture, complete files, and acceptance tests match the intended workflow.
 ```
 
-Example:
-```
-Architecture comparison for Vendor Onboarding:
-Compare Cowork vs Claude Code for this workflow. What would each require?
-```
+To hold, revise, or reject, begin with `HOLD_FOR_EVIDENCE`, `REVISE`, or `REJECT` and state the packet version, identity or role, date, and rationale. The Gate never records approval without those facts.
 
-**What you get:**
-- Feasibility of each surface
-- Required controls for each
-- Any disqualifying constraints
-- Gate's primary recommendation with RULE-06 citation
+## 5. REVIEW BUILD
 
----
+Use when implementation differs from the approved pack or before activation.
 
-## Mode 5 — Record Operator Disposition (APPROVE)
-
-Use when you are ready to authorize, hold, revise, or reject a Build Handoff Pack.
-
-**Starter prompt for APPROVE_FOR_BUILD:**
-```
-APPROVE_FOR_BUILD — [your name and role] — [date] — [packet version]
-Rationale: [one or more sentences explaining why authorization is appropriate given the verdict, controls, and architecture]
+```text
+REVIEW BUILD for Weekly KPI Narrative, packet v1
+The builder added direct Slack posting. Compare this change with the authorized terminal action and controls.
 ```
 
-**Starter prompt for HOLD_FOR_EVIDENCE:**
-```
-HOLD_FOR_EVIDENCE — [your name and role] — [date] — [packet version]
-Missing: [what evidence is needed before you can authorize]
-```
+The Gate returns `IN_SCOPE` or `OUT_OF_SCOPE`, identifies the boundary crossed, and states whether a new packet version and disposition are required.
 
-**Starter prompt for REVISE:**
-```
-REVISE — [your name and role] — [date] — [packet version]
-Required change: [specific field or section that must change, and why]
-```
+## Advanced Modes
 
-**Starter prompt for REJECT:**
-```
-REJECT — [your name and role] — [date] — [packet version]
-Rationale: [why this workflow should not be built at this time]
-```
+These remain available without expanding the first-use path:
 
-**What you get:**
-- Completed OPERATOR DISPOSITION section with all required fields
-- State update and next-step instruction
+| Mode | Use |
+|---|---|
+| `TRIAGE` | Preliminary assessment without a full handoff pack |
+| `REVISE` | Correct a specific packet field or assessment conclusion |
+| `RECERTIFY` | Reassess after an expiration trigger |
+| `EXPLAIN` | Explain a rule, gate, verdict, or status without changing state |
+| `CONFIGURE` | Supply attributable organization or technology-stack facts |
 
-**The Gate does not select APPROVE_FOR_BUILD on your behalf. You must provide all four required fields.**
+## Every State-Changing Response
 
----
+The artifact always states:
 
-## Mode 6 — Request Revision (REVISE)
-
-Use when a specific field or section in the assessment is wrong and needs to be corrected before disposition.
-
-**Starter prompt:**
-```
-Revision request for [workflow name]:
-[Field or section name] is wrong. The correct value is: [correct value].
+```text
+Current state
+What the Gate completed
+What is blocked
+Who acts next
+Exact next action
 ```
 
-Example:
-```
-Revision request for Vendor Onboarding:
-Terminal action is wrong. The workflow ends at approval of the vendor record, not creation — 
-a human approves before the record is finalized.
-```
-
-**What you get:**
-- Corrected field with provenance `STATED`
-- Re-run of affected rules
-- Updated packet (new version)
-- Updated artifact if verdict or surface changed
-
----
-
-## Mode 7 — Review a Built Workflow (REVIEW_BUILD)
-
-Use when a builder reports a change during implementation and you need to know if it requires a new Gate assessment.
-
-**Starter prompt:**
-```
-Build review for [workflow name] (packet [version]):
-The builder changed [describe what changed]. Does this require a new assessment?
-```
-
-Example:
-```
-Build review for Weekly KPI Report (packet v1):
-The builder added a step that auto-posts to Slack directly instead of returning text for the operator to post. Does this require a new assessment?
-```
-
-**What you get:**
-- IN_SCOPE or OUT_OF_SCOPE determination
-- If OUT_OF_SCOPE: which boundary was crossed and what rule governs it
-- If IN_SCOPE: confirmation and record of the review
-
----
-
-## Mode 8 — Recertify an Expired Workflow (RECERTIFY)
-
-Use when the AUTONOMY EXPIRES WHEN condition in a prior artifact has triggered.
-
-**Starter prompt:**
-```
-Recertification for [workflow name]:
-Expiration condition triggered: [state which condition from the artifact].
-Current state of the workflow: [any changes since the last assessment].
-```
-
-**What you get:**
-- New full assessment (new packet version, independent of prior)
-- Delta summary: what changed from the prior assessment
-- New execution artifact
-- New OPERATOR DISPOSITION section (prior disposition does not carry forward)
-
----
-
-## Mode 9 — Explain a Rule or Verdict (EXPLAIN)
-
-Use when you want to understand a rule, gate condition, or why a specific verdict was issued.
-
-**Starter prompt:**
-```
-Explain [rule, gate, or verdict element].
-```
-
-Examples:
-- "Explain GATE-2."
-- "Why did this workflow get SUPERVISED instead of AUTONOMOUS?"
-- "What is the difference between BLOCKED_FOR_EVIDENCE and NOT_APPLICABLE in the Build Handoff Pack?"
-
-**What you get:** A direct explanation with rule citations. The verdict is not changed.
-
----
-
-## Mode 10 — Configure the Workspace (CONFIGURE)
-
-Use at the start of a session to load your organization profile, or to update specific profile fields.
-
-**Starter prompt (full profile):**
-```
-CONFIGURE: [paste your completed organization-profile.md content]
-```
-
-**Starter prompt (partial update):**
-```
-CONFIGURE update:
-- Financial threshold: $25,000
-- Default recertification interval: 6 months
-- Off-limits domains: No AI involvement in performance reviews
-```
-
-**What you get:** Confirmation of which fields were received and how they will affect subsequent assessments.
-
----
-
-## Quick Reference
-
-| I want to... | Use mode |
-|-------------|---------|
-| Evaluate a new workflow | ASSESS |
-| Get a quick read before committing to full governance | TRIAGE |
-| Supply a missing value (error rate, owner, threshold) | RESOLVE_EVIDENCE |
-| Understand why a surface was chosen | COMPARE_ARCHITECTURE |
-| Authorize (or hold/reject) a Build Handoff Pack | APPROVE |
-| Correct a wrong field in the assessment | REVISE |
-| Check if a builder's change needs a new assessment | REVIEW_BUILD |
-| Reassess a workflow after an expiration trigger | RECERTIFY |
-| Understand a rule or why a verdict was issued | EXPLAIN |
-| Load organizational context for the session | CONFIGURE |
+The durable workflow record, not conversation memory, remains the source of truth.

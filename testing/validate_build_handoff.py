@@ -6,7 +6,28 @@ from pathlib import Path
 
 def validate(data: dict) -> list[str]:
     errors: list[str] = []
-    required = ["workflow_id", "packet_version", "status", "assumptions", "prohibited_actions", "acceptance_tests", "expiration_triggers", "stop_conditions"]
+    required = [
+        "workflow_id",
+        "packet_version",
+        "status",
+        "terminal_action_boundary",
+        "architecture_decision_record",
+        "permissions_credentials_contract",
+        "deterministic_controls",
+        "human_checkpoints",
+        "prohibited_actions",
+        "logging_audit_requirements",
+        "failure_rollback_stop_behavior",
+        "acceptance_tests",
+        "deployment_sequence",
+        "assumptions",
+        "unresolved_dependencies",
+        "expiration_triggers",
+        "version_invalidation_triggers",
+        "tool_alternatives",
+        "builder_acknowledgement",
+        "stop_conditions",
+    ]
     errors.extend(f"missing field: {name}" for name in required if name not in data)
     status = data.get("status")
     if status not in {"BUILD_READY", "BLOCKED_FOR_EVIDENCE", "NOT_APPLICABLE"}:
@@ -25,6 +46,15 @@ def validate(data: dict) -> list[str]:
             errors.append("BUILD_READY cannot contain unresolved_dependencies")
     if status == "BLOCKED_FOR_EVIDENCE" and not data.get("unresolved_dependencies"):
         errors.append("BLOCKED_FOR_EVIDENCE requires unresolved_dependencies")
+    if status == "NOT_APPLICABLE":
+        if not data.get("human_operating_procedure"):
+            errors.append("NOT_APPLICABLE requires human_operating_procedure")
+        if not data.get("safe_decomposition_opportunities"):
+            errors.append("NOT_APPLICABLE requires safe_decomposition_opportunities")
+    architecture = data.get("architecture_decision_record") or {}
+    for name in ("selected_option_id", "selected_by", "selection_date", "rejected_or_omitted_options"):
+        if name not in architecture:
+            errors.append(f"architecture_decision_record missing {name}")
     for index, case in enumerate(data.get("acceptance_tests") or []):
         for name in ("setup", "input", "expected", "pass_criterion"):
             if not case.get(name):

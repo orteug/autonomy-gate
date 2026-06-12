@@ -16,3 +16,12 @@ Static validation never substitutes for live model acceptance. Recording, voice,
 ## Current Evidence
 
 Static release evidence is produced by `python3 testing/run_release_suite.py`. Live evidence is produced by `python3 testing/run_cross_model_acceptance.py`; an unavailable CLI or network produces `NOT_RUN`, never `PASS`.
+
+As of June 12, 2026:
+
+- The full static public-clone release suite passes.
+- Claude CLI authentication is healthy on a minimal prompt, but exact 14-file F02 generation exceeded the five-minute acceptance timeout. Status: `NOT_ACCEPTED_TIMEOUT`.
+- Codex CLI is reachable, but the account reported a usage limit during the current exact-package run. Status: `NOT_RUN_USAGE_LIMIT`.
+- An earlier Codex F02 attempt produced the correct `HUMAN_ONLY` / GATE-2 outcome but omitted the packet's required `Terminal action` field. It is diagnostic evidence, not an accepted receipt.
+
+Release criterion 5 remains open until fresh exact-package Claude and Codex outputs pass `testing/validate_gate_output.py`.

@@ -4,12 +4,24 @@
   "title": "Build Handoff Pack",
   "type": "object",
   "additionalProperties": false,
-  "required": ["workflow_id", "packet_version", "status", "assumptions", "prohibited_actions", "acceptance_tests", "expiration_triggers", "stop_conditions"],
+  "required": ["workflow_id", "packet_version", "status", "terminal_action_boundary", "architecture_decision_record", "permissions_credentials_contract", "deterministic_controls", "human_checkpoints", "prohibited_actions", "logging_audit_requirements", "failure_rollback_stop_behavior", "acceptance_tests", "deployment_sequence", "assumptions", "unresolved_dependencies", "expiration_triggers", "version_invalidation_triggers", "tool_alternatives", "builder_acknowledgement", "stop_conditions"],
   "properties": {
     "workflow_id": {"type": "string", "pattern": "^WF-\\d{8}-\\d{3}$"},
     "packet_version": {"type": "string", "pattern": "^v\\d+$"},
     "status": {"enum": ["BUILD_READY", "BLOCKED_FOR_EVIDENCE", "NOT_APPLICABLE"]},
     "architecture_option_id": {"type": "string", "minLength": 2},
+    "terminal_action_boundary": {"type": "string", "minLength": 5},
+    "architecture_decision_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_option_id", "selected_by", "selection_date", "rejected_or_omitted_options"],
+      "properties": {
+        "selected_option_id": {"type": "string", "minLength": 2},
+        "selected_by": {"type": "string", "minLength": 2},
+        "selection_date": {"type": "string", "minLength": 8},
+        "rejected_or_omitted_options": {"type": "array", "items": {"type": "string", "minLength": 3}}
+      }
+    },
     "manifest": {
       "type": "array",
       "items": {
@@ -26,7 +38,12 @@
     },
     "assumptions": {"type": "array", "items": {"type": "string"}},
     "unresolved_dependencies": {"type": "array", "items": {"type": "string", "minLength": 3}},
+    "permissions_credentials_contract": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+    "deterministic_controls": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+    "human_checkpoints": {"type": "array", "items": {"type": "string", "minLength": 3}},
     "prohibited_actions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+    "logging_audit_requirements": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+    "failure_rollback_stop_behavior": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
     "acceptance_tests": {
       "type": "array",
       "minItems": 1,
@@ -41,7 +58,13 @@
         }
       }
     },
+    "deployment_sequence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 3}},
     "expiration_triggers": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "version_invalidation_triggers": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+    "tool_alternatives": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+    "builder_acknowledgement": {"type": "string", "minLength": 5},
+    "human_operating_procedure": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+    "safe_decomposition_opportunities": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
     "stop_conditions": {"type": "array", "minItems": 1, "items": {"type": "string"}}
   },
   "allOf": [
@@ -55,7 +78,7 @@
     },
     {
       "if": {"properties": {"status": {"const": "NOT_APPLICABLE"}}, "required": ["status"]},
-      "then": {"properties": {"manifest": {"maxItems": 0}}}
+      "then": {"required": ["human_operating_procedure", "safe_decomposition_opportunities"], "properties": {"manifest": {"maxItems": 0}}}
     }
   ]
 }

@@ -1,5 +1,6 @@
 # Template: Stabilization Plan
-**Verdict:** SOP_FIRST / NO_AI
+**Autonomy:** SOP_FIRST  
+**Architecture status:** Not selected until stabilization evidence is complete
 **Section 20 additions applied:** EXPECTED OUTCOMES (Addition 2) · AUTONOMY EXPIRES WHEN (Addition 5)
 
 ---
@@ -12,7 +13,7 @@ A Stabilization Plan is not a rejection. It is the correct first action for a wo
 
 ```
 STABILIZATION PLAN
-[Workflow Name] · SOP_FIRST / NO_AI · [Confidence]
+[Workflow Name] · SOP_FIRST · Architecture not yet authorized · [Confidence]
 
 [One paragraph: why automation is premature for this workflow, what instability
 was identified, and what must be resolved before re-assessment.
@@ -102,6 +103,26 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 
 BUILD HANDOFF PACK
 Handoff status: BLOCKED_FOR_EVIDENCE
+Terminal-action boundary: [exact authorized terminal action and explicit out-of-scope boundary]
+Architecture decision record: [selected option, selection metadata, and rejected or omitted alternatives; use NOT_APPLICABLE where no AI architecture is authorized]
+Permissions and credentials: [least-privilege access, credential owner, storage, rotation, and unavailable values]
+Deterministic controls: [controls implemented in code or configuration rather than model prompts]
+Human checkpoints: [blocking checkpoint contract, or None with rationale]
+Prohibited actions: [implementation constraints that may not execute]
+Logging and audit: [events, fields, location, retention, and reviewer]
+Failure, rollback, and stop behavior: [failure paths, halt conditions, rollback or compensation, and irreversible limits]
+Deployment sequence: [ordered non-production setup, validation, approval, and activation steps]
+Assumptions: [grounded assumptions, or None]
+Unresolved dependencies: [irreducible missing inputs only, or None]
+Expiration and reassessment triggers: [observable events that end authorization]
+Version invalidation triggers: [material changes that create a new packet version and invalidate prior selection, disposition, and acknowledgement]
+Tool alternatives: [selected option plus viable fallback or safe capability-neutral alternative]
+Builder acknowledgement: [required acknowledgement state and reference to the complete acknowledgement contract]
+Current state: [canonical lifecycle state]
+What the Gate completed: [assessment, architecture, and handoff work completed]
+What is blocked: [specific blocker or None]
+Who acts next: [operator, evidence owner, builder, or human procedure owner]
+Exact next action: [one executable action]
 Generate a ready-to-use stabilization worksheet with process-step, exception, failure-path, baseline, and evidence-log fields derived from this workflow. Include the exact evidence required for re-submission and one completion check. This is an operations pack, not an AI build handoff pack. Do not leave bracketed placeholders or invent thresholds.
 ```
 

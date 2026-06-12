@@ -10,17 +10,23 @@ The Build Handoff Pack is the implementation-ready output of the Gate's Phase 2.
 |--------|---------|-------------|
 | `BUILD_READY` | All required content is fully generated and an architecture is selected; operator disposition `APPROVE_FOR_BUILD` can authorize implementation | Every referenced file, instruction block, test, control, and source-evidence citation is fully present |
 | `BLOCKED_FOR_EVIDENCE` | Pack is structurally sound but specific operator-supplied values are required | Missing items are irreducible; all generatable content is already complete |
-| `NOT_APPLICABLE` | No pack is generated | Pairs with HUMAN_ONLY / NO_AI verdict; implementation artifact is a Governance Memo only |
+| `NOT_APPLICABLE` | No AI implementation pack is generated | Pairs with `HUMAN_ONLY`; the Governance Memo defines the human procedure and any safely decomposed preparatory work |
 
 **BUILD_READY requires zero outstanding items.** If any file is described but not generated, any test is named but not written, architecture is unselected, or any value remains unresolved, the status is `BLOCKED_FOR_EVIDENCE`.
 
 **BLOCKED_FOR_EVIDENCE is not a failed assessment.** The operator supplies missing evidence and the Gate reruns every affected rule. Promotion to `BUILD_READY` is never a text substitution.
+
+Decision confidence and handoff status are separate. Confidence describes support for the autonomy verdict. Handoff status describes implementation completeness. A well-supported verdict can be `HIGH` confidence while its pack remains `BLOCKED_FOR_EVIDENCE`.
 
 ---
 
 ## What BUILD_READY Requires
 
 A BUILD_READY Build Handoff Pack must contain:
+
+### 0. Terminal-Action Boundary and Architecture Decision Record
+
+State the exact authorized terminal action and the actions outside scope. Record the selected generated architecture option, selector identity or role, selection date, and rejected or omitted alternatives. The record must match the Autonomy Decision Packet and `ARCHITECTURE OPTIONS` block.
 
 ### 1. Complete Artifact Manifest
 
@@ -73,6 +79,26 @@ What happens when the workflow must stop. Includes:
 - Steps the builder must implement to halt cleanly
 - What cannot be rolled back (named explicitly)
 
+### 8. Permissions, Credentials, Controls, and Checkpoints
+
+State least-privilege permissions, credential ownership and storage, deterministic controls, and every blocking human checkpoint. If no checkpoint applies, say so with a rationale. Model instructions do not count as deterministic enforcement.
+
+### 9. Logging and Audit
+
+State events and fields logged, storage location, retention, access, and review responsibility. Logs must make terminal-action execution and approval behavior independently reviewable.
+
+### 10. Deployment Sequence
+
+Give the ordered path from non-production setup through acceptance testing, operator approval, builder acknowledgement, and activation. No production activation occurs inside the Gate.
+
+### 11. Version Invalidation and Tool Alternatives
+
+Name material changes that create a new packet version and invalidate prior architecture selection, operator disposition, and builder acknowledgement. Include the selected tool path and at least one viable fallback or a capability-neutral alternative that preserves controls.
+
+### 12. Builder Acknowledgement
+
+Require the builder to confirm terminal-action parity, control implementation, files, dependencies, acceptance evidence, and scope-change behavior before implementation begins.
+
 ---
 
 ## What Is Forbidden
@@ -102,6 +128,22 @@ A BLOCKED_FOR_EVIDENCE pack still generates all content the Gate can produce wit
 The `BLOCKED_FOR_EVIDENCE` list contains only irreducible missing inputs. It does not contain items the Gate chose not to generate. If the Gate can generate it, it must.
 
 Example: A `BLOCKED_FOR_EVIDENCE` pack for a SUPERVISED workflow includes a complete `CLAUDE.md` with the approval checkpoint structure, while naming the missing error-rate threshold and recertification interval as organizational evidence.
+
+## What NOT_APPLICABLE Generates
+
+`NOT_APPLICABLE` is a refusal of AI execution for the prohibited terminal action, not an empty response. It includes:
+
+- A complete human operating procedure with owner, verification evidence, decision criteria, escalation, recordkeeping, and audit check
+- The exact prohibited terminal action and gate basis
+- Safe decomposition opportunities: bounded preparation work AI may perform without authorizing or executing the terminal action, or a grounded explanation that none is safe
+- Acceptance checks for the human procedure
+- Version invalidation and reassessment triggers
+
+No AI deployment manifest is generated for the prohibited action.
+
+## Material-Change Invalidation
+
+A change to terminal action, architecture, controls, permissions, credentials, data flow, tool capabilities, approval behavior, or prohibited actions creates a new packet version. It invalidates the prior architecture selection, operator disposition, and builder acknowledgement. The affected rules must rerun before implementation resumes.
 
 ---
 

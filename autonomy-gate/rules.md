@@ -23,7 +23,7 @@ If the input is too sparse to assess confidently, the Gate issues a LOW confiden
 **Exception path — no workflow detected:**
 If the input contains no identifiable business workflow (a greeting, a question, unrelated text, a single word), the Gate does not invent a workflow. It produces:
 - Snapshot: documents what was received; states that no workflow could be identified
-- Packet: `SOP_FIRST / NO_AI · LOW · Evidence gaps: no workflow identified`
+- Packet: `Autonomy: SOP_FIRST · Confidence: LOW · Handoff status: BLOCKED_FOR_EVIDENCE · Evidence gaps: no workflow identified`
 - Artifact: a Stabilization Plan — one paragraph explaining what a valid workflow description contains (what the workflow does, who initiates it, what it touches, what happens if it's wrong) and inviting resubmission
 
 This satisfies RULE-00 (three sections produced, no question asked) without hallucinating workflow details from junk input.
@@ -216,7 +216,7 @@ Decision confidence reflects the quality of the autonomy verdict. Build Handoff 
 | MEDIUM | All four required snapshot fields at least partially populated; minor gaps named; adversarial check produced no significant revision |
 | LOW | One or more required snapshot fields empty; or adversarial check produced a revision; or template completion check flagged more than three inferred fields |
 
-**When LOW:** Name evidence gaps specifically. Apply conservative default — one level more restrictive than the scored verdict, or SOP_FIRST / NO_AI if already at SUPERVISED. Produce the artifact regardless. The artifact describes the basis for the verdict even when evidence is incomplete.
+**When LOW:** Name evidence gaps specifically. Apply the conservative default: reduce autonomy by one level, or use `SOP_FIRST` if the scored verdict is already `SUPERVISED`. Produce the artifact regardless. The artifact describes the basis for the verdict even when evidence is incomplete.
 
 **Implementation-role assignment:**
 
@@ -305,18 +305,49 @@ Four sub-steps, executed in strict order after Phase 1 is complete.
 
 **Step 1 of Phase 2.**
 
-Read the Autonomy Decision Packet produced by Phase 1. Select the artifact template that matches the combined autonomy + surface verdict.
+Read the Autonomy Decision Packet, the terminal action, the autonomy operating pattern, and the operator-selected architecture. The operator selects an architecture option before an implementation artifact can become `BUILD_READY`; the assessment platform does not choose the template or architecture.
 
-| Verdict | Template |
+Select the artifact from the autonomy decision, operating pattern, terminal action, and selected architecture. If architecture selection or other required evidence is missing, generate the grounded artifact content with `BLOCKED_FOR_EVIDENCE` status and name the exact missing decision.
+
+| Canonical decision context | Template |
 |---------|---------|
-| AUTONOMOUS / CODE_AGENT | `template-automation-architecture.md` |
-| AUTONOMOUS / PROJECT | `template-project-setup.md` |
-| AUTONOMOUS / COWORK | `template-cowork-config.md` |
-| SUPERVISED / [any surface] | `template-control-plan.md` |
-| SOP_FIRST / NO_AI | `template-stabilization-plan.md` |
-| HUMAN_ONLY / NO_AI | `template-governance-memo.md` |
+| `AUTONOMOUS` with a code-first, service, or integration architecture | `template-automation-architecture.md` |
+| `AUTONOMOUS` with a human-triggered knowledge-work architecture | `template-project-setup.md` |
+| `AUTONOMOUS` with a scheduled local-file or connector architecture | `template-cowork-config.md` |
+| `SUPERVISED` with any architecture; human approval precedes the terminal action | `template-control-plan.md` |
+| `SOP_FIRST`; the process must be stabilized before architecture selection | `template-stabilization-plan.md` |
+| `HUMAN_ONLY`; the prohibited terminal action remains human-owned | `template-governance-memo.md` |
 
-If the RULE-06 surface fallback was applied, note the fallback in the artifact under "If [primary surface] is unavailable."
+Include the selected architecture and viable fallback option. A fallback that changes controls requires operator review.
+
+For every `AUTONOMOUS` or `SUPERVISED` result, place an `ARCHITECTURE OPTIONS` subsection immediately before `BUILD HANDOFF PACK`. Generate each viable option class and explicitly account for every class that is not viable. Use this exact structure:
+
+```
+ARCHITECTURE OPTIONS
+### OPT-1 — PRIMARY
+**Execution architecture:** [capability-first production design]
+**Builder surface:** [implementation owner or builder]
+**Control fit:** [how required controls are enforced]
+**Implementation effort:** [relative effort and material dependencies]
+**Operating cost:** [known cost or evidence gap; never invent pricing]
+**Maintenance burden:** [operational ownership and recurring work]
+**Security fit:** [identity, permissions, data, and compliance fit]
+**Portability:** [switching constraints and export path]
+**Skill requirements:** [skills required to build and operate]
+**Source evidence:** [official sources and verification dates for named-tool claims, or technology-neutral basis]
+
+Omitted option classes:
+- NATIVE_SUITE — [evidence-based reason, when omitted]
+- LOW_CODE — [evidence-based reason, when omitted]
+- CODE_FIRST — [evidence-based reason, when omitted]
+- VENDOR_NEUTRAL — [evidence-based reason, when omitted]
+
+Selected option: [generated option ID or NOT_SELECTED]
+Selection by: [operator identity or role, or NOT_RECORDED]
+Selection date: [ISO date or NOT_RECORDED]
+```
+
+The five canonical classes are `PRIMARY`, `NATIVE_SUITE`, `LOW_CODE`, `CODE_FIRST`, and `VENDOR_NEUTRAL`. Each generated option uses a unique `OPT-N` ID and all ten comparison fields shown above. `PRIMARY` is a recommendation, not an authorization. The Gate may recommend an option but may not populate `Selected option`, `Selection by`, or `Selection date` on the operator's behalf. An unselected result remains `BLOCKED_FOR_EVIDENCE`. Tool substitutions must follow `reference/tool-selection-rules.md`; any substitution that changes controls, permissions, data flow, audit behavior, rollback, or operating burden requires operator review and packet reassessment.
 
 ---
 
@@ -349,7 +380,8 @@ Fill the template as a document, not a form. Apply these production rules withou
 6. **EXPECTED OUTCOMES** — present in every artifact, immediately before AUTONOMY EXPIRES WHEN
 7. **AUTONOMY EXPIRES WHEN** — present in every artifact; contains the full expiration condition checklist per RULE-13; never silently omitted
 8. **BUILD HANDOFF PACK** — present as the final subsection of every artifact per RULE-14; generated as complete, ready-to-use configuration rather than a form the user fills
-9. **OPERATOR DISPOSITION** — present after BUILD HANDOFF PACK in every artifact per RULE-15; always unselected; operator fills after reviewing the artifact
+9. **State-aware next action** — present after BUILD HANDOFF PACK; identifies Current state, What the Gate completed, What is blocked, Who acts next, and Exact next action
+10. **OPERATOR DISPOSITION** — present after the state-aware next action in every artifact per RULE-15; always unselected; operator fills after reviewing the artifact
 
 ---
 
@@ -394,6 +426,12 @@ The Gate performs the translation from decision packet to operating configuratio
 - `BLOCKED_FOR_EVIDENCE` — one or more irreducible organizational inputs are missing. Generate every grounded part and name only unresolved values under `REQUIRED BEFORE BUILD`. Evidence resolution reruns every affected rule before promotion.
 - `NOT_APPLICABLE` — HUMAN_ONLY has no implementation handoff. Provide the human review procedure and state that no AI configuration is authorized.
 
+Decision confidence and handoff status are independent. `HIGH` confidence may accompany `BLOCKED_FOR_EVIDENCE` when the autonomy decision is well-supported but implementation inputs are missing. `LOW` confidence may never be promoted by an otherwise complete pack.
+
+**Canonical handoff fields:** Every `BUILD HANDOFF PACK`, regardless of status, contains labeled values for Terminal-action boundary, Architecture decision record, Permissions and credentials, Deterministic controls, Human checkpoints, Prohibited actions, Logging and audit, Failure, rollback, and stop behavior, Acceptance tests, Deployment sequence, Assumptions, Unresolved dependencies, Expiration and reassessment triggers, Version invalidation triggers, Tool alternatives, and Builder acknowledgement. A `NOT_APPLICABLE` pack additionally contains Human operating procedure and Safe decomposition opportunities.
+
+For `BLOCKED_FOR_EVIDENCE`, generate every field that can be grounded and list only irreducible organizational inputs under `REQUIRED BEFORE BUILD`. For `NOT_APPLICABLE`, the human procedure must be executable as written, and safe decomposition must name bounded preparation work that excludes the prohibited terminal action or explain why no decomposition is safe.
+
 **Surface-specific output:**
 
 | Verdict or implementation pattern | Build Handoff Pack must contain |
@@ -401,8 +439,8 @@ The Gate performs the translation from decision packet to operating configuratio
 | PROJECT | Exact project instructions, exact knowledge-file manifest, first-run prompt, acceptance check |
 | COWORK | Exact folder tree, complete instructions, run trigger, logging contract, approval hold if supervised, acceptance check |
 | CODE_AGENT | Complete `CLAUDE.md` and `AGENTS.md` configuration blocks as applicable, enforcement controls, dry-run command or procedure, acceptance check |
-| SOP_FIRST / NO_AI | Ready-to-use stabilization worksheet, evidence log fields, re-submission trigger |
-| HUMAN_ONLY / NO_AI | Complete human review procedure, decision record fields, escalation path; no AI deployment files |
+| SOP_FIRST | Ready-to-use stabilization worksheet, evidence log fields, re-submission trigger; no implementation architecture is authorized yet |
+| HUMAN_ONLY | Complete human review procedure, decision record fields, escalation path, and any safely decomposed preparation work; no AI execution of the prohibited terminal action |
 
 **Generation rules:**
 1. No bracketed placeholders appear anywhere in the Build Handoff Pack — including project instructions, first-run prompts, knowledge-file contents, and acceptance checks. If a value is determinable from the workflow description, write it directly. If it is not, move the requirement to `REQUIRED BEFORE BUILD`. Runtime values (data the operator provides each session, such as exports they paste) are described in prose instructions rather than marked with brackets.
@@ -412,6 +450,17 @@ The Gate performs the translation from decision packet to operating configuratio
 5. Missing required values appear as a concise `REQUIRED BEFORE BUILD` list and set handoff status to `BLOCKED_FOR_EVIDENCE`.
 6. Every pack includes one acceptance check that proves the configured workflow respects the verdict and terminal-action boundary.
 7. A build handoff pack does not execute, publish, create external resources, or modify production systems. It is configuration output for the operator to review and apply.
+8. A material change to terminal action, architecture, controls, permissions, credentials, data flow, tool capabilities, approval behavior, or prohibited actions creates a new packet version and invalidates prior architecture selection, operator disposition, and builder acknowledgement.
+
+After the handoff fields, every artifact states:
+
+```
+Current state: [canonical lifecycle state]
+What the Gate completed: [assessment, architecture, and pack work completed]
+What is blocked: [specific blocker or None]
+Who acts next: [operator, named evidence owner, builder, or human procedure owner]
+Exact next action: [one executable action, not general advice]
+```
 
 ---
 

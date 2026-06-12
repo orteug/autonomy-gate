@@ -8,7 +8,7 @@ This guide is for someone who has never used an AI operator before.
 
 ## The One-Sentence Version
 
-The Autonomy Gate helps you decide whether a business workflow should be handled by AI, how much authority AI should get, what platform should run it, and what document you need before acting.
+The Autonomy Gate helps you decide whether a business workflow should be handled by AI, how much authority AI should get, which implementation architectures are viable, and what must be true before a builder begins.
 
 ---
 
@@ -44,7 +44,7 @@ When you paste a workflow description, the Gate produces three sections:
 
 2. `AUTONOMY DECISION PACKET`
    - Whether AI can handle it
-   - Which surface should run it
+   - The technology-neutral execution architecture and builder role
    - How confident the Gate is
    - Which rules and gates drove the decision
 
@@ -65,7 +65,7 @@ The Gate does not:
 - Guarantee your workflow description is accurate
 - Make unsafe workflows safe by adding vague "human review"
 
-The Gate decides. Execution happens on the right surface after the decision.
+The Gate decides and specifies. Execution happens only after architecture selection, operator disposition, and builder acknowledgement.
 
 ---
 
@@ -143,13 +143,13 @@ That is 14 runtime files. Do not upload `README.md`, `JUDGE_GUIDE.md`, `OPERATOR
 Use this first test:
 
 ```text
-We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable.
+We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary for a human to review and post to our ops Slack channel. The format is standardized and the sources are stable. If the narrative is wrong, it can be corrected before posting. The workflow has no system write access.
 ```
 
 Expected result:
 
 ```text
-AUTONOMOUS / PROJECT · HIGH
+AUTONOMOUS · HIGH with architecture options
 Artifact: Project Setup Brief
 ```
 
@@ -186,29 +186,32 @@ That is the final thing the workflow does. A workflow that "checks refund eligib
 
 ---
 
-## The Four Possible Surface Verdicts
+## Common Implementation Patterns
 
-| Surface | Plain meaning |
+| Pattern | Plain meaning |
 |---|---|
 | `PROJECT` | Human-initiated Claude Project or ChatGPT Project. Good for analysis and artifacts. |
 | `COWORK` | Scheduled or local file workflow surface, when available. |
 | `CODE_AGENT` | Claude Code or Codex. Good for scripts, integrations, APIs, tests, and enforcement. |
-| `NO_AI` | Do not run this workflow on an AI surface. |
+
+These are implementation patterns, not autonomy verdicts. The packet records the assessment surface, execution architecture, and builder surface separately.
 
 ---
 
 ## What To Do After A Verdict
 
-Use this table:
+Do not choose a template. Use the five primary commands in `USER_MODES.md`: `ASSESS`, `RESOLVE EVIDENCE`, `SELECT ARCHITECTURE`, `APPROVE`, and `REVIEW BUILD`.
+
+Use this table to interpret the artifact:
 
 | If the Gate says | Do this |
 |---|---|
-| `AUTONOMOUS / PROJECT` | Create a workflow-specific Project using the Project Setup Brief. |
-| `AUTONOMOUS / COWORK` | Use the Cowork Config and set up folders, schedule, and logs. |
-| `AUTONOMOUS / CODE_AGENT` | Give the Automation Architecture to a builder or code agent. |
-| `SUPERVISED / anything` | Implement the Control Plan and named approval checkpoint before execution. |
-| `SOP_FIRST / NO_AI` | Assign a process owner and complete the Stabilization Plan. |
-| `HUMAN_ONLY / NO_AI` | Use the Governance Memo as the human process document. |
+| `AUTONOMOUS` with Project pattern | Create a workflow-specific Project using the Project Setup Brief. |
+| `AUTONOMOUS` with a scheduled local-file or connector architecture | Use the Cowork Config and set up folders, schedule, and logs. |
+| `AUTONOMOUS` with a code-first architecture | Give the Automation Architecture to the selected builder. |
+| `SUPERVISED` | Implement the Control Plan and named approval checkpoint before the terminal action. |
+| `SOP_FIRST` | Assign a process owner and complete the Stabilization Plan. |
+| `HUMAN_ONLY` | Use the Governance Memo as the human process document; no AI execution handoff is authorized. |
 
 ---
 
@@ -225,7 +228,7 @@ We generate a weekly KPI report every Monday morning. A team member exports data
 Expected:
 
 ```text
-AUTONOMOUS / PROJECT
+AUTONOMOUS with a Project implementation pattern
 ```
 
 ### Test 2: Money Movement
@@ -237,7 +240,7 @@ When a refund request comes in, I want AI to check it against our policy and aut
 Expected:
 
 ```text
-SUPERVISED / CODE_AGENT
+SUPERVISED with a code-first implementation pattern
 GATE-1 should be cited.
 ```
 
@@ -250,7 +253,7 @@ A vendor emailed asking us to update their bank account details before the next 
 Expected:
 
 ```text
-HUMAN_ONLY / NO_AI
+HUMAN_ONLY with NOT_APPLICABLE handoff status
 GATE-2 should be cited.
 ```
 
@@ -262,8 +265,8 @@ If you are unsure what to do with the result, do not ask the Gate to override it
 
 Instead, read:
 
-- `VERDICT_PLAYBOOK.md`
-- `TROUBLESHOOTING.md`
+- `USER_MODES.md`
+- the validated receipts in `../examples/receipts/`
 - the artifact the Gate produced
 
 The Gate is designed to be conservative when evidence is missing.

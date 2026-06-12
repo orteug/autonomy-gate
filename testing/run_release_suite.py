@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -11,7 +12,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def run(name: str, command: list[str]) -> bool:
-    result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
+    env = os.environ.copy()
+    env["AUTONOMY_GATE_READ_ONLY"] = "1"
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    result = subprocess.run(command, cwd=ROOT, env=env, text=True, capture_output=True, check=False)
     print(f"{'PASS' if result.returncode == 0 else 'FAIL'} {name}")
     if result.stdout:
         print(result.stdout.rstrip())

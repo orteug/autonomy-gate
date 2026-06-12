@@ -85,7 +85,7 @@ If your upload UI does not preserve folders, upload flat and keep filenames reco
 
 ## Setup: Gate-Governed Workflow
 
-Use this after the Gate returns `AUTONOMOUS / PROJECT` or `SUPERVISED / PROJECT`.
+Use this when the operator-selected execution architecture uses a human-triggered ChatGPT Project pattern.
 
 1. Create a new Project for that workflow.
 2. Paste the artifact's custom instructions.

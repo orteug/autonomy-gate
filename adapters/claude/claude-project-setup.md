@@ -51,7 +51,7 @@ Paste any workflow description. The Gate produces three sections in order: Workf
 
 ## Scenario 2 — Deploying a Gate-Governed Workflow (PROJECT Surface)
 
-Use this after the Gate has issued an `AUTONOMOUS / PROJECT` or `SUPERVISED / PROJECT` verdict and produced a Project Setup Brief or Control Plan.
+Use this when the operator-selected execution architecture uses a human-triggered Claude Project pattern and the Gate has produced a Project Setup Brief or Control Plan.
 
 **Step 1 — Read the generated build handoff pack**
 
@@ -96,4 +96,4 @@ The artifact's AUTONOMY EXPIRES WHEN section lists the conditions that invalidat
 - Make external API calls (Salesforce, Stripe, Zendesk, Slack, etc.)
 - Initiate actions without human input
 
-If the workflow requires any of the "cannot do" capabilities, the Gate will route to COWORK or CODE_AGENT. Use the fallback note in the artifact if those surfaces are unavailable.
+If the workflow requires any of the "cannot do" capabilities, the selected architecture must use an implementation pattern that provides them, such as Cowork, a code agent, a low-code platform, or a service. Use the fallback note if the preferred tool is unavailable.

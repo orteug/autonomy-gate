@@ -213,6 +213,39 @@ A workflow specification that names a specific product before the architecture i
 
 Before selection, compare five option classes when viable: primary, native-suite, low-code, code-first, and vendor-neutral. Each option states execution architecture, builder surface, control fit, implementation effort, operating cost, maintenance burden, security/compliance fit, portability, skill requirements, and source evidence. An option class may be omitted only with an evidence-based reason. The operator records the selected option; no pack is `BUILD_READY` before that selection.
 
+### Canonical Architecture Options Block
+
+Every `AUTONOMOUS` and `SUPERVISED` artifact places this block immediately before `BUILD HANDOFF PACK`. Repeat the option section for every viable class. Account for every absent class under `Omitted option classes` with an evidence-based reason.
+
+```
+ARCHITECTURE OPTIONS
+### OPT-1 — PRIMARY
+**Execution architecture:** [capability-first production design]
+**Builder surface:** [implementation owner or builder]
+**Control fit:** [deterministic enforcement of required controls]
+**Implementation effort:** [relative effort and dependencies]
+**Operating cost:** [grounded cost information or named evidence gap]
+**Maintenance burden:** [ownership and recurring operational work]
+**Security fit:** [identity, permissions, data, and compliance fit]
+**Portability:** [switching constraints and export path]
+**Skill requirements:** [build and operating skills]
+**Source evidence:** [official source and verification date for named-tool claims, or technology-neutral basis]
+
+Omitted option classes:
+- NATIVE_SUITE — [evidence-based reason, when omitted]
+- LOW_CODE — [evidence-based reason, when omitted]
+- CODE_FIRST — [evidence-based reason, when omitted]
+- VENDOR_NEUTRAL — [evidence-based reason, when omitted]
+
+Selected option: [generated option ID or NOT_SELECTED]
+Selection by: [operator identity or role, or NOT_RECORDED]
+Selection date: [ISO date or NOT_RECORDED]
+```
+
+The canonical classes are `PRIMARY`, `NATIVE_SUITE`, `LOW_CODE`, `CODE_FIRST`, and `VENDOR_NEUTRAL`. Every generated option includes all ten labeled comparison fields. The Gate may recommend `PRIMARY`, but only the operator may record `Selected option`, `Selection by`, and `Selection date`. Until a generated option is selected, the handoff is `BLOCKED_FOR_EVIDENCE`.
+
+Tool substitution preserves the autonomy verdict and terminal-action boundary. A substitute is acceptable only when verified capabilities satisfy the same controls and organizational constraints. A change to permissions, data flow, approval enforcement, audit behavior, rollback, security posture, or operating burden requires operator review and reassessment under `tool-selection-rules.md`.
+
 ---
 
 ## Technology-Neutral Architecture Descriptions

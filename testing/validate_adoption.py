@@ -15,6 +15,7 @@ def main() -> int:
     rules = (ROOT / "autonomy-gate" / "rules.md").read_text(encoding="utf-8")
     start = (ROOT / "docs" / "START_HERE.md").read_text(encoding="utf-8")
     root_readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    modes = (ROOT / "docs" / "USER_MODES.md").read_text(encoding="utf-8")
 
     adapter_paths = [
         ROOT / "adapters" / "claude" / "claude-code-CLAUDE.md",
@@ -63,6 +64,21 @@ def main() -> int:
             "Follow identity.md, rules.md, and operating-contract.md." in root_readme
             and "Follow identity.md, rules.md, and operating-contract.md." in start,
             "Primary setup entry points use one canonical instruction.",
+        ),
+        check(
+            "ADOPT-08",
+            all(command in modes for command in ("ASSESS", "RESOLVE EVIDENCE", "SELECT ARCHITECTURE", "APPROVE", "REVIEW BUILD")),
+            "The first-use journey exposes five primary operator commands.",
+        ),
+        check(
+            "ADOPT-09",
+            "fill in the brackets" not in modes.lower() and "copy, fill" not in modes.lower(),
+            "Primary operator guidance requires no template translation.",
+        ),
+        check(
+            "ADOPT-10",
+            all(field in rules for field in ("Current state", "What the Gate completed", "What is blocked", "Who acts next", "Exact next action")),
+            "Every state-changing artifact has an explicit owner and next action.",
         ),
     ]
 

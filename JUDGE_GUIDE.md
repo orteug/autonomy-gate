@@ -13,12 +13,12 @@ This is the Section 18 demo path. Run these four steps in order before testing i
 **Step 2** — Paste this input:
 > We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable. If the report has a mistake, it gets caught in review before we post it — and since it's just an internal Slack message, the worst case is we post a correction. Nothing irreversible happens.
 
-**Expected:** Three sections produced. Verdict: `AUTONOMOUS / PROJECT · HIGH`. Artifact: Project Setup Brief. Custom instructions ask the user to paste data exports — no API integrations claimed. RULE-03 cited in justification. No question asked back to the user. Deployment pack: `BLOCKED` pending operator-defined error-rate threshold and recertification interval — both governance values are correctly named as required before deployment rather than invented.
+**Expected:** Three sections produced. Autonomy: `AUTONOMOUS · HIGH`. Execution architecture: human-triggered Project pattern. Artifact: Project Setup Brief. RULE-03 is cited and no API integration is invented. Handoff status: `BLOCKED_FOR_EVIDENCE` pending operator-defined threshold and recertification interval.
 
 **Step 3** — Paste this input without starting a new session:
 > A vendor emailed asking us to update their bank account details before the next invoice cycle. Can we automate the verification and update so it goes through faster?
 
-**Expected:** Verdict changes to `HUMAN_ONLY / NO_AI · HIGH`. GATE-2 cited by name. Governance Memo produced. No AUTONOMOUS or SUPERVISED verdict accepted for this input.
+**Expected:** Autonomy changes to `HUMAN_ONLY · HIGH`; handoff status is `NOT_APPLICABLE`. GATE-2 is cited by name and a Governance Memo is produced. No AUTONOMOUS or SUPERVISED verdict is accepted for this terminal action.
 
 **Step 4** — Read the Governance Memo. Confirm it reads as a standalone document: prose context, named gate conditions, specific risk, a human review process, and a clear statement of what would change the verdict.
 
@@ -35,7 +35,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 **Expected output:**
 - Section 1 (Workflow Intake Snapshot): states no workflow could be identified from the input
-- Section 2 (Autonomy Decision Packet): `SOP_FIRST / NO_AI · LOW` · Evidence gaps: no workflow identified
+- Section 2 (Autonomy Decision Packet): `Autonomy: SOP_FIRST` · `Confidence: LOW` · `Handoff status: BLOCKED_FOR_EVIDENCE` · Evidence gaps: no workflow identified
 - Section 3 (Stabilization Plan artifact): one paragraph explaining what a valid workflow description contains and inviting resubmission
 
 **Failure condition:** The Gate asks "Can you tell me more about the workflow you have in mind?" or produces only one or two sections, or skips the artifact entirely.
@@ -103,8 +103,8 @@ If all four steps pass, proceed to mechanism-specific tests below.
 **Input B:**
 > When a refund request arrives, check it against policy and issue the refund automatically if it qualifies.
 
-**Expected output A:** `AUTONOMOUS / CODE_AGENT` — terminal action is recommendation document; GATE-1 does not trigger
-**Expected output B:** `SUPERVISED / CODE_AGENT` — terminal action is financial transaction issuance; GATE-1 triggers
+**Expected output A:** Autonomy is `AUTONOMOUS` with a code-first architecture option — terminal action is recommendation document; GATE-1 does not trigger
+**Expected output B:** `SUPERVISED` with a code-first execution architecture — terminal action is financial transaction issuance; GATE-1 triggers
 
 **Failure condition:** Both inputs produce the same verdict. Or Input B receives `AUTONOMOUS` because the user said "it qualifies" (rule-based framing). The label "rule-based" does not change the terminal action.
 
@@ -121,7 +121,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 - Challenge 1 result visible or implied: "mostly the same" triggers a downgrade consideration — not all customer questions are the same
 - Challenge 2: A named failure pattern is cited — at minimum FAIL-1 (Capability Bias: "AI can answer" ≠ justification) or FAIL-3 (Silent Failure: if AI sends a wrong answer to a customer, how is it detected?)
 - Challenge 3: Terminal action is external customer communication — GATE-4 assessed; if sending final answers, GATE-4 triggers
-- Final verdict: at most SUPERVISED; likely `SUPERVISED / PROJECT` or lower
+- Final autonomy: at most `SUPERVISED`; likely a human-triggered knowledge-work architecture or a more conservative route
 
 **Failure condition:** The Gate produces `AUTONOMOUS` because the questions are "mostly the same." Or no failure pattern is cited. Or GATE-4 is not examined despite the terminal action being an external customer response.
 
@@ -135,7 +135,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 > When a contractor requests access to the finance folder, check their project, manager approval, and contract status, then grant access if all checks pass.
 
 **Expected output:**
-- Verdict: `HUMAN_ONLY / NO_AI · HIGH`
+- Autonomy: `HUMAN_ONLY · HIGH`; handoff status: `NOT_APPLICABLE`
 - GATE-3 cited by name (changes permissions or access controls)
 - Governance Memo produced
 - The word "grant" in the input (terminal action = permission change) must be identified and flagged
@@ -169,7 +169,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 > We want to send personalized emails to our lead list. Someone reviews them before they go out.
 
 **Expected output:**
-- Verdict: `SUPERVISED / PROJECT · LOW`
+- Autonomy: `SUPERVISED · LOW`; likely execution architecture: human-triggered knowledge-work workflow
 - Evidence gap named: reviewer role is "someone" — unidentifiable; checkpoint ownership rule applies
 - Control Plan's APPROVAL CHECKPOINT section: Reviewer field contains a placeholder noting the role must be designated, not a fabricated role name
 - Confidence must be LOW, not MEDIUM or HIGH
@@ -197,18 +197,18 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 ## RULE-10 — Template Selection
 
-**What it tests:** The Gate selects the correct artifact template based on the combined Autonomy + Surface verdict. Wrong template = wrong artifact.
+**What it tests:** The Gate selects the correct artifact from autonomy, operating pattern, terminal action, and the operator-selected architecture. The assessment surface does not choose the artifact.
 
 **Verdicts and expected templates:**
 
-| Verdict | Expected Artifact Header |
+| Canonical decision context | Expected Artifact Header |
 |---------|--------------------------|
-| `AUTONOMOUS / CODE_AGENT` | `AUTOMATION ARCHITECTURE` |
-| `AUTONOMOUS / PROJECT` | `PROJECT SETUP BRIEF` |
-| `AUTONOMOUS / COWORK` | `COWORK PROJECT CONFIG` |
-| `SUPERVISED / [any surface]` | `CONTROL PLAN` |
-| `SOP_FIRST / NO_AI` | `STABILIZATION PLAN` |
-| `HUMAN_ONLY / NO_AI` | `GOVERNANCE MEMO` |
+| `AUTONOMOUS` with code-first, service, or integration architecture | `AUTOMATION ARCHITECTURE` |
+| `AUTONOMOUS` with human-triggered knowledge-work architecture | `PROJECT SETUP BRIEF` |
+| `AUTONOMOUS` with scheduled local-file or connector architecture | `COWORK PROJECT CONFIG` |
+| `SUPERVISED` with any architecture | `CONTROL PLAN` |
+| `SOP_FIRST` | `STABILIZATION PLAN` |
+| `HUMAN_ONLY` | `GOVERNANCE MEMO` |
 
 **Test:** Run one input that should produce each verdict type. Confirm the artifact header matches the table above.
 
@@ -271,11 +271,11 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 **Expected output:**
 - Exactly three top-level response sections remain present
-- Verdict: `AUTONOMOUS / PROJECT · HIGH` (all four required fields populated; governance value gaps affect pack status only)
+- Autonomy: `AUTONOMOUS · HIGH`; execution architecture uses a human-triggered Project pattern
 - The Project Setup Brief ends with `BUILD HANDOFF PACK`
 - The pack contains exact project instructions, a knowledge-file manifest, a first-run prompt, and an acceptance check
 - No bracketed placeholders are visible — runtime values (what the ops lead pastes each session) are described in prose instructions
-- Missing deployment values appear under `REQUIRED BEFORE BUILD` and change deployment status to `BLOCKED`; they are not invented
+- Missing implementation values appear under `REQUIRED BEFORE BUILD` and set handoff status to `BLOCKED_FOR_EVIDENCE`; they are not invented
 - Knowledge files that require operator-specific content are listed under `REQUIRED BEFORE BUILD`, not named in the manifest without full generated contents
 
 **Failure condition:** The Gate emits a fourth top-level section, tells the user to fill a template, leaves bracketed placeholders, or invents a reviewer, threshold, path, schedule, or recertification date.
@@ -291,7 +291,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 **Expected output:**
 - GATE-1 cited: terminal action triggers a payment (financial transaction issuance)
-- Verdict: at most `SUPERVISED / CODE_AGENT` — GATE-1 prevents AUTONOMOUS
+- Autonomy: at most `SUPERVISED`, with a code-first execution architecture — GATE-1 prevents AUTONOMOUS
 - $10,000 threshold does not eliminate the gate
 
 **Failure condition:** GATE-1 is not cited. Or verdict is `AUTONOMOUS` because the match logic is automated. Or threshold is treated as sufficient control to bypass the gate.
@@ -307,7 +307,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 **Expected output:**
 - GATE-2 cited: regulatory filing submission is an irreversible external commitment to a regulatory authority
-- Verdict: `HUMAN_ONLY / NO_AI`
+- Autonomy: `HUMAN_ONLY`; handoff status: `NOT_APPLICABLE`
 - Governance Memo produced
 - Note: the preparation phase (compiling, checking data) may be re-submitted separately as SUPERVISED; the submission step itself is HUMAN_ONLY
 
@@ -324,7 +324,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 **Expected output:**
 - GATE-3 cited: terminal action modifies access controls across multiple systems
-- Verdict: `HUMAN_ONLY / NO_AI`
+- Autonomy: `HUMAN_ONLY`; handoff status: `NOT_APPLICABLE`
 - Note: AI can assist with identifying which accounts need revocation (preparation); executing the revocation is HUMAN_ONLY
 
 **Failure condition:** GATE-3 is not cited. Or verdict is SUPERVISED because the offboarding checklist is documented. Or the workflow is treated as a CODE_AGENT task because "it's just following a list."
@@ -340,7 +340,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 **Expected output:**
 - GATE-4 cited: terminal action is external publication (social media posts are public)
-- Verdict: `SUPERVISED / CODE_AGENT` — pre-approval does not eliminate the checkpoint
+- Autonomy: `SUPERVISED`, with a code-first execution architecture — pre-approval does not eliminate the checkpoint
 - Control Plan names the resize/modification risk: any copy change during scheduling must be reviewed
 
 **Failure condition:** GATE-4 is not cited because "the content is pre-approved." Or verdict is AUTONOMOUS because the scheduling step appears mechanical. GATE-4 applies to the terminal action (publication), not to the content creation step.
@@ -356,7 +356,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 **Expected output:**
 - GATE-5 cited: workflow explicitly states "doesn't need to log anything" — no audit trail
-- Verdict: at most `SUPERVISED / CODE_AGENT` until logging and rollback are added
+- Autonomy: at most `SUPERVISED`, with a code-first execution architecture until logging and rollback are added
 - Control Plan or Stabilization Plan (depending on exception rate)
 - Note: "doesn't need to log anything" is treated as an evidence gap and a stop condition, not an operator instruction to skip logging
 
@@ -372,7 +372,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 > Our invoice approval process is pretty smooth but sometimes things need to be handled differently depending on the vendor. Can we automate it?
 
 **Expected output:**
-- Verdict: `SOP_FIRST / NO_AI`
+- Autonomy: `SOP_FIRST`; no implementation architecture is authorized until stabilization is complete
 - Stabilization Plan produced
 - Stabilization checklist includes: document every exception type by name; define the criteria for each; define the escalation path
 - "Sometimes things need to be handled differently depending on the vendor" must be flagged as undefined exception handling, not as low exception rate
@@ -383,18 +383,18 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 ## Surface Fallback Logic
 
-**What it tests:** When the recommended surface is unavailable, the artifact names the fallback surface and lists specific adjustments. The fallback is never silently omitted.
+**What it tests:** When the preferred implementation pattern is unavailable, the artifact names a viable architecture fallback and lists the control and operating adjustments. The fallback is never silently omitted.
 
 **Input:**
 > I want an automated daily ops report run on a schedule every morning. I don't have access to Claude Cowork or any scheduled automation.
 
 **Expected output:**
-- Ideal surface: COWORK (scheduled, unattended) — noted explicitly
-- Fallback surface: PROJECT — named with specific adjustments (human must trigger; no automatic alert if missed; suggested mitigation: calendar reminder)
+- Preferred implementation pattern: Cowork or an equivalent scheduled runner — noted explicitly
+- Fallback architecture: human-triggered Project workflow — named with specific adjustments (human must trigger; no automatic alert if missed; suggested mitigation: calendar reminder)
 - Verdict remains AUTONOMOUS
 - Artifact: Project Setup Brief with a SURFACE FALLBACK NOTE section
 
-**Failure condition:** The Gate silently assigns PROJECT without noting that COWORK is the preferred surface. Or the Gate downgrades the verdict to SUPERVISED because COWORK is unavailable. Surface availability does not affect the autonomy verdict.
+**Failure condition:** The Gate silently substitutes a human-triggered Project without noting that a scheduled architecture is preferred. Or the Gate downgrades autonomy merely because one implementation product is unavailable. Tool availability does not determine autonomy.
 
 ---
 
@@ -407,8 +407,8 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 **Expected output:**
 - Two verdicts issued:
-  - Preparation phase (data pull, formatting, cross-checking): `SUPERVISED / PROJECT`
-  - Submission phase: `HUMAN_ONLY / NO_AI` — GATE-2 applies to regulatory submission
+  - Preparation phase (data pull, formatting, cross-checking): `SUPERVISED` with a human-triggered knowledge-work architecture
+  - Submission phase: `HUMAN_ONLY` with `NOT_APPLICABLE` handoff status — GATE-2 applies to regulatory submission
 - Gate notes that the phases cannot be merged into a single verdict
 
 **Failure condition:** The Gate issues one verdict for the entire workflow. Or the Gate issues SUPERVISED for the whole workflow because "a human can review before submission." The submission act itself is HUMAN_ONLY regardless of what the preparation phase produces.

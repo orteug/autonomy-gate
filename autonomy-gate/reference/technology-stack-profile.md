@@ -1,6 +1,6 @@
 # Technology Stack Profile
 
-The Technology Stack Profile captures an organization's technical environment so the Gate can assign execution surfaces and builder recommendations that are compatible with the company's actual tools, approved vendors, and operational constraints.
+The Technology Stack Profile captures an organization's technical environment so the Gate can recommend execution architectures and builders compatible with the company's actual tools, approved vendors, skills, and operational constraints.
 
 The Gate never assumes a specific vendor. When this profile is absent or incomplete, the Gate produces technology-neutral architecture descriptions and marks tool-specific fields `UNKNOWN`. When the profile is present, the Gate applies it as `STATED` evidence and avoids recommending tools outside the approved set.
 

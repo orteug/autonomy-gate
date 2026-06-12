@@ -16,7 +16,16 @@ def main() -> int:
     expected = {line.strip() for line in manifest.read_text().splitlines() if line.strip() and not line.startswith("#")}
     missing = sorted(path for path in expected if not (root / path).is_file())
     forbidden = []
+    extras = []
     if (root / ".git").is_dir():
+        actual = {
+            str(path.relative_to(root))
+            for path in root.rglob("*")
+            if path.is_file()
+            and ".git" not in path.relative_to(root).parts
+            and path.name not in {".DS_Store"}
+        }
+        extras = sorted(actual - expected)
         forbidden = sorted(
             str(path.relative_to(root))
             for path in root.rglob("*")
@@ -24,8 +33,9 @@ def main() -> int:
         )
     print(f"Manifest files: {len(expected)}")
     print(f"Missing: {missing}")
+    print(f"Unexpected public files: {extras}")
     print(f"Forbidden private paths: {forbidden}")
-    return 1 if missing or forbidden else 0
+    return 1 if missing or extras or forbidden else 0
 
 
 if __name__ == "__main__":

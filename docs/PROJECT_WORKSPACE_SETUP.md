@@ -22,9 +22,9 @@ These files are uploaded once and never removed. They define the Gate's behavior
 | `surface-capability-matrix.md` | What each execution surface can and cannot do |
 | `precedents.md` | Prior decisions and governance precedents |
 | `operating-contract.md` | Canonical lifecycle, architecture selection, handoff statuses, and authority boundaries |
-| `template-project-setup.md` | Artifact template: AUTONOMOUS / PROJECT |
+| `template-project-setup.md` | Artifact template: AUTONOMOUS with a human-triggered knowledge-work architecture |
 | `template-control-plan.md` | Artifact template: SUPERVISED |
-| `template-automation-architecture.md` | Artifact template: AUTONOMOUS / CODE_AGENT or COWORK |
+| `template-automation-architecture.md` | Artifact template: AUTONOMOUS with a code-first, service, or integration architecture |
 | `template-cowork-config.md` | Artifact template: COWORK |
 | `template-governance-memo.md` | Artifact template: HUMAN_ONLY |
 | `template-stabilization-plan.md` | Artifact template: SOP_FIRST |

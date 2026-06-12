@@ -83,7 +83,7 @@ ChatGPT Projects do not support (in standard configuration):
 - Local filesystem access
 - External API calls without a connected app
 
-If the workflow requires capabilities beyond document reasoning and analysis, the verdict will route to CODE_AGENT. Use the Codex adapter (`adapters/openai/codex-AGENTS.md`) for those workflows.
+If the selected architecture requires code, integrations, deterministic enforcement, or repository changes, use the Codex adapter (`adapters/openai/codex-AGENTS.md`) or the named builder alternative from the handoff pack.
 
 ---
 
