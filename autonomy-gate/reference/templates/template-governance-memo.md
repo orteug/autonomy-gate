@@ -99,7 +99,7 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       updated with a new designated owner before the workflow can proceed.]
 
 BUILD HANDOFF PACK
-Deployment status: NOT APPLICABLE
+Handoff status: NOT_APPLICABLE
 State explicitly that no AI deployment files should be created for the gate-triggering terminal action. Generate the complete human review procedure, decision-record fields, required verification evidence, escalation path, and one audit check. If the owner or escalation role is unknown, list it under REQUIRED BEFORE OPERATION rather than inventing it.
 ```
 

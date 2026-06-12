@@ -8,7 +8,7 @@ The Gate produces architecture specifications that conform to this contract. Bui
 
 ## Contract Structure
 
-A complete workflow architecture specification covers seven sections. All seven must be present in a READY Build Handoff Pack. A section with unanswered fields produces a BLOCKED status entry.
+A complete workflow architecture specification covers seven sections. All seven must be present in a `BUILD_READY` Build Handoff Pack. An unanswered required field produces `BLOCKED_FOR_EVIDENCE`.
 
 ---
 
@@ -208,6 +208,10 @@ The workflow architecture is agreed before tool selection. The Gate produces arc
 3. Tools are matched to required capabilities
 
 A workflow specification that names a specific product before the architecture is agreed is incomplete. Product names are implementation details — capabilities are the contract.
+
+## Required Alternatives
+
+Before selection, compare five option classes when viable: primary, native-suite, low-code, code-first, and vendor-neutral. Each option states execution architecture, builder surface, control fit, implementation effort, operating cost, maintenance burden, security/compliance fit, portability, skill requirements, and source evidence. An option class may be omitted only with an evidence-based reason. The operator records the selected option; no pack is `BUILD_READY` before that selection.
 
 ---
 

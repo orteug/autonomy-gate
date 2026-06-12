@@ -1,0 +1,10 @@
+{
+  "recommendations": [{
+    "tool": "Microsoft Power Automate Approvals",
+    "capability": "Blocking human approval workflow",
+    "source_url": "https://learn.microsoft.com/power-automate/modern-approvals",
+    "verified_date": "2026-06-11",
+    "constraint_fit": "Use only when Microsoft tooling is approved and licensing is confirmed",
+    "capability_to_control": "Maps the SUPERVISED approval checkpoint to an auditable approval record"
+  }]
+}

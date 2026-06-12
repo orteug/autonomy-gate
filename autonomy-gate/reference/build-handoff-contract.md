@@ -8,19 +8,19 @@ The Build Handoff Pack is the implementation-ready output of the Gate's Phase 2.
 
 | Status | Meaning | When to use |
 |--------|---------|-------------|
-| `READY` | All required content is fully generated; operator disposition `APPROVE_FOR_BUILD` can authorize implementation | Every referenced file, instruction block, test, and control is fully present as paste-ready content |
-| `BLOCKED` | Pack is structurally sound but specific operator-supplied values are required | Missing items are irreducible — the Gate cannot generate them without real organizational input; all generatable content is already complete |
+| `BUILD_READY` | All required content is fully generated and an architecture is selected; operator disposition `APPROVE_FOR_BUILD` can authorize implementation | Every referenced file, instruction block, test, control, and source-evidence citation is fully present |
+| `BLOCKED_FOR_EVIDENCE` | Pack is structurally sound but specific operator-supplied values are required | Missing items are irreducible; all generatable content is already complete |
 | `NOT_APPLICABLE` | No pack is generated | Pairs with HUMAN_ONLY / NO_AI verdict; implementation artifact is a Governance Memo only |
 
-**READY requires zero outstanding items.** If any file is described but not generated, any test is named but not written, or any value is marked for the operator to fill — the status is `BLOCKED`, not `READY`.
+**BUILD_READY requires zero outstanding items.** If any file is described but not generated, any test is named but not written, architecture is unselected, or any value remains unresolved, the status is `BLOCKED_FOR_EVIDENCE`.
 
-**BLOCKED is not a failure.** It means the governance architecture is complete and the builder can begin planning. The operator supplies the missing values; the builder does not re-assess. When the operator supplies all BLOCKED items, the pack becomes READY without re-running the Gate.
+**BLOCKED_FOR_EVIDENCE is not a failed assessment.** The operator supplies missing evidence and the Gate reruns every affected rule. Promotion to `BUILD_READY` is never a text substitution.
 
 ---
 
-## What READY Requires
+## What BUILD_READY Requires
 
-A READY Build Handoff Pack must contain:
+A BUILD_READY Build Handoff Pack must contain:
 
 ### 1. Complete Artifact Manifest
 
@@ -48,7 +48,7 @@ If any item could not be fully generated without organizational input that the G
 - What the operator must supply
 - How the builder should proceed once it is supplied
 
-These are the only items that appear in the BLOCKED list. Everything else must be generated.
+These are the only items that appear in the `BLOCKED_FOR_EVIDENCE` list. Everything else must be generated.
 
 ### 4. Prohibited Actions
 
@@ -77,7 +77,7 @@ What happens when the workflow must stop. Includes:
 
 ## What Is Forbidden
 
-The following are not permitted in a READY Build Handoff Pack:
+The following are not permitted in a `BUILD_READY` Build Handoff Pack:
 
 | Forbidden | Why |
 |-----------|-----|
@@ -90,18 +90,18 @@ The following are not permitted in a READY Build Handoff Pack:
 
 ---
 
-## What BLOCKED Generates
+## What BLOCKED_FOR_EVIDENCE Generates
 
-A BLOCKED pack still generates all content the Gate can produce without the missing values. The builder receives:
+A BLOCKED_FOR_EVIDENCE pack still generates all content the Gate can produce without the missing values. The builder receives:
 
 - All files that can be fully generated
 - All acceptance tests that do not depend on missing values
 - Architecture description with named gaps
 - Clear statement of exactly what the operator must supply and in what format
 
-The BLOCKED list contains only irreducible missing inputs. It does not contain items the Gate chose not to generate. If the Gate can generate it, it must.
+The `BLOCKED_FOR_EVIDENCE` list contains only irreducible missing inputs. It does not contain items the Gate chose not to generate. If the Gate can generate it, it must.
 
-Example: A BLOCKED pack for a SUPERVISED workflow includes a complete `CLAUDE.md` with the approval checkpoint structure, but marks the error-rate threshold and recertification interval as BLOCKED because those are organizational policy decisions the operator must supply.
+Example: A `BLOCKED_FOR_EVIDENCE` pack for a SUPERVISED workflow includes a complete `CLAUDE.md` with the approval checkpoint structure, while naming the missing error-rate threshold and recertification interval as organizational evidence.
 
 ---
 
@@ -124,7 +124,7 @@ The builder copies this content verbatim. No editing required. If editing is req
 
 ## Builder Responsibilities
 
-When receiving a READY Build Handoff Pack:
+When receiving a BUILD_READY Build Handoff Pack:
 
 1. Compare the terminal action in the pack against what you intend to build. They must match exactly.
 2. Confirm you can implement all required controls as listed. If a control cannot be implemented, stop and return to the operator.
@@ -139,7 +139,7 @@ The builder may not proceed without an `APPROVE_FOR_BUILD` operator disposition 
 ## References
 
 - Operator Disposition: `autonomy-gate/reference/operator-disposition.md`
-- Builder Acknowledgement: `autonomy-gate/reference/templates/template-builder-acknowledgement.md`
+- Builder Acknowledgement: `autonomy-gate/reference/builder-acknowledgement.md`
 - Workflow Architecture Contract: `autonomy-gate/reference/workflow-architecture-contract.md`
 - User Journey Contract (REVIEW_BUILD mode): `autonomy-gate/reference/user-journey-contract.md`
 - Governed by RULE-14 and RULE-15.

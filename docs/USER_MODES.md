@@ -52,7 +52,7 @@ To proceed from triage to full assessment: submit the workflow as a full ASSESS 
 
 ## Mode 3 — Resolve Missing Evidence (RESOLVE_EVIDENCE)
 
-Use when a prior assessment returned BLOCKED or LOW confidence because of a specific missing value.
+Use when a prior assessment returned `BLOCKED_FOR_EVIDENCE` or LOW confidence because of a specific missing value.
 
 **Starter prompt:**
 ```
@@ -72,7 +72,7 @@ Evidence update for Weekly KPI Report:
 **What you get:**
 - Updated snapshot with new provenance (`STATED`)
 - Revised packet (new version)
-- Updated Build Handoff Pack (BLOCKED → READY if all gaps resolved)
+- Updated Build Handoff Pack (`BLOCKED_FOR_EVIDENCE` → `BUILD_READY` only after affected-rule reassessment and architecture selection)
 
 **Does not:** Restart the full assessment. Change the verdict unless new evidence directly affects scoring.
 
@@ -219,7 +219,7 @@ Explain [rule, gate, or verdict element].
 Examples:
 - "Explain GATE-2."
 - "Why did this workflow get SUPERVISED instead of AUTONOMOUS?"
-- "What is the difference between BLOCKED and NOT_APPLICABLE in the Build Handoff Pack?"
+- "What is the difference between BLOCKED_FOR_EVIDENCE and NOT_APPLICABLE in the Build Handoff Pack?"
 
 **What you get:** A direct explanation with rule citations. The verdict is not changed.
 

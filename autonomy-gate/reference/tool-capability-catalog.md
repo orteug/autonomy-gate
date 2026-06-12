@@ -11,6 +11,22 @@ This catalog maps tool categories to the capabilities relevant to autonomous wor
 
 **Catalog version:** 2026-06-11
 
+**Authority rule:** This catalog supports discovery only. Before a named tool appears in a recommendation, verify the relevant claim against official documentation and record `source_url`, `verified_date`, and the capability-to-control mapping in the architecture option. If verification is unavailable, use a technology-neutral capability description. See `tool-selection-rules.md`.
+
+**Official documentation starting points:**
+- Microsoft Power Automate approvals: https://learn.microsoft.com/power-automate/modern-approvals
+- AWS Step Functions: https://docs.aws.amazon.com/step-functions/
+- Google Cloud Workflows: https://cloud.google.com/workflows/docs
+- Temporal: https://docs.temporal.io/
+- Apache Airflow: https://airflow.apache.org/docs/
+- Prefect: https://docs.prefect.io/
+- n8n: https://docs.n8n.io/
+- Zapier: https://help.zapier.com/
+- Make: https://www.make.com/en/help
+- Model Context Protocol: https://modelcontextprotocol.io/docs/
+
+Licensing, plan limits, residency, and feature availability change. They must be re-verified for the organization and release date; the prose below is not procurement authority.
+
 ---
 
 ## Category 1 — Trigger Mechanisms

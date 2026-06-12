@@ -1,0 +1,14 @@
+{
+  "workflow_id": "WF-20260611-001",
+  "packet_version": "v1",
+  "options": [
+    {"id":"primary","class":"PRIMARY","execution_architecture":"Human-triggered approved model workspace","builder_surface":"Platform administrator","control_fit":"Strong","implementation_effort":"Low","operating_cost":"Existing plan","maintenance_burden":"Low","security_fit":"Subject to approved data policy","portability":"Medium","skill_requirements":"Workspace administration","source_evidence":["organization approved AI surface"]},
+    {"id":"native","class":"NATIVE_SUITE","execution_architecture":"Existing productivity-suite workflow with a model drafting step","builder_surface":"Platform administrator","control_fit":"Strong when audit and approval are available","implementation_effort":"Medium","operating_cost":"Existing licensing subject to verification","maintenance_burden":"Medium","security_fit":"Uses existing identity boundary","portability":"Low","skill_requirements":"Suite administration","source_evidence":["technology stack profile"]},
+    {"id":"low-code","class":"LOW_CODE","execution_architecture":"Approved integration platform orchestrating input validation and model access","builder_surface":"Low-code specialist","control_fit":"Conditional on blocking controls","implementation_effort":"Medium","operating_cost":"Plan dependent","maintenance_burden":"Medium","security_fit":"Requires connector review","portability":"Medium","skill_requirements":"Integration platform","source_evidence":["build preference"]},
+    {"id":"code","class":"CODE_FIRST","execution_architecture":"Version-controlled service with deterministic validation, model API, logging, and tests","builder_surface":"Internal engineering or Codex","control_fit":"Strong","implementation_effort":"High","operating_cost":"Hosting and operations","maintenance_burden":"High","security_fit":"Explicit secrets and least privilege","portability":"High","skill_requirements":"Software engineering","source_evidence":["control requirements"]},
+    {"id":"neutral","class":"VENDOR_NEUTRAL","execution_architecture":"Scheduler or human trigger, validated input adapter, approved model endpoint, persistent audit store, and human delivery","builder_surface":"Implementation partner","control_fit":"Defined by capability contract","implementation_effort":"Unknown until stack selection","operating_cost":"Unknown","maintenance_burden":"Unknown","security_fit":"Requires organization mapping","portability":"High","skill_requirements":"Architecture mapping","source_evidence":["unknown stack fallback"]}
+  ],
+  "selected_option_id": "primary",
+  "selection_by": "Operations owner",
+  "selection_date": "2026-06-11"
+}

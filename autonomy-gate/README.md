@@ -1,6 +1,6 @@
 # The Autonomy Gate
 
-The Autonomy Gate receives a workflow description, assesses what level of AI autonomy it deserves, and produces the execution artifact the operator acts on — in one pass, without asking clarifying questions. To use it: create a Claude Project or supported ChatGPT Project, set the custom instruction to `You are The Autonomy Gate. Follow identity.md and rules.md.`, upload the 13 runtime files listed below, then paste any workflow description. You will get a Workflow Intake Snapshot, an Autonomy Decision Packet, and a complete execution artifact ending in a ready-to-apply DEPLOYMENT PACK.
+The Autonomy Gate receives a workflow description, assigns the minimum justified autonomy, compares provider-neutral implementation architectures, and produces a governed Build Handoff Pack. Set the project instruction to `You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.`, upload the 14 runtime files below, then submit a workflow description.
 
 ### Runtime Files
 
@@ -14,6 +14,7 @@ reference/autonomy-criteria.md
 reference/surface-capability-matrix.md
 reference/risk-classification.md
 reference/precedents.md
+reference/operating-contract.md
 reference/templates/template-automation-architecture.md
 reference/templates/template-project-setup.md
 reference/templates/template-cowork-config.md
@@ -29,8 +30,8 @@ reference/templates/template-governance-memo.md
 **Phase 1 — Assessment**
 The Gate normalizes the input into a structured Workflow Intake Snapshot. It scores the workflow against four autonomy criteria: reversibility, observability, exception rate, and cost of failure. It identifies the terminal action — the last thing that executes, not the label applied to the workflow. It runs an adversarial check with three mandatory challenges. It applies hard gate conditions to the terminal action. It packages the result as an Autonomy Decision Packet with a verdict, confidence level, and justification citing specific rule and gate identifiers.
 
-**Phase 2 — Artifact and Deployment-Pack Generation**
-The Gate reads the verdict and selects the matching artifact template. It checks how many fields can be populated from the snapshot, fills the template as a complete document, and generates surface-specific configuration. Missing required values are named as blockers rather than left as user-filled placeholders.
+**Phase 2 — Architecture and Build Handoff Generation**
+The Gate separates assessment, execution, and builder roles; compares viable architecture classes; records operator selection; and generates complete implementation content. Missing organizational evidence is named rather than converted into a user-filled template.
 
 The two phases run in sequence in one session. There is no second identity, no external handoff, no clarifying question back to the user.
 
@@ -78,7 +79,9 @@ audit trail, evidence gaps.
 
 ━━ AUTONOMY DECISION PACKET ━━━━━━━━━━━━━━━━━━━━━
 Autonomy: [AUT-N verdict]
-Surface: [SURFACE-N verdict]
+Assessment surface: [where the Gate ran]
+Execution architecture: [technology-neutral or selected stack]
+Builder surface: [implementer]
 Confidence: HIGH / MEDIUM / LOW
 Justification: [specific RULE-NN and GATE-NN identifiers]
 Controls required: [list]
@@ -89,7 +92,7 @@ Artifact required: [template name]
 ━━ [ARTIFACT NAME IN CAPS] ━━━━━━━━━━━━━━━━━━━━━━
 Complete execution document. Prose context, headers, formatted lists.
 Includes EXPECTED OUTCOMES and AUTONOMY EXPIRES WHEN sections.
-Ends with a DEPLOYMENT PACK containing complete configuration or explicit prerequisites.
+Ends with a BUILD HANDOFF PACK containing complete configuration or explicit prerequisites.
 Readable in a meeting without explanation.
 ```
 
@@ -108,12 +111,7 @@ Two axes. Always both. Always with confidence.
 | SOP_FIRST | Process too unstable to assign any autonomy level |
 | HUMAN_ONLY | Judgment or risk cannot be delegated — structural block |
 
-| Surface | Meaning |
-|---------|---------|
-| PROJECT | Human-initiated recurring work in a Claude Project |
-| COWORK | Multi-step scheduled work with files or connectors — may run unattended |
-| CODE_AGENT | Deterministic workflows, scripts, integrations — Claude Code or Codex |
-| NO_AI | No surface assigned — pairs with SOP_FIRST and HUMAN_ONLY |
+`PROJECT`, `COWORK`, and `CODE_AGENT` remain implementation patterns. The packet records assessment surface, execution architecture, and builder surface independently.
 
 ---
 

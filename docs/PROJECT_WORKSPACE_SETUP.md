@@ -21,6 +21,7 @@ These files are uploaded once and never removed. They define the Gate's behavior
 | `risk-classification.md` | Risk classification reference |
 | `surface-capability-matrix.md` | What each execution surface can and cannot do |
 | `precedents.md` | Prior decisions and governance precedents |
+| `operating-contract.md` | Canonical lifecycle, architecture selection, handoff statuses, and authority boundaries |
 | `template-project-setup.md` | Artifact template: AUTONOMOUS / PROJECT |
 | `template-control-plan.md` | Artifact template: SUPERVISED |
 | `template-automation-architecture.md` | Artifact template: AUTONOMOUS / CODE_AGENT or COWORK |
@@ -28,7 +29,7 @@ These files are uploaded once and never removed. They define the Gate's behavior
 | `template-governance-memo.md` | Artifact template: HUMAN_ONLY |
 | `template-stabilization-plan.md` | Artifact template: SOP_FIRST |
 
-Total: 13 files. These are the canonical runtime files. Do not remove or rename them.
+Total: 14 files. These are the canonical runtime files. Do not remove or rename them.
 
 **Organization profile — loaded at session start:**
 
@@ -36,7 +37,7 @@ Your organization profile (`organization-profile.md`) is either:
 - Uploaded to the workspace as a permanent file (recommended for team workspaces), or
 - Pasted at the beginning of each session using the CONFIGURE trigger
 
-For a personal workspace, paste the profile. For a shared team workspace, upload it as a 14th permanent file.
+For a personal workspace, paste the profile. For a shared team workspace, upload it as a 15th permanent file.
 
 **Workflow artifacts — session-specific:**
 
@@ -51,10 +52,10 @@ For a single operator assessing workflows on their own.
 **Setup:**
 
 1. Create a new Claude Project or ChatGPT Project named "Autonomy Gate" (or equivalent).
-2. Upload the 13 canonical files listed above.
+2. Upload the 14 canonical files listed above.
 3. Set the project instruction to:
    ```
-   You are The Autonomy Gate. Follow identity.md and rules.md.
+   You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
    ```
 4. At the start of each session, paste your organization profile using CONFIGURE mode:
    ```
@@ -62,7 +63,7 @@ For a single operator assessing workflows on their own.
    ```
 5. Submit workflow descriptions. Receive governed assessments. Record operator dispositions. Store completed artifacts externally.
 
-**What persists across sessions:** The 13 canonical files and any uploaded organization profile. Conversation history (in Projects that retain it).
+**What persists across sessions:** The 14 canonical files and any uploaded organization profile. Conversation history where supported.
 
 **What does not persist:** Evidence supplied mid-session that was not saved to a file. Operator dispositions not recorded in an external artifact.
 
@@ -75,11 +76,11 @@ For a team of operators assessing workflows together, with shared governance def
 **Setup:**
 
 1. Create a shared Claude Project or ChatGPT Project with access for all operators.
-2. Upload the 13 canonical files.
-3. Upload your organization profile as a 14th file (`organization-profile.md`).
+2. Upload the 14 canonical files.
+3. Upload your organization profile as a 15th file (`organization-profile.md`).
 4. Set the project instruction to:
    ```
-   You are The Autonomy Gate. Follow identity.md and rules.md. Apply the organization context in organization-profile.md to every assessment.
+   You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md. Apply organization-profile.md as inherited evidence requiring workflow-level applicability confirmation.
    ```
 5. Establish an artifact naming convention: `[WorkflowName]-[Date]-v[N].md`
 6. Establish a shared folder (Google Drive, Notion, SharePoint) for completed artifacts.
@@ -102,7 +103,7 @@ Examples:
 
 **Versioning:** Increment `v[N]` when a new packet is issued (evidence update, revision request, recertification). The version in the filename must match the `Packet version` field in the OPERATOR DISPOSITION section.
 
-**Archival:** Retain completed artifacts (any disposition recorded) for a minimum of 12 months or until the recertification interval specified in the organization profile expires. After expiration, the artifact is historical record only — a new assessment is required before the workflow runs.
+**Archival:** Retain completed artifacts according to the organization's stated records policy. If no policy is supplied, mark retention `UNKNOWN`; do not invent a duration. An expired artifact remains historical record only and cannot authorize operation.
 
 **Access:** Completed artifacts with `APPROVE_FOR_BUILD` dispositions should be accessible to: the operator who approved, the builder who received the handoff, and any auditor who reviews the governance trail.
 
@@ -110,13 +111,13 @@ Examples:
 
 ## File Upload Limits
 
-**Claude Project:** Supports file uploads in the knowledge base. Upload the 13 canonical files as knowledge files. Check your plan for file count and size limits.
+**Claude Project:** Upload the 14 canonical files as knowledge files. Check current plan limits before installation.
 
 **ChatGPT Project:** Maximum 10 files per upload batch. Upload in two batches:
-- Batch 1 (10 files): `identity.md`, `rules.md`, `examples.md`, `autonomy-criteria.md`, `risk-classification.md`, `surface-capability-matrix.md`, `precedents.md`, `template-project-setup.md`, `template-control-plan.md`, `template-automation-architecture.md`
-- Batch 2 (3 files): `template-cowork-config.md`, `template-governance-memo.md`, `template-stabilization-plan.md`
+- Batch 1 (10 files): `identity.md`, `rules.md`, `examples.md`, `operating-contract.md`, `autonomy-criteria.md`, `risk-classification.md`, `surface-capability-matrix.md`, `precedents.md`, `template-project-setup.md`, `template-control-plan.md`
+- Batch 2 (4 files): `template-automation-architecture.md`, `template-cowork-config.md`, `template-governance-memo.md`, `template-stabilization-plan.md`
 
-All 13 files must be present before use. Verify by asking the Gate: "List the files you have access to."
+All 14 files must be present before use. Verify by asking the Gate to list accessible runtime files and confirm `operating-contract.md` is included.
 
 ---
 

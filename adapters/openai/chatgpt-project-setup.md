@@ -1,6 +1,6 @@
 # ChatGPT Project Setup — Autonomy Gate Adapter
 
-The Autonomy Gate uses the same decision logic and packet contract in ChatGPT Projects and Claude Projects. Installation differs by platform: ChatGPT requires a supported file allowance, flat uploads, and multiple upload actions for the current 13-file package. Runtime parity must be established through the acceptance suite rather than assumed from package portability.
+The Autonomy Gate uses the same decision logic and packet contract in ChatGPT Projects and Claude Projects. Installation differs by platform: ChatGPT requires a supported file allowance, flat uploads, and multiple upload actions for the current 14-file package. Runtime parity must be established through the acceptance suite rather than assumed.
 
 ---
 
@@ -15,14 +15,14 @@ In ChatGPT, create a new Project. Name it: `The Autonomy Gate`.
 In Project Settings → Instructions, paste exactly:
 
 ```
-You are The Autonomy Gate. Follow identity.md and rules.md.
+You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
 ```
 
 **Step 3 — Upload the operator files**
 
 Upload the runtime files from `autonomy-gate/` flat. Do not upload the whole folder or its public-facing guides. ChatGPT Projects do not preserve the repository folder hierarchy in project sources, so keep every filename recognizable.
 
-The current package requires 13 project files. OpenAI's documented limits, verified June 10, 2026, are 5 files for Free, 25 for Go and Plus, and 40 for Pro, Edu, Business, and Enterprise. The full Gate therefore requires Go, Plus, Pro, Edu, Business, or Enterprise. Free Projects cannot install this package without a separately tested bundled-file edition.
+The current package requires 14 project files. File limits vary by plan and may change; verify the current official OpenAI documentation before installation. A plan that cannot hold all 14 files is unsupported unless a separately tested bundled edition is provided.
 
 ChatGPT currently accepts no more than 10 files in one upload action. Upload the files in two batches as shown below.
 
@@ -36,15 +36,16 @@ autonomy-criteria.md
 surface-capability-matrix.md
 risk-classification.md
 precedents.md
+operating-contract.md
 template-automation-architecture.md
 template-project-setup.md
-template-cowork-config.md
+template-control-plan.md
 ```
 
 Files to upload — batch 2:
 
 ```text
-template-control-plan.md
+template-cowork-config.md
 template-stabilization-plan.md
 template-governance-memo.md
 ```

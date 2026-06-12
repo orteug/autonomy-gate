@@ -262,7 +262,7 @@ If all four steps pass, proceed to mechanism-specific tests below.
 
 ---
 
-## RULE-14 — Deployment Pack Generation
+## RULE-14 — Build Handoff Pack Generation
 
 **What it tests:** The Gate translates its verdict into complete surface-specific configuration inside the execution artifact. The user is not sent to a blank template.
 
@@ -272,11 +272,11 @@ If all four steps pass, proceed to mechanism-specific tests below.
 **Expected output:**
 - Exactly three top-level response sections remain present
 - Verdict: `AUTONOMOUS / PROJECT · HIGH` (all four required fields populated; governance value gaps affect pack status only)
-- The Project Setup Brief ends with `DEPLOYMENT PACK`
+- The Project Setup Brief ends with `BUILD HANDOFF PACK`
 - The pack contains exact project instructions, a knowledge-file manifest, a first-run prompt, and an acceptance check
 - No bracketed placeholders are visible — runtime values (what the ops lead pastes each session) are described in prose instructions
-- Missing deployment values appear under `REQUIRED BEFORE DEPLOYMENT` and change deployment status to `BLOCKED`; they are not invented
-- Knowledge files that require operator-specific content are listed under `REQUIRED BEFORE DEPLOYMENT`, not named in the manifest without full generated contents
+- Missing deployment values appear under `REQUIRED BEFORE BUILD` and change deployment status to `BLOCKED`; they are not invented
+- Knowledge files that require operator-specific content are listed under `REQUIRED BEFORE BUILD`, not named in the manifest without full generated contents
 
 **Failure condition:** The Gate emits a fourth top-level section, tells the user to fill a template, leaves bracketed placeholders, or invents a reviewer, threshold, path, schedule, or recertification date.
 

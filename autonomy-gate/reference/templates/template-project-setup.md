@@ -78,7 +78,7 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Not applicable — AUTONOMOUS / PROJECT has no approval checkpoint. Human initiates but does not approve.]
 
 BUILD HANDOFF PACK
-Deployment status: [READY or BLOCKED per RULE-14]
+Handoff status: [BUILD_READY or BLOCKED_FOR_EVIDENCE per RULE-14]
 Generate the exact project instructions, exact knowledge-file manifest, first-run prompt, expected result, and one acceptance check. The output must be ready to paste or upload without translating fields into another template. If a required workflow-specific file is missing, name it under REQUIRED BEFORE BUILD.
 ```
 

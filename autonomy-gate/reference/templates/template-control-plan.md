@@ -94,7 +94,7 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       or becomes vacant, the Control Plan must be updated with the new reviewer before execution resumes.]
 
 BUILD HANDOFF PACK
-Deployment status: [READY or BLOCKED per RULE-14]
+Handoff status: [BUILD_READY or BLOCKED_FOR_EVIDENCE per RULE-14]
 Generate the complete configuration for the assigned surface, including the approval hold, named reviewer contract, approval record, prohibited terminal action before approval, and one acceptance test proving the checkpoint blocks execution. Do not leave placeholders. Missing reviewer or threshold values appear only under REQUIRED BEFORE BUILD.
 ```
 

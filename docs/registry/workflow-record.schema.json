@@ -1,119 +1,33 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "workflow-record.schema.json",
-  "title": "Workflow Record",
-  "description": "Portable governance record for one workflow assessed by The Autonomy Gate. One record per workflow. Version increments with each new Gate assessment.",
+  "title": "Workflow Governance Record",
   "type": "object",
-  "required": [
-    "workflow_id",
-    "name",
-    "owner",
-    "packet_version",
-    "verdict",
-    "surface",
-    "confidence",
-    "disposition",
-    "status",
-    "assessed_date"
-  ],
+  "additionalProperties": false,
+  "required": ["workflow_id", "name", "owner", "packet_version", "autonomy", "assessment_surface", "execution_architecture", "builder_surface", "confidence", "handoff_status", "disposition", "status", "assessed_date"],
   "properties": {
-    "workflow_id": {
-      "type": "string",
-      "pattern": "^WF-\\d{8}-\\d{3}$",
-      "description": "Unique identifier. Format: WF-YYYYMMDD-NNN",
-      "examples": ["WF-20260611-001"]
-    },
-    "name": {
-      "type": "string",
-      "minLength": 3,
-      "description": "Human-readable workflow name"
-    },
-    "owner": {
-      "type": "string",
-      "minLength": 2,
-      "description": "Name or role of the person accountable for this workflow"
-    },
-    "packet_version": {
-      "type": "string",
-      "pattern": "^v\\d+$",
-      "description": "Current packet version (v1, v2, ...)"
-    },
-    "verdict": {
-      "type": "string",
-      "enum": ["AUTONOMOUS", "SUPERVISED", "SOP_FIRST", "HUMAN_ONLY"],
-      "description": "Autonomy verdict from the current packet"
-    },
-    "surface": {
-      "type": "string",
-      "enum": ["PROJECT", "COWORK", "CODE_AGENT", "NO_AI"],
-      "description": "Assigned execution surface"
-    },
-    "confidence": {
-      "type": "string",
-      "enum": ["HIGH", "MEDIUM", "LOW"],
-      "description": "Decision confidence of the current packet"
-    },
-    "disposition": {
-      "type": "string",
-      "enum": ["PENDING", "APPROVE_FOR_BUILD", "HOLD_FOR_EVIDENCE", "REVISE", "REJECT"],
-      "description": "Operator disposition on the current packet version"
-    },
-    "disposition_by": {
-      "type": "string",
-      "description": "Name and role of the operator who recorded the disposition"
-    },
-    "disposition_date": {
-      "type": "string",
-      "format": "date",
-      "description": "Date disposition was recorded (YYYY-MM-DD)"
-    },
+    "workflow_id": {"type": "string", "pattern": "^WF-\\d{8}-\\d{3}$"},
+    "name": {"type": "string", "minLength": 3},
+    "owner": {"type": "string", "minLength": 2},
+    "packet_version": {"type": "string", "pattern": "^v\\d+$"},
+    "autonomy": {"enum": ["AUTONOMOUS", "SUPERVISED", "SOP_FIRST", "HUMAN_ONLY"]},
+    "assessment_surface": {"type": "string", "minLength": 3},
+    "execution_architecture": {"type": "string", "minLength": 10},
+    "builder_surface": {"type": "string", "minLength": 3},
+    "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+    "handoff_status": {"enum": ["BUILD_READY", "BLOCKED_FOR_EVIDENCE", "NOT_APPLICABLE"]},
+    "disposition": {"enum": ["PENDING", "APPROVE_FOR_BUILD", "HOLD_FOR_EVIDENCE", "REVISE", "REJECT"]},
+    "disposition_by": {"type": "string"},
+    "disposition_date": {"type": "string", "format": "date"},
+    "disposition_rationale": {"type": "string"},
     "status": {
-      "type": "string",
-      "enum": [
-        "ASSESSED",
-        "BLOCKED",
-        "APPROVED_FOR_BUILD",
-        "IN_BUILD",
-        "VALIDATING",
-        "ACTIVE",
-        "PAUSED",
-        "EXPIRED",
-        "REJECTED"
-      ],
-      "description": "Current lifecycle state of the workflow record"
+      "enum": ["SUBMITTED", "ASSESSED", "ARCHITECTURE_SELECTED", "HANDOFF_BLOCKED", "DISPOSITION_PENDING", "APPROVED_FOR_BUILD", "IN_BUILD", "VALIDATING", "ACTIVE", "PAUSED", "EXPIRED", "RECERTIFICATION_REQUIRED", "REJECTED"]
     },
-    "assessed_date": {
-      "type": "string",
-      "format": "date",
-      "description": "Date of the most recent Gate assessment (YYYY-MM-DD)"
-    },
-    "builder": {
-      "type": "string",
-      "description": "Name, role, or team responsible for implementation"
-    },
-    "build_status": {
-      "type": "string",
-      "enum": ["NOT_STARTED", "IN_PROGRESS", "COMPLETE", "PAUSED", "ABANDONED"],
-      "description": "Current implementation status"
-    },
-    "artifact_path": {
-      "type": "string",
-      "description": "File path or URL of the governance artifact"
-    },
-    "terminal_action": {
-      "type": "string",
-      "description": "Terminal action as stated in the packet (copied verbatim)"
-    },
-    "expiration_triggers": {
-      "type": "array",
-      "items": {"type": "string"},
-      "description": "Conditions from AUTONOMY EXPIRES WHEN section that trigger recertification"
-    },
-    "recertification_due": {
-      "type": "string",
-      "format": "date",
-      "description": "Date by which recertification must be complete (YYYY-MM-DD)"
-    },
+    "assessed_date": {"type": "string", "format": "date"},
+    "artifact_path": {"type": "string"},
+    "terminal_action": {"type": "string"},
+    "expiration_triggers": {"type": "array", "items": {"type": "string"}},
+    "recertification_due": {"type": "string", "format": "date"},
     "incidents": {
       "type": "array",
       "items": {
@@ -125,30 +39,32 @@
           "resolution": {"type": "string"},
           "recertification_required": {"type": "boolean"}
         }
-      },
-      "description": "Log of errors, unexpected outputs, or near-misses"
+      }
     },
     "history": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["version", "assessed_date", "verdict", "disposition"],
+        "required": ["packet_version", "assessed_date", "autonomy", "disposition"],
         "properties": {
-          "version": {"type": "string", "pattern": "^v\\d+$"},
+          "packet_version": {"type": "string", "pattern": "^v\\d+$"},
           "assessed_date": {"type": "string", "format": "date"},
-          "verdict": {"type": "string"},
-          "confidence": {"type": "string"},
+          "autonomy": {"type": "string"},
           "disposition": {"type": "string"},
-          "disposition_date": {"type": "string", "format": "date"},
-          "disposition_by": {"type": "string"},
-          "reason": {"type": "string", "description": "Why this version was issued"}
+          "reason": {"type": "string"}
         }
-      },
-      "description": "Prior packet versions and their dispositions"
+      }
     },
-    "notes": {
-      "type": "string",
-      "description": "Free-text notes visible to the operator and builder"
+    "notes": {"type": "string"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"disposition": {"const": "APPROVE_FOR_BUILD"}}, "required": ["disposition"]},
+      "then": {"required": ["disposition_by", "disposition_date", "disposition_rationale"], "properties": {"handoff_status": {"const": "BUILD_READY"}}}
+    },
+    {
+      "if": {"properties": {"status": {"enum": ["ACTIVE", "PAUSED", "EXPIRED"]}}, "required": ["status"]},
+      "then": {"required": ["terminal_action", "expiration_triggers"]}
     }
-  }
+  ]
 }

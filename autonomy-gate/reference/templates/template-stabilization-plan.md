@@ -101,7 +101,7 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable if re-assessment produces SUPERVISED verdict.]
 
 BUILD HANDOFF PACK
-Deployment status: BLOCKED
+Handoff status: BLOCKED_FOR_EVIDENCE
 Generate a ready-to-use stabilization worksheet with process-step, exception, failure-path, baseline, and evidence-log fields derived from this workflow. Include the exact evidence required for re-submission and one completion check. This is an operations pack, not an AI build handoff pack. Do not leave bracketed placeholders or invent thresholds.
 ```
 

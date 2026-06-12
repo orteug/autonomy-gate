@@ -16,11 +16,11 @@ The Gate becomes useful when it is part of a recurring cadence, not an occasiona
 
 2. **Submit to the Gate (ASSESS mode).** Paste the description into your Gate workspace. Receive the three-section output in one response.
 
-3. **Review the packet.** Check: Is the terminal action correctly identified? Is the verdict reasonable? Is the pack READY or BLOCKED?
+3. **Review the packet.** Check the terminal action, verdict, architecture options, and whether the pack is `BUILD_READY` or `BLOCKED_FOR_EVIDENCE`.
 
 4. **Act on the result:**
-   - **READY + convinced:** Record `APPROVE_FOR_BUILD`. Forward the Build Handoff Pack to the builder.
-   - **BLOCKED:** Submit missing values using RESOLVE_EVIDENCE. Then reassess disposition.
+   - **BUILD_READY + convinced:** Record `APPROVE_FOR_BUILD`. Forward the Build Handoff Pack to the builder.
+   - **BLOCKED_FOR_EVIDENCE:** Submit missing values using RESOLVE_EVIDENCE. The Gate reruns affected rules before disposition.
    - **Not convinced:** Record `REVISE`. Specify what needs to change.
    - **HUMAN_ONLY:** Document the decision. Share the Governance Memo with the requestor. Close the automation request.
 
@@ -41,7 +41,7 @@ The Gate becomes useful when it is part of a recurring cadence, not an occasiona
 **Agenda:**
 
 **1. Blocked assessments (5 min)**
-- List all workflows in `HOLD_FOR_EVIDENCE` or `REVISE_REQUESTED` state
+- List all workflows in `HANDOFF_BLOCKED` or returned to `ASSESSED` for revision
 - For each: is the blocking evidence now available? Who owns it?
 - Action: submit evidence updates or escalate to the owner
 

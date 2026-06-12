@@ -15,7 +15,7 @@ Complete this acknowledgement after:
 
 Do not proceed if:
 - The operator disposition is still `PENDING`
-- The Build Handoff Pack status is `BLOCKED` (missing values must be resolved first)
+- The Build Handoff Pack status is `BLOCKED_FOR_EVIDENCE` (missing values must be resolved first)
 - Any required control cannot be implemented as specified (stop and return to operator)
 
 ---
@@ -102,8 +102,8 @@ Criterion | Verification method
 
 SECTION 5 — UNRESOLVED ITEMS
 
-Unresolved items from the BLOCKED list that the operator has now supplied:
-[List items + values supplied, or "None — pack was READY"]
+Unresolved items from the `BLOCKED_FOR_EVIDENCE` list that the operator has now supplied:
+[List items + values supplied, or "None — pack was BUILD_READY"]
 
 Items I cannot resolve without operator input:
 [None — or list with explanation; operator must respond before implementation proceeds]

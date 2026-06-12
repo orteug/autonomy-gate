@@ -1,13 +1,13 @@
 # The Autonomy Gate
 
-The Autonomy Gate receives a workflow description, assesses what level of AI autonomy it deserves, and produces the execution artifact the operator acts on — in one pass, without asking clarifying questions. To use it: create a Claude Project or supported ChatGPT Project, set the custom instruction to `You are The Autonomy Gate. Follow identity.md and rules.md.`, upload the 13 runtime files listed below, then paste any workflow description. You will get a Workflow Intake Snapshot, an Autonomy Decision Packet with a verdict citing named rules, and a ready-to-use execution artifact — every time, regardless of how sparse or messy the input is.
+The Autonomy Gate receives a workflow description, assigns the minimum justified autonomy, compares provider-neutral implementation architectures, and produces a governed Build Handoff Pack. Create a Claude Project or supported ChatGPT Project, set the instruction to `You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.`, upload the 14 runtime files below, then submit a workflow description.
 
 ## Judge Path
 
 You do not need to read the whole repository.
 
 1. Run the vendor bank-change prompt in [Try These First](#try-these-first) to see `GATE-2` refuse an irreversible external commitment.
-2. Open [the committed trial outputs](examples/trial-audit-output.md) to inspect three complete receipts without installing anything.
+2. Open [the validated productization receipts](examples/receipts/) to inspect autonomous, supervised, and refusal outcomes without installing anything.
 3. Use [JUDGE_GUIDE.md](JUDGE_GUIDE.md) to audit any named mechanism with a falsifiable prompt.
 4. Read [WRITEUP.md](WRITEUP.md) for the three-paragraph product argument.
 
@@ -25,6 +25,7 @@ reference/autonomy-criteria.md
 reference/surface-capability-matrix.md
 reference/risk-classification.md
 reference/precedents.md
+reference/operating-contract.md
 reference/templates/template-automation-architecture.md
 reference/templates/template-project-setup.md
 reference/templates/template-cowork-config.md
@@ -42,8 +43,8 @@ Claude Projects can receive these in their folder structure. For ChatGPT Project
 **Phase 1 — Assessment**
 The Gate normalizes the input into a structured Workflow Intake Snapshot. It scores the workflow against four autonomy criteria: reversibility, observability, exception rate, and cost of failure. It identifies the terminal action — the last thing that executes, not the label applied to the workflow. It runs an adversarial check with three mandatory challenges. It applies hard gate conditions to the terminal action. It packages the result as an Autonomy Decision Packet with a verdict, confidence level, and justification citing specific rule and gate identifiers.
 
-**Phase 2 — Artifact and Deployment-Pack Generation**
-The Gate reads the verdict and selects the matching artifact template. It checks how many fields can be populated from the snapshot, fills the template as a complete document, then generates the exact surface configuration inside the artifact's DEPLOYMENT PACK. Users apply completed instructions or files; they do not fill blank governance templates.
+**Phase 2 — Architecture and Build Handoff Generation**
+The Gate separates assessment, execution, and builder roles, compares viable architecture classes, and fills the matching artifact. Users select an architecture and supply only irreducible organizational evidence; they do not complete blank governance templates.
 
 The two phases run in sequence in one session. There is no second identity, no external handoff, no clarifying question back to the user.
 
@@ -57,7 +58,7 @@ These three inputs are copy-paste ready. Each produces a materially different ve
 ```
 We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable. If the report has a mistake, it gets caught in review before we post it — and since it's just an internal Slack message, the worst case is we post a correction. Nothing irreversible happens.
 ```
-Expected: `AUTONOMOUS / PROJECT · HIGH` → Project Setup Brief (PROJECT surface: human provides the data exports; operator formats and delivers a Slack-ready report in session). Deployment pack: `BLOCKED` pending operator-defined error-rate threshold and recertification interval.
+Expected autonomy: `AUTONOMOUS · HIGH`. Assessment surface: Project. Execution architecture: human-triggered document workflow. Build Handoff Pack: `BLOCKED_FOR_EVIDENCE` pending operator-defined error-rate threshold and recertification interval.
 
 **Test 2 — Hard gate case:**
 ```
@@ -91,7 +92,9 @@ audit trail, evidence gaps.
 
 ━━ AUTONOMY DECISION PACKET ━━━━━━━━━━━━━━━━━━━━━
 Autonomy: [AUT-N verdict]
-Surface: [SURFACE-N verdict]
+Assessment surface: [where the Gate ran]
+Execution architecture: [technology-neutral or selected stack]
+Builder surface: [implementer]
 Confidence: HIGH / MEDIUM / LOW
 Justification: [specific RULE-NN and GATE-NN identifiers]
 Controls required: [list]
@@ -102,7 +105,7 @@ Artifact required: [template name]
 ━━ [ARTIFACT NAME IN CAPS] ━━━━━━━━━━━━━━━━━━━━━━
 Complete execution document. Prose context, headers, formatted lists.
 Includes EXPECTED OUTCOMES and AUTONOMY EXPIRES WHEN sections.
-Ends with a DEPLOYMENT PACK containing ready-to-apply configuration or an explicit blocked-input list.
+Ends with a BUILD HANDOFF PACK containing complete configuration or an explicit evidence-block list.
 Readable in a meeting without explanation.
 ```
 
@@ -112,7 +115,7 @@ The artifact detaches from the other two sections. A judge, ops leader, or colle
 
 ## Verdicts
 
-Two axes. Always both. Always with confidence.
+Autonomy, three implementation roles, handoff status, and confidence are always distinct.
 
 | Autonomy | Meaning |
 |----------|---------|
@@ -121,12 +124,7 @@ Two axes. Always both. Always with confidence.
 | SOP_FIRST | Process too unstable to assign any autonomy level |
 | HUMAN_ONLY | Judgment or risk cannot be delegated — structural block |
 
-| Surface | Meaning |
-|---------|---------|
-| PROJECT | Human-initiated recurring work in a Claude Project |
-| COWORK | Multi-step scheduled work with files or connectors — may run unattended |
-| CODE_AGENT | Deterministic workflows, scripts, integrations — Claude Code or Codex |
-| NO_AI | No surface assigned — pairs with SOP_FIRST and HUMAN_ONLY |
+`PROJECT`, `COWORK`, and `CODE_AGENT` are implementation patterns. The packet records `Assessment surface`, `Execution architecture`, and `Builder surface` so production design is not limited by the platform running the Gate.
 
 ---
 
@@ -157,7 +155,7 @@ SOP_FIRST is not a failure verdict. It is often the correct automation decision.
 
 The repository uses progressive disclosure:
 
-- `autonomy-gate/` is the 13-file runtime and decision architecture.
+- `autonomy-gate/` contains the 14-file runtime and supporting contracts.
 - `examples/` contains committed receipts.
 - `docs/` is optional operator documentation; it is not required for judging or first use.
 - `print-manual/` and `testing/` are supporting product and validation material, not part of the fast path.
@@ -170,7 +168,7 @@ Copyright 2026 Ariel Ortiz. Licensed under the [Apache License 2.0](LICENSE).
 
 ## Forward Note
 
-The Autonomy Decision Packet is a portable work order. It is produced by the Gate (Decision Layer) and consumed by any execution surface without requiring platform memory to transfer. The artifact's DEPLOYMENT PACK performs that translation directly, so a user does not need a separate blank adapter template.
+The Autonomy Decision Packet is a portable work order. Its Build Handoff Pack translates the selected production architecture for the named builder without binding the design to the assessment platform.
 
 ---
 
@@ -187,7 +185,7 @@ repo-root/
 ├── docs/
 │   └── AUTONOMY_GATE_FIELD_MANUAL.pdf
 │
-├── autonomy-gate/           ← Runtime source; upload only the 13 files listed above
+├── autonomy-gate/           ← Runtime source; upload only the 14 files listed above
 │   ├── identity.md
 │   ├── rules.md
 │   ├── examples.md

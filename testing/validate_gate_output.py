@@ -1,18 +1,7 @@
 #!/usr/bin/env python3
-"""
-validate_gate_output.py — Autonomy Gate output validator.
+"""Validate a saved Autonomy Gate Markdown response."""
 
-Parses a Gate response (Markdown text) and checks for:
-  - Presence of the three required sections (Snapshot, Packet, Artifact)
-  - Required packet fields with valid mechanism IDs
-  - Forbidden placeholders (brackets, TBD, "fill in", "customize")
-  - Logical contradictions (HIGH + evidence gaps, AUTONOMOUS + hard gate, etc.)
-  - Build Handoff Pack consistency
-
-Usage:
-  python3 validate_gate_output.py <output_file.md>
-  cat output.md | python3 validate_gate_output.py -
-"""
+from __future__ import annotations
 
 import re
 import sys
@@ -21,42 +10,30 @@ from pathlib import Path
 
 
 AUTONOMY_VALUES = {"AUTONOMOUS", "SUPERVISED", "SOP_FIRST", "HUMAN_ONLY"}
-SURFACE_VALUES = {"PROJECT", "COWORK", "CODE_AGENT", "NO_AI"}
 CONFIDENCE_VALUES = {"HIGH", "MEDIUM", "LOW"}
-PACK_STATUSES = {"READY", "BLOCKED", "NOT_APPLICABLE"}
-
+HANDOFF_STATUSES = {"BUILD_READY", "BLOCKED_FOR_EVIDENCE", "NOT_APPLICABLE"}
+HANDOFF_HEADING = r"^\s*(?:#{1,4}\s*)?(?:━━\s*)?BUILD HANDOFF PACK(?:\s*━━+)?\s*$"
+PACKET_FIELDS = [
+    "Autonomy",
+    "Assessment surface",
+    "Execution architecture",
+    "Builder surface",
+    "Confidence",
+    "Terminal action",
+    "Justification",
+]
 PLACEHOLDER_PATTERNS = [
-    re.compile(r"\[(?!CONDITIONAL|present when|optional)[^\]]{3,}\]"),  # [fill in], [your value]
+    re.compile(r"\[(?!x\]| \]|CONDITIONAL|present when|optional)[^\]]{3,}\]", re.IGNORECASE),
     re.compile(r"\bTBD\b", re.IGNORECASE),
     re.compile(r"\bcustomize\b", re.IGNORECASE),
     re.compile(r"fill in", re.IGNORECASE),
     re.compile(r"\byour value\b", re.IGNORECASE),
 ]
 
-RULE_ID = re.compile(r"\bRULE-\d+\b")
-GATE_ID = re.compile(r"\bGATE-[1-5]\b")
-
-SECTION_MARKERS = {
-    "snapshot": re.compile(r"WORKFLOW INTAKE SNAPSHOT", re.IGNORECASE),
-    "packet": re.compile(r"AUTONOMY DECISION PACKET", re.IGNORECASE),
-    "artifact": re.compile(r"BUILD HANDOFF PACK|OPERATOR DISPOSITION", re.IGNORECASE),
-}
-
-# Matches full-width box-drawing dashes (━) and regular dashes/underscores
-SECTION_BORDER = re.compile(r"[━─=\-_]{4,}")
-
-PACKET_FIELDS = [
-    "Autonomy",
-    "Surface",
-    "Confidence",
-    "Terminal action",
-    "Justification",
-]
-
 
 @dataclass
 class Finding:
-    severity: str  # FAIL | WARN
+    severity: str
     code: str
     message: str
     line: int = 0
@@ -74,266 +51,190 @@ class ValidationResult:
 
     @property
     def passed(self) -> bool:
-        return not any(f.severity == "FAIL" for f in self.findings)
+        return not any(item.severity == "FAIL" for item in self.findings)
 
 
-def check_three_sections(text: str, result: ValidationResult) -> dict[str, int]:
-    positions = {}
-    for name, pattern in SECTION_MARKERS.items():
-        m = pattern.search(text)
-        if m:
-            positions[name] = m.start()
-        else:
-            result.fail(
-                f"STRUCT-{name.upper()}",
-                f"Required section not found: {name.upper()}. "
-                "Gate must produce Snapshot, Packet, and Artifact in every response.",
-            )
-    return positions
+def section(text: str, start: str, end: str | None = None) -> str:
+    match = re.search(start, text, re.IGNORECASE | re.MULTILINE)
+    if not match:
+        return ""
+    tail = text[match.end():]
+    if end:
+        stop = re.search(end, tail, re.IGNORECASE | re.MULTILINE)
+        if stop:
+            tail = tail[:stop.start()]
+    return tail
 
 
-def extract_packet_blocks(text: str) -> list[str]:
-    """Return all packet blocks from the text (one per Gate run)."""
-    parts = re.split(r"(?:AUTONOMY DECISION PACKET)", text, flags=re.IGNORECASE)
-    blocks = []
-    for part in parts[1:]:
-        lines = []
-        for line in part.splitlines():
-            if re.match(r"^\s*#{1,3}\s+", line) and lines:
-                break
-            lines.append(line)
-        block = "\n".join(lines)
-        # Only treat as a real packet block if it contains actual packet fields
-        if re.search(r"(?m)^[*\s]*Autonomy\s*:", block):
-            blocks.append(block)
-    return blocks
-
-
-def extract_packet_block(text: str) -> str:
-    """Return the first packet block (backward-compatible)."""
-    blocks = extract_packet_blocks(text)
-    return blocks[0] if blocks else ""
-
-
-def parse_packet_fields(packet_block: str) -> dict[str, str]:
-    fields = {}
-    for line in packet_block.splitlines():
-        if ":" in line:
-            key, _, value = line.partition(":")
-            key = key.strip().lstrip("─- *")
-            value = value.strip()
-            if key and value:
-                fields[key] = value
+def parse_fields(block: str) -> dict[str, str]:
+    fields: dict[str, str] = {}
+    for line in block.splitlines():
+        line = line.strip().replace("**", "")
+        match = re.match(r"^\s*(?:[-*]\s*)?([A-Za-z][A-Za-z /_-]+?)\s*:\s*(.+?)\s*$", line)
+        if match:
+            fields[match.group(1).strip()] = match.group(2).strip().strip("`*")
     return fields
 
 
-def check_packet_fields(text: str, result: ValidationResult) -> list[dict[str, str]]:
-    blocks = extract_packet_blocks(text)
+def packet_blocks(text: str) -> list[str]:
+    starts = list(re.finditer(r"AUTONOMY DECISION PACKET", text, re.IGNORECASE))
+    blocks: list[str] = []
+    for index, start in enumerate(starts):
+        tail_end = starts[index + 1].start() if index + 1 < len(starts) else len(text)
+        tail = text[start.end():tail_end]
+        boundary = re.search(r"\n\s*(?:━━|#{1,3}\s+)(?!AUTONOMY DECISION PACKET)", tail, re.IGNORECASE)
+        blocks.append(tail[:boundary.start()] if boundary else tail)
+    return blocks
+
+
+def check_structure(text: str, result: ValidationResult) -> None:
+    for code, marker in (
+        ("STRUCT-SNAPSHOT", "WORKFLOW INTAKE SNAPSHOT"),
+        ("STRUCT-PACKET", "AUTONOMY DECISION PACKET"),
+        ("STRUCT-ARTIFACT", "OPERATOR DISPOSITION"),
+    ):
+        if not re.search(marker, text, re.IGNORECASE):
+            result.fail(code, f"Required section not found: {marker}.")
+    if not re.search(HANDOFF_HEADING, text, re.IGNORECASE | re.MULTILINE):
+        result.fail("PACK-MISSING", "BUILD HANDOFF PACK section not found.")
+
+
+def check_packets(text: str, result: ValidationResult) -> None:
+    blocks = packet_blocks(text)
     if not blocks:
-        for required in PACKET_FIELDS:
-            result.fail("PKT-FIELD", f"Required packet field missing: '{required}'")
-        return [{}]
-
-    all_fields = []
-    for i, block in enumerate(blocks):
-        prefix = f"Run {i+1}: " if len(blocks) > 1 else ""
-        fields = parse_packet_fields(block)
-        all_fields.append(fields)
-
-        for required in PACKET_FIELDS:
-            if required not in fields:
-                result.fail(
-                    "PKT-FIELD",
-                    f"{prefix}Required packet field missing: '{required}'",
-                )
-
-        autonomy = fields.get("Autonomy", "")
-        surface = fields.get("Surface", "")
-        confidence = fields.get("Confidence", "")
-
-        for val, valid_set, field_name in [
-            (autonomy, AUTONOMY_VALUES, "Autonomy"),
-            (surface, SURFACE_VALUES, "Surface"),
-            (confidence, CONFIDENCE_VALUES, "Confidence"),
-        ]:
-            token = val.split()[0].rstrip(".,()").upper() if val else ""
-            if token and token not in valid_set:
-                result.fail(
-                    "PKT-VALUE",
-                    f"{prefix}Packet field '{field_name}' has unrecognized value: '{val}'. "
-                    f"Expected one of: {', '.join(sorted(valid_set))}",
-                )
-
-    return all_fields
-
-
-def check_justification_citations(fields: dict[str, str], result: ValidationResult) -> None:
-    justification = fields.get("Justification", "")
-    if not justification:
+        for name in PACKET_FIELDS:
+            result.fail("PKT-FIELD", f"Required packet field missing: '{name}'")
         return
-    has_rule = bool(RULE_ID.search(justification))
-    if not has_rule:
-        result.warn(
-            "PKT-CITE",
-            "Justification field does not cite any RULE-NN identifier. "
-            "Verdicts should cite the rules that drove them.",
-        )
-
-
-def check_contradictions(fields: dict[str, str], text: str, result: ValidationResult) -> None:
-    autonomy_raw = fields.get("Autonomy", "").upper()
-    confidence_raw = fields.get("Confidence", "").upper()
-    surface_raw = fields.get("Surface", "").upper()
-    pack_raw = fields.get("Build Handoff Pack", "").upper()
-
-    autonomy = next((v for v in AUTONOMY_VALUES if v in autonomy_raw), "")
-    confidence = next((v for v in CONFIDENCE_VALUES if v in confidence_raw), "")
-    surface = next((v for v in SURFACE_VALUES if v in surface_raw), "")
-
-    # HIGH confidence with named evidence gaps — check the packet block only, not full text
-    if confidence == "HIGH":
-        # Look for evidence gaps line with actual content (not empty or "none")
-        gap_match = re.search(r"Evidence gaps?:\s+(?!N/A|None|none|—|$)(.+)", text, re.IGNORECASE | re.MULTILINE)
-        if gap_match and gap_match.group(1).strip() not in ("—", "None", "N/A", ""):
-            result.fail(
-                "CONTRA-HIGH-GAPS",
-                "Confidence is HIGH but evidence gaps are named. "
-                "HIGH confidence requires all required fields populated and no decision-material gaps. "
-                "(RULE-06)",
-            )
-
-    # AUTONOMOUS with a hard gate — check the Justification field specifically
-    if autonomy == "AUTONOMOUS":
+    for run_number, block in enumerate(blocks, 1):
+        fields = parse_fields(block)
+        prefix = f"Run {run_number}: " if len(blocks) > 1 else ""
+        for name in PACKET_FIELDS:
+            if not fields.get(name):
+                result.fail("PKT-FIELD", f"{prefix}Required packet field missing: '{name}'")
+        if "Surface" in fields:
+            result.fail("PKT-SURFACE", f"{prefix}Legacy overloaded 'Surface' field is forbidden.")
+        autonomy_parts = fields.get("Autonomy", "").split()
+        confidence_parts = fields.get("Confidence", "").split()
+        autonomy = autonomy_parts[0].strip("`.,()") if autonomy_parts else ""
+        confidence = confidence_parts[0].strip("`.,()") if confidence_parts else ""
+        if autonomy and autonomy not in AUTONOMY_VALUES:
+            result.fail("PKT-VALUE", f"{prefix}Invalid autonomy value: {autonomy}")
+        if confidence and confidence not in CONFIDENCE_VALUES:
+            result.fail("PKT-VALUE", f"{prefix}Invalid confidence value: {confidence}")
         justification = fields.get("Justification", "")
-        gate_hits = GATE_ID.findall(justification)
-        critical_gates = [g for g in gate_hits if g in {"GATE-2", "GATE-3"}]
-        if critical_gates:
-            result.fail(
-                "CONTRA-AUTO-GATE",
-                f"Autonomy is AUTONOMOUS but {critical_gates} cited in Justification. "
-                "GATE-2 and GATE-3 require HUMAN_ONLY regardless of controls. (RULE-06)",
-            )
-
-    # NO_AI surface with non-SOP_FIRST / HUMAN_ONLY autonomy
-    if "NO_AI" in surface and autonomy not in ("SOP_FIRST", "HUMAN_ONLY", ""):
-        result.fail(
-            "CONTRA-NO-AI",
-            f"Surface is NO_AI but autonomy is '{autonomy}'. "
-            "NO_AI pairs only with SOP_FIRST or HUMAN_ONLY. (RULE-06)",
-        )
-
-    # NOT_APPLICABLE pack with AUTONOMOUS or SUPERVISED
-    if "NOT_APPLICABLE" in pack_raw and autonomy in ("AUTONOMOUS", "SUPERVISED"):
-        result.fail(
-            "CONTRA-PACK-STATUS",
-            f"Build Handoff Pack is NOT_APPLICABLE but autonomy is '{autonomy}'. "
-            "NOT_APPLICABLE pairs only with SOP_FIRST and HUMAN_ONLY. (RULE-14)",
-        )
-
-    # READY pack with HUMAN_ONLY
-    if "READY" in pack_raw and autonomy == "HUMAN_ONLY":
-        result.warn(
-            "CONTRA-READY-HUMAN",
-            "Build Handoff Pack is READY but autonomy is HUMAN_ONLY. "
-            "HUMAN_ONLY workflows produce a Governance Memo, not a READY implementation pack. "
-            "Expected NOT_APPLICABLE. (RULE-14)",
-        )
+        if justification and not re.search(r"\bRULE-\d+\b", justification):
+            result.warn("PKT-CITE", f"{prefix}Justification does not cite a RULE-NN identifier.")
+        gaps = fields.get("Evidence gaps", "").strip()
+        if confidence == "HIGH" and gaps and gaps.lower() not in {"none", "n/a", "not applicable", "—"}:
+            result.fail("CONTRA-HIGH-GAPS", f"{prefix}HIGH confidence cannot include decision-material evidence gaps.")
+        if autonomy == "AUTONOMOUS" and re.search(r"\bGATE-[23]\b", justification):
+            result.fail("CONTRA-AUTO-GATE", f"{prefix}AUTONOMOUS conflicts with GATE-2 or GATE-3.")
 
 
-def strip_operator_section(text: str) -> str:
-    """Remove OPERATOR DISPOSITION sections — their blanks are intentional."""
-    return re.sub(
-        r"OPERATOR DISPOSITION.*?(?=\n#{1,3}\s|\Z)",
-        "",
-        text,
-        flags=re.DOTALL | re.IGNORECASE,
+def handoff_block(text: str) -> str:
+    return section(text, HANDOFF_HEADING, r"OPERATOR DISPOSITION")
+
+
+def check_handoff(text: str, result: ValidationResult) -> None:
+    block = handoff_block(text)
+    if not block:
+        return
+    fields = parse_fields(block)
+    raw_status = (
+        fields.get("Handoff status")
+        or fields.get("Build Handoff Pack")
+        or fields.get("Deployment status")
     )
+    if not raw_status:
+        result.fail("PACK-STATUS", "Handoff status is missing.")
+        return
+    status = raw_status.strip(" `*").replace(" ", "_").upper()
+    if status not in HANDOFF_STATUSES:
+        result.fail("PACK-STATUS", f"Invalid handoff status '{status}'.")
+        return
+    if status == "BUILD_READY":
+        if not re.search(r"\bManifest\s*:", block, re.IGNORECASE):
+            result.fail("PACK-MANIFEST", "BUILD_READY requires an artifact manifest.")
+        entries = re.split(r"(?=^\s*-?\s*Path\s*:)", block, flags=re.IGNORECASE | re.MULTILINE)[1:]
+        if not entries:
+            result.fail("PACK-MANIFEST", "BUILD_READY manifest contains no file entries.")
+        for entry in entries:
+            if not re.search(r"^\s*(?:-\s*)?Complete content\s*:\s*\S", entry, re.IGNORECASE | re.MULTILINE):
+                result.fail("PACK-CONTENT", "Every BUILD_READY manifest entry requires complete content.")
+            if not re.search(r"^\s*(?:-\s*)?Source evidence\s*:\s*\S", entry, re.IGNORECASE | re.MULTILINE):
+                result.fail("PACK-SOURCE", "Every BUILD_READY manifest entry requires source evidence.")
+        if not re.search(r"Acceptance tests?\s*:", block, re.IGNORECASE):
+            result.fail("PACK-TESTS", "BUILD_READY requires complete acceptance tests.")
+        if re.search(r"Required before build\s*:\s*\S", block, re.IGNORECASE):
+            result.fail("PACK-READY-BLOCKERS", "BUILD_READY cannot contain unresolved required inputs.")
+    elif status == "BLOCKED_FOR_EVIDENCE":
+        if not re.search(r"Required before build\s*:\s*\S", block, re.IGNORECASE):
+            result.fail("PACK-BLOCKERS", "BLOCKED_FOR_EVIDENCE requires named missing evidence.")
+
+
+def disposition_block(text: str) -> str:
+    return section(text, r"OPERATOR DISPOSITION")
+
+
+def check_disposition(text: str, result: ValidationResult) -> None:
+    block = disposition_block(text)
+    if not block:
+        result.fail("DISP-MISSING", "OPERATOR DISPOSITION section not found.")
+        return
+    checked_approval = bool(re.search(r"\[x\]\s*APPROVE_FOR_BUILD", block, re.IGNORECASE))
+    field_approval = bool(re.search(r"Disposition\s*:\s*APPROVE_FOR_BUILD", block, re.IGNORECASE))
+    if checked_approval:
+        result.fail("DISP-PRESELECTED", "The Gate may not pre-select APPROVE_FOR_BUILD.")
+    if field_approval or checked_approval:
+        required = {
+            "Name / role": r"Name\s*/\s*role\s*:\s*\S",
+            "Date": r"Date\s*:\s*\d{4}-\d{2}-\d{2}",
+            "Packet version": r"Packet version\s*:\s*v\d+",
+            "Rationale": r"Rationale\s*:\s*\S",
+        }
+        missing = [name for name, pattern in required.items() if not re.search(pattern, block, re.IGNORECASE)]
+        if missing:
+            result.fail("DISP-PRESELECTED", "APPROVE_FOR_BUILD appears without a complete operator record.")
+            result.fail("DISP-METADATA", f"Approval is missing required metadata: {', '.join(missing)}.")
 
 
 def check_placeholders(text: str, result: ValidationResult) -> None:
-    # Exclude the OPERATOR DISPOSITION section — blanks there are by design (RULE-15)
-    checkable = strip_operator_section(text)
-    lines = checkable.splitlines()
-    for lineno, line in enumerate(lines, 1):
+    checkable = re.sub(r"OPERATOR DISPOSITION.*\Z", "", text, flags=re.IGNORECASE | re.DOTALL)
+    for line_number, line in enumerate(checkable.splitlines(), 1):
         for pattern in PLACEHOLDER_PATTERNS:
             if pattern.search(line):
-                snippet = line.strip()[:80]
-                result.fail(
-                    "PLACEHOLDER",
-                    f"Forbidden placeholder at line {lineno}: {snippet!r}",
-                    line=lineno,
-                )
-                break  # one finding per line
-
-
-def check_operator_disposition(text: str, result: ValidationResult) -> None:
-    if not re.search(r"OPERATOR DISPOSITION", text, re.IGNORECASE):
-        result.fail(
-            "DISP-MISSING",
-            "OPERATOR DISPOSITION section not found. Required by RULE-15 and RULE-12.",
-        )
-        return
-
-    if re.search(r"\[x\]\s*APPROVE_FOR_BUILD", text, re.IGNORECASE):
-        result.fail(
-            "DISP-PRESELECTED",
-            "APPROVE_FOR_BUILD is pre-selected in the OPERATOR DISPOSITION section. "
-            "The Gate may not select APPROVE_FOR_BUILD on the operator's behalf. (RULE-15)",
-        )
+                result.fail("PLACEHOLDER", f"Forbidden placeholder at line {line_number}: {line.strip()[:80]}", line_number)
+                break
 
 
 def validate(text: str) -> ValidationResult:
     result = ValidationResult()
-
-    check_three_sections(text, result)
-    all_fields = check_packet_fields(text, result)
-    for fields in all_fields:
-        check_justification_citations(fields, result)
-        check_contradictions(fields, text, result)
+    check_structure(text, result)
+    check_packets(text, result)
+    check_handoff(text, result)
     check_placeholders(text, result)
-    check_operator_disposition(text, result)
-
+    check_disposition(text, result)
     return result
 
 
 def main() -> int:
-    if len(sys.argv) < 2:
-        print("Usage: validate_gate_output.py <file.md> OR cat output.md | validate_gate_output.py -")
+    if len(sys.argv) != 2:
+        print("Usage: validate_gate_output.py <output_file.md> OR -")
         return 2
-
-    path = sys.argv[1]
-    if path == "-":
-        text = sys.stdin.read()
-        source = "<stdin>"
-    else:
-        p = Path(path)
-        if not p.exists():
-            print(f"File not found: {path}")
-            return 2
-        text = p.read_text(encoding="utf-8")
-        source = path
-
+    source = sys.argv[1]
+    text = sys.stdin.read() if source == "-" else Path(source).read_text(encoding="utf-8")
     result = validate(text)
-
     print(f"Gate Output Validator — {source}")
     print("─" * 60)
-
     if not result.findings:
         print("PASS  No issues found.")
-    else:
-        failures = 0
-        warnings = 0
-        for f in result.findings:
-            loc = f" (line {f.line})" if f.line else ""
-            print(f"{f.severity:4}  [{f.code}]{loc} {f.message}")
-            if f.severity == "FAIL":
-                failures += 1
-            else:
-                warnings += 1
-        print("─" * 60)
-        print(f"{failures} failure(s), {warnings} warning(s)")
-
-    return 0 if result.passed else 1
+    for item in result.findings:
+        location = f" (line {item.line})" if item.line else ""
+        print(f"{item.severity:4}  [{item.code}]{location} {item.message}")
+    failures = sum(item.severity == "FAIL" for item in result.findings)
+    warnings = sum(item.severity == "WARN" for item in result.findings)
+    print(f"Result: {'PASS' if failures == 0 else 'FAIL'} — {failures} failure(s), {warnings} warning(s)")
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

@@ -91,7 +91,7 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Not applicable — AUTONOMOUS / CODE_AGENT has no reviewer role]
 
 BUILD HANDOFF PACK
-Deployment status: [READY or BLOCKED per RULE-14]
+Handoff status: [BUILD_READY or BLOCKED_FOR_EVIDENCE per RULE-14]
 Generate complete `CLAUDE.md` and `AGENTS.md` configuration blocks appropriate to the named code-agent surface. Include allowed actions, prohibited actions, audit requirements, dry-run procedure, and one acceptance test. Do not leave placeholders. If a required value is absent, list it under REQUIRED BEFORE BUILD and generate the remaining grounded configuration.
 ```
 

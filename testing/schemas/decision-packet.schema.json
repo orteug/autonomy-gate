@@ -2,114 +2,64 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "decision-packet.schema.json",
   "title": "Autonomy Decision Packet",
-  "description": "Machine-checkable schema for the Autonomy Decision Packet produced by The Autonomy Gate (RULE-06).",
   "type": "object",
+  "additionalProperties": false,
   "required": [
+    "workflow_id",
+    "packet_version",
     "autonomy",
-    "surface",
+    "assessment_surface",
+    "execution_architecture",
+    "builder_surface",
     "confidence",
     "terminal_action",
     "justification",
     "controls_required",
+    "evidence_gaps",
     "artifact_required",
-    "build_handoff_pack",
+    "handoff_status",
     "operator_disposition"
   ],
   "properties": {
-    "autonomy": {
-      "type": "string",
-      "enum": ["AUTONOMOUS", "SUPERVISED", "SOP_FIRST", "HUMAN_ONLY"],
-      "description": "Autonomy verdict from RULE-06."
-    },
-    "surface": {
-      "type": "string",
-      "enum": ["PROJECT", "COWORK", "CODE_AGENT", "NO_AI"],
-      "description": "Execution surface from RULE-06."
-    },
-    "confidence": {
-      "type": "string",
-      "enum": ["HIGH", "MEDIUM", "LOW"],
-      "description": "Decision confidence level. Independent of Build Handoff Pack status."
-    },
-    "terminal_action": {
-      "type": "string",
-      "minLength": 10,
-      "description": "The last action the workflow executes. Must be descriptive — not a label."
-    },
-    "justification": {
-      "type": "string",
-      "minLength": 5,
-      "description": "RULE-NN and GATE-NN citations that drove the verdict."
-    },
-    "controls_required": {
-      "type": "array",
-      "items": {"type": "string", "minLength": 5},
-      "description": "Controls that must be in place before the workflow runs."
-    },
-    "evidence_gaps": {
-      "type": "array",
-      "items": {"type": "string"},
-      "description": "Named gaps. Required when confidence is MEDIUM or LOW."
-    },
-    "conservative_route": {
-      "type": "string",
-      "description": "Present when adversarial check revised the base verdict."
-    },
-    "artifact_required": {
-      "type": "string",
-      "description": "Template filename for the execution document produced in Phase 2."
-    },
-    "build_handoff_pack": {
-      "type": "string",
-      "enum": ["READY", "BLOCKED", "NOT_APPLICABLE"],
-      "description": "Status of the generated Build Handoff Pack. Independent of confidence."
-    },
-    "operator_disposition": {
-      "type": "string",
-      "enum": ["PENDING", "APPROVE_FOR_BUILD", "REVISE", "HOLD_FOR_EVIDENCE", "REJECT"],
-      "description": "Operator disposition. Always PENDING when issued by the Gate."
-    }
+    "workflow_id": {"type": "string", "pattern": "^WF-\\d{8}-\\d{3}$"},
+    "packet_version": {"type": "string", "pattern": "^v\\d+$"},
+    "autonomy": {"enum": ["AUTONOMOUS", "SUPERVISED", "SOP_FIRST", "HUMAN_ONLY"]},
+    "assessment_surface": {"type": "string", "minLength": 3},
+    "execution_architecture": {"type": "string", "minLength": 10},
+    "builder_surface": {"type": "string", "minLength": 3},
+    "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+    "terminal_action": {"type": "string", "minLength": 10},
+    "justification": {"type": "string", "pattern": "RULE-\\d+"},
+    "controls_required": {"type": "array", "items": {"type": "string", "minLength": 5}},
+    "evidence_gaps": {"type": "array", "items": {"type": "string", "minLength": 3}},
+    "artifact_required": {"type": "string", "minLength": 3},
+    "architecture_selected": {"type": "boolean"},
+    "handoff_status": {"enum": ["BUILD_READY", "BLOCKED_FOR_EVIDENCE", "NOT_APPLICABLE"]},
+    "operator_disposition": {"enum": ["PENDING", "APPROVE_FOR_BUILD", "REVISE", "HOLD_FOR_EVIDENCE", "REJECT"]},
+    "disposition_by": {"type": "string", "minLength": 2},
+    "disposition_date": {"type": "string", "format": "date"},
+    "disposition_rationale": {"type": "string", "minLength": 5}
   },
   "allOf": [
     {
-      "description": "Evidence gaps required when confidence is not HIGH",
-      "if": {
-        "properties": {"confidence": {"enum": ["MEDIUM", "LOW"]}}
-      },
-      "then": {
-        "required": ["evidence_gaps"],
-        "properties": {
-          "evidence_gaps": {"minItems": 1}
-        }
-      }
+      "if": {"properties": {"confidence": {"const": "HIGH"}}, "required": ["confidence"]},
+      "then": {"properties": {"evidence_gaps": {"maxItems": 0}}}
     },
     {
-      "description": "NO_AI surface pairs only with SOP_FIRST or HUMAN_ONLY",
-      "if": {
-        "properties": {"surface": {"const": "NO_AI"}}
-      },
-      "then": {
-        "properties": {
-          "autonomy": {"enum": ["SOP_FIRST", "HUMAN_ONLY"]}
-        }
-      }
+      "if": {"properties": {"confidence": {"enum": ["MEDIUM", "LOW"]}}, "required": ["confidence"]},
+      "then": {"properties": {"evidence_gaps": {"minItems": 1}}}
     },
     {
-      "description": "NOT_APPLICABLE pack pairs only with HUMAN_ONLY or SOP_FIRST",
-      "if": {
-        "properties": {"build_handoff_pack": {"const": "NOT_APPLICABLE"}}
-      },
-      "then": {
-        "properties": {
-          "autonomy": {"enum": ["HUMAN_ONLY", "SOP_FIRST"]}
-        }
-      }
+      "if": {"properties": {"handoff_status": {"const": "BUILD_READY"}}, "required": ["handoff_status"]},
+      "then": {"properties": {"architecture_selected": {"const": true}}, "required": ["architecture_selected"]}
     },
     {
-      "description": "Gate-issued packets always have PENDING disposition",
-      "properties": {
-        "operator_disposition": {"const": "PENDING"}
-      }
+      "if": {"properties": {"operator_disposition": {"const": "APPROVE_FOR_BUILD"}}, "required": ["operator_disposition"]},
+      "then": {"required": ["disposition_by", "disposition_date", "disposition_rationale"], "properties": {"handoff_status": {"const": "BUILD_READY"}}}
+    },
+    {
+      "if": {"properties": {"autonomy": {"const": "HUMAN_ONLY"}}, "required": ["autonomy"]},
+      "then": {"properties": {"handoff_status": {"const": "NOT_APPLICABLE"}}}
     }
   ]
 }

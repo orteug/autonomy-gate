@@ -89,7 +89,7 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Not applicable — AUTONOMOUS / COWORK has no approval checkpoint.]
 
 BUILD HANDOFF PACK
-Deployment status: [READY or BLOCKED per RULE-14]
+Handoff status: [BUILD_READY or BLOCKED_FOR_EVIDENCE per RULE-14]
 Generate the exact folder tree, complete project instructions, run trigger, terminal-status log format, failure behavior, and one non-production acceptance run. Do not leave placeholders. If schedule, path, or connector details are missing, name them under REQUIRED BEFORE BUILD and configure manual trigger as the conservative fallback.
 ```
 

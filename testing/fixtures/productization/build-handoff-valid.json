@@ -1,0 +1,23 @@
+{
+  "workflow_id": "WF-20260611-001",
+  "packet_version": "v1",
+  "status": "BUILD_READY",
+  "architecture_option_id": "primary",
+  "manifest": [{
+    "path": "project-instructions.md",
+    "purpose": "Define the bounded workflow",
+    "complete_content": "Use only supplied exports, validate periods, produce an internal narrative, and perform no external action.",
+    "source_evidence": ["packet.terminal_action", "packet.controls_required"]
+  }],
+  "assumptions": ["Exports retain a stable documented shape"],
+  "unresolved_dependencies": [],
+  "prohibited_actions": ["Do not post externally or modify source systems"],
+  "acceptance_tests": [{
+    "setup": "Valid same-period exports",
+    "input": "One reporting run",
+    "expected": "Source-grounded internal narrative",
+    "pass_criterion": "No invented value and no external action"
+  }],
+  "expiration_triggers": ["Source schema changes", "Model or platform changes", "An incident occurs"],
+  "stop_conditions": ["Required export missing", "Reporting periods conflict"]
+}

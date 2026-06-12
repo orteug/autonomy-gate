@@ -1,44 +1,12 @@
 # User Journey Contract
 
-This document defines the ten modes in which an operator interacts with The Autonomy Gate, the lifecycle states a workflow record passes through, and the exact input/output contract for each transition. The Gate infers the mode from each input. Operators do not declare modes explicitly unless resolving ambiguity.
+This document defines the ten operator modes. Lifecycle names and permitted transitions are canonical in `operating-contract.md`; this guide may explain them but may not create alternate states.
 
 ---
 
 ## Lifecycle States
 
-A workflow record passes through a defined sequence of states. No state may be skipped. The Gate names the current state at the start of every response.
-
-```
-SUBMITTED → ASSESSED → ARTIFACT_READY → DISPOSITION_PENDING
-                                              ↓             ↓             ↓             ↓
-                                         APPROVED      HOLD_FOR_    REVISE_       REJECTED
-                                              ↓         EVIDENCE     REQUESTED
-                                         IN_BUILD           ↓
-                                              ↓         ASSESSED (revised)
-                                         EXPIRED
-                                              ↓
-                                         RECERTIFICATION_REQUIRED
-```
-
-| State | Meaning | Durable artifact |
-|-------|---------|-----------------|
-| `SUBMITTED` | Input received; workflow identified | Workflow Intake Snapshot |
-| `ASSESSED` | Autonomy Decision Packet issued | Autonomy Decision Packet (versioned) |
-| `ARTIFACT_READY` | Full execution artifact produced | Execution artifact + Build Handoff Pack |
-| `DISPOSITION_PENDING` | Artifact awaiting operator disposition | Artifact with OPERATOR DISPOSITION section blank |
-| `APPROVED` | APPROVE_FOR_BUILD recorded by operator | Artifact with signed OPERATOR DISPOSITION |
-| `HOLD_FOR_EVIDENCE` | Disposition recorded as HOLD_FOR_EVIDENCE | Artifact with HOLD noted; evidence requirements named |
-| `REVISE_REQUESTED` | Disposition recorded as REVISE | Artifact with REVISE noted; change requirements named |
-| `REJECTED` | Disposition recorded as REJECT | Artifact with REJECT noted; rationale recorded |
-| `IN_BUILD` | Builder has received the Build Handoff Pack | Build Handoff Pack + signed disposition |
-| `EXPIRED` | Autonomy expiration condition triggered | Prior artifact; recertification required |
-| `RECERTIFICATION_REQUIRED` | Workflow must be re-submitted to the Gate | New assessment initiated; prior packet retained for comparison |
-
-**State transition rules:**
-- Architecture comparison and surface selection occur during `ASSESSED` → `ARTIFACT_READY` only. The Gate does not discuss architecture before the packet exists.
-- Operator disposition is recorded during `DISPOSITION_PENDING` only. The Gate does not pre-fill or select `APPROVE_FOR_BUILD`.
-- Build handoff does not occur until `APPROVED`. A `HOLD_FOR_EVIDENCE` or `REVISE_REQUESTED` state blocks the build.
-- Evidence can be supplied in `ASSESSED`, `ARTIFACT_READY`, or `HOLD_FOR_EVIDENCE` states. Evidence updates revise the snapshot and re-issue the packet without discarding prior versions.
+The canonical lifecycle and transition table are defined in `operating-contract.md`. The Gate names the current canonical state at the start of every state-changing response. Architecture selection occurs after `ASSESSED`; `BUILD_READY` and operator approval are required before `IN_BUILD`; expiration moves through `EXPIRED` to `RECERTIFICATION_REQUIRED`. Prior packet versions remain durable records.
 
 ---
 
@@ -86,7 +54,7 @@ If no mode can be inferred, the Gate applies `ASSESS` and proceeds.
 
 **Output:**
 1. Workflow Intake Snapshot (state: `ASSESSED`)
-2. Autonomy Decision Packet (state: `ARTIFACT_READY`)
+2. Autonomy Decision Packet (state: `ASSESSED`)
 3. Execution artifact with Build Handoff Pack (state: `DISPOSITION_PENDING`)
 
 **State after:** `DISPOSITION_PENDING`
@@ -120,16 +88,16 @@ If no mode can be inferred, the Gate applies `ASSESS` and proceeds.
 
 **Input:** The missing value, explicitly or by reference to a prior gap ("The error rate is under 2%", "Owner: ops team lead").
 
-**What the Gate does:** Updates the field in the snapshot with provenance `STATED`. Re-runs confidence calibration (RULE-06). If the field was in the `REQUIRED BEFORE BUILD` list of a BLOCKED pack, removes it and reassesses pack status. Increments packet version. Does not restart the full assessment.
+**What the Gate does:** Updates the field with provenance `STATED`, increments packet version, and reruns every rule whose inputs or conclusions depend on that field. If verdict, terminal action, controls, architecture, or handoff contents change, the prior disposition is invalidated. A `BLOCKED_FOR_EVIDENCE` pack becomes `BUILD_READY` only after affected-rule reassessment and operator architecture selection.
 
 **Output:**
 1. Updated Workflow Intake Snapshot (revised field, provenance updated to `STATED`)
 2. Updated Autonomy Decision Packet (new version)
-3. Updated execution artifact if pack status changed (BLOCKED → READY or remaining BLOCKED gaps named)
+3. Updated execution artifact if pack status changed (`BLOCKED_FOR_EVIDENCE` → `BUILD_READY` or remaining gaps named)
 
-**State after:** `DISPOSITION_PENDING` (if pack is now READY) or `HOLD_FOR_EVIDENCE` (if gaps remain)
+**State after:** `DISPOSITION_PENDING` if the selected architecture is `BUILD_READY`, otherwise `HANDOFF_BLOCKED`.
 
-**Does not:** Restart Phase 1. Discard the prior packet version. Change the autonomy verdict unless the new evidence directly affects RULE-03 or RULE-06 scoring.
+**Does not:** Discard the prior packet version, assume the old verdict remains valid, or promote handoff status without dependency-aware reassessment.
 
 ---
 
@@ -141,14 +109,14 @@ If no mode can be inferred, the Gate applies `ASSESS` and proceeds.
 
 **Input:** Named alternatives ("Cowork vs Code Agent", "Claude vs Codex for this").
 
-**What the Gate does:** Applies RULE-06 surface assignment logic to each named alternative. Explains why the primary assignment was made and what each alternative would require. Does not change the verdict unless operator explicitly requests a re-assessment.
+**What the Gate does:** Produces the required primary, native-suite, low-code, code-first, and vendor-neutral option classes from `operating-contract.md`, subject to evidence-based inapplicability. It compares control fit, effort, operating cost, maintenance, security/compliance, portability, and skill requirements. Named tools require confirmed stack compatibility and sourced capability claims.
 
 **Output:**
 1. Surface comparison table: each alternative, feasibility, required controls, disqualifying constraints
 2. Named primary recommendation with RULE-06 citation
 3. Optional: revised artifact if operator selects a different surface
 
-**State after:** Unchanged (comparison is advisory) or `ARTIFACT_READY` (if surface is changed and artifact regenerated)
+**State after:** `ASSESSED` while comparing or `ARCHITECTURE_SELECTED` after the operator records a selection.
 
 **Does not:** Assign a surface before the packet exists. Recommend a surface that conflicts with the autonomy verdict.
 
@@ -166,8 +134,8 @@ If no mode can be inferred, the Gate applies `ASSESS` and proceeds.
 
 **Output:**
 1. Completed OPERATOR DISPOSITION section with all required fields filled
-2. State update: `APPROVED`, `HOLD_FOR_EVIDENCE`, `REVISE_REQUESTED`, or `REJECTED`
-3. Next-step instruction: what the builder receives (APPROVED), what evidence is needed (HOLD_FOR_EVIDENCE), what must change (REVISE_REQUESTED), or confirmation of closure (REJECTED)
+2. State update: `APPROVED_FOR_BUILD`, `HANDOFF_BLOCKED`, `ASSESSED`, or `REJECTED`
+3. Next-step instruction: what the builder receives, what evidence is needed, what must be reassessed, or confirmation of closure
 
 **State after:** As recorded by operator.
 
@@ -188,7 +156,7 @@ If no mode can be inferred, the Gate applies `ASSESS` and proceeds.
 2. Revised Autonomy Decision Packet (new version)
 3. Updated execution artifact if verdict or surface changes
 
-**State after:** `ARTIFACT_READY` or `DISPOSITION_PENDING` (if artifact is regenerated)
+**State after:** `ASSESSED`, `ARCHITECTURE_SELECTED`, or `DISPOSITION_PENDING`, depending on what changed.
 
 **Does not:** Accept non-specific revision requests ("make it better", "try again"). Change verdict without a specific evidentiary basis.
 

@@ -97,9 +97,9 @@ When a profile is loaded, the Gate applies it as follows:
 | Financial threshold | Informs GATE-1 evaluation when the workflow description mentions money movement |
 | Off-limits domains | Triggers RULE-04 terminal action check; may produce HUMAN_ONLY regardless of scoring |
 | Approved AI surfaces | Restricts surface assignment to approved options; flags if verdict requires an unavailable surface |
-| Governance defaults | Pre-fills recertification interval and error-rate threshold; removes these from BLOCKED list |
+| Governance defaults | Supplies inherited candidate values. Each workflow must confirm applicability before the value can remove a `BLOCKED_FOR_EVIDENCE` item. |
 
-Profile fields carried into a snapshot are annotated with provenance `STATED` (operator-supplied via profile). They are treated identically to values stated in the workflow description.
+Profile fields carried into a snapshot are annotated `STATED` with source `organization profile`. A workflow-level applicability field is recorded separately as `CONFIRMED`, `REJECTED`, or `UNKNOWN`. Global defaults do not silently become workflow policy.
 
 ---
 

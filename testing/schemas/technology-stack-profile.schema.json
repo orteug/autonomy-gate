@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "technology-stack-profile.schema.json",
+  "title": "Technology Stack Profile",
+  "type": "object",
+  "required": ["profile_version", "fields"],
+  "properties": {
+    "profile_version": {"type": "string", "pattern": "^v\\d+$"},
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["value", "provenance"],
+        "properties": {
+          "value": {},
+          "provenance": {"enum": ["STATED", "DERIVED", "UNKNOWN", "NOT_APPLICABLE"]},
+          "source": {"type": "string"},
+          "derivation_rule": {"type": "string"},
+          "verified_date": {"type": "string", "format": "date"}
+        },
+        "allOf": [
+          {"if": {"properties": {"provenance": {"const": "DERIVED"}}}, "then": {"required": ["derivation_rule"]}},
+          {"if": {"properties": {"provenance": {"const": "STATED"}}}, "then": {"required": ["source"]}}
+        ]
+      }
+    }
+  }
+}

@@ -208,7 +208,7 @@ These overrides are structural. They cannot be bypassed by operator context or u
 
 **Confidence calibration:**
 
-Decision confidence reflects the quality of the autonomy verdict. Build Handoff Pack status (BLOCKED or READY) reflects whether all configuration values needed to deploy have been supplied. These are independent dimensions.
+Decision confidence reflects the quality of the autonomy verdict. Build Handoff Pack status (`BLOCKED_FOR_EVIDENCE` or `BUILD_READY`) reflects implementation completeness. These are independent dimensions and follow `reference/operating-contract.md`.
 
 | Level | Condition |
 |-------|-----------|
@@ -218,32 +218,27 @@ Decision confidence reflects the quality of the autonomy verdict. Build Handoff 
 
 **When LOW:** Name evidence gaps specifically. Apply conservative default — one level more restrictive than the scored verdict, or SOP_FIRST / NO_AI if already at SUPERVISED. Produce the artifact regardless. The artifact describes the basis for the verdict even when evidence is incomplete.
 
-**Surface assignment:**
+**Implementation-role assignment:**
 
-Select the surface that matches the workflow's execution profile:
+Record three different fields. `Assessment surface` is the Project or environment running the Gate. `Execution architecture` is a technology-neutral production design until the organization stack supports named tools. `Builder surface` is the implementer. Never collapse these into one `Surface` value.
 
-| ID | Surface | Assign when |
-|----|---------|------------|
-| SURFACE-1 | PROJECT | Human-initiated recurring work in a Claude Project or ChatGPT Project; no scheduled or unattended execution |
-| SURFACE-2 | COWORK | Multi-step local work with files, schedules, or connectors; Claude Cowork; may run unattended |
-| SURFACE-3 | CODE_AGENT | Deterministic workflows, scripts, integrations, system-to-system enforcement; Claude Code or Codex |
-| SURFACE-4 | NO_AI | No surface assigned; pairs only with SOP_FIRST (AUT-3) and HUMAN_ONLY (AUT-4) |
-
-**Surface fallback logic:** If the recommended surface requires access the user is unlikely to have (Cowork, Claude Code), the artifact must include a fallback: "If [surface] is unavailable, the nearest alternative is [fallback surface] with the following adjustments: [list]." Fallback logic is always named; never silently omitted.
+After the packet, generate the architecture option classes required by `reference/operating-contract.md`. The operator selects one option before the handoff can be `BUILD_READY`. `PROJECT`, `COWORK`, and `CODE_AGENT` may be used as implementation patterns inside an option, not as universal production verdicts.
 
 **Output format — Autonomy Decision Packet:**
 
 ```
 ━━ AUTONOMY DECISION PACKET ━━━━━━━━━━━━━━━━━━━━━
 
-Autonomy:          [AUT-N verdict]
-Surface:           [SURFACE-N verdict]
-Confidence:        HIGH / MEDIUM / LOW
-Justification:     [RULE-NN and/or GATE-NN that drove the verdict]
-Controls required: [audit log / rollback / exception queue / approval record]
-Evidence gaps:     [if LOW — specific missing fields]
-Conservative route:[if LOW — fallback verdict applied]
-Artifact required: [template filename — see RULE-10 table]
+Autonomy:              [AUT-N verdict]
+Assessment surface:    [where this Gate assessment ran]
+Execution architecture:[technology-neutral architecture or selected named stack]
+Builder surface:       [implementer]
+Confidence:            HIGH / MEDIUM / LOW
+Justification:         [RULE-NN and/or GATE-NN that drove the verdict]
+Controls required:     [audit log / rollback / exception queue / approval record]
+Evidence gaps:         [specific decision-material gaps or None]
+Handoff status:        BUILD_READY / BLOCKED_FOR_EVIDENCE / NOT_APPLICABLE
+Artifact required:     [template filename — see RULE-10 table]
 ```
 
 ---
@@ -394,14 +389,14 @@ Every artifact ends with a `BUILD HANDOFF PACK` subsection. This subsection rema
 
 The Gate performs the translation from decision packet to operating configuration. The user does not copy packet fields into a blank template.
 
-**Deployment status:**
-- `READY` — every value required to use the artifact is grounded in the workflow description, and every file named in the build handoff pack manifest has been fully generated as paste-ready content within this response.
-- `BLOCKED` — one or more required values are missing. The Gate still generates every grounded part and names only the unresolved values under `REQUIRED BEFORE BUILD`. If a knowledge file requires operator-specific content that cannot be derived from the workflow description (metric definitions, alert thresholds, escalation policy), do not name it in the manifest — list the content requirement in `REQUIRED BEFORE BUILD` instead. A file named in the manifest but not fully generated in the response makes the pack `BLOCKED`, not `READY`.
-- `NOT APPLICABLE` — HUMAN_ONLY / NO_AI has no AI deployment. Provide the complete human review procedure and explicitly state that no AI configuration should be created.
+**Handoff status:**
+- `BUILD_READY` — the operator selected an architecture; every required value is grounded; every manifest file has complete paste-ready content and source evidence; controls and acceptance tests are complete.
+- `BLOCKED_FOR_EVIDENCE` — one or more irreducible organizational inputs are missing. Generate every grounded part and name only unresolved values under `REQUIRED BEFORE BUILD`. Evidence resolution reruns every affected rule before promotion.
+- `NOT_APPLICABLE` — HUMAN_ONLY has no implementation handoff. Provide the human review procedure and state that no AI configuration is authorized.
 
 **Surface-specific output:**
 
-| Verdict or surface | Deployment pack must contain |
+| Verdict or implementation pattern | Build Handoff Pack must contain |
 |--------------------|------------------------------|
 | PROJECT | Exact project instructions, exact knowledge-file manifest, first-run prompt, acceptance check |
 | COWORK | Exact folder tree, complete instructions, run trigger, logging contract, approval hold if supervised, acceptance check |
@@ -414,7 +409,7 @@ The Gate performs the translation from decision packet to operating configuratio
 2. Do not instruct the user to fill, copy fields into, or customize a blank template.
 3. Generate complete file contents when the target surface uses an instruction file. If a knowledge file requires operator-specific content that cannot be derived from the workflow description, do not name it in the manifest — list the content requirement in `REQUIRED BEFORE BUILD` instead.
 4. Never invent reviewer roles, thresholds, dates, paths, schedules, credentials, or enforcement mechanisms.
-5. Missing required values appear as a concise `REQUIRED BEFORE BUILD` list and set deployment status to `BLOCKED`.
+5. Missing required values appear as a concise `REQUIRED BEFORE BUILD` list and set handoff status to `BLOCKED_FOR_EVIDENCE`.
 6. Every pack includes one acceptance check that proves the configured workflow respects the verdict and terminal-action boundary.
 7. A build handoff pack does not execute, publish, create external resources, or modify production systems. It is configuration output for the operator to review and apply.
 
@@ -449,17 +444,17 @@ Every artifact ends with an `OPERATOR DISPOSITION` section placed after the BUIL
 ```
 ━━ OPERATOR DISPOSITION ━━━━━━━━━━━━━━━━━━━━━━━━
 
-[ ] APPROVE_FOR_BUILD
-[ ] REVISE
-[ ] HOLD_FOR_EVIDENCE
-[ ] REJECT
+APPROVE_FOR_BUILD: unselected
+REVISE: unselected
+HOLD_FOR_EVIDENCE: unselected
+REJECT: unselected
 
-Gate recommendation: [optional — Gate may recommend based on handoff status; may not select]
+Gate recommendation: omitted unless a recommendation is grounded; never records approval
 
-Name / role:   [operator fills]
-Date:          [operator fills]
-Packet version: [operator fills]
-Rationale:     [operator fills]
+Name / role: not recorded
+Date: not recorded
+Packet version: not recorded
+Rationale: not recorded
 ```
 
 ---

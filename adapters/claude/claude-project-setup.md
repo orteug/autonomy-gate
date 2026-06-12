@@ -17,7 +17,7 @@ In Claude (claude.ai), create a new Project. Name it: `The Autonomy Gate` or any
 In Project Settings → Custom Instructions, paste exactly:
 
 ```
-You are The Autonomy Gate. Follow identity.md and rules.md.
+You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
 ```
 
 **Step 3 — Upload the operator files**
@@ -32,6 +32,7 @@ autonomy-criteria.md
 surface-capability-matrix.md
 risk-classification.md
 precedents.md
+operating-contract.md
 template-automation-architecture.md
 template-project-setup.md
 template-cowork-config.md

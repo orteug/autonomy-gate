@@ -27,7 +27,7 @@ The Gate processes the input through six sub-steps in fixed order:
 3. **Base Scoring** (RULE-03) — scores the workflow against four criteria: reversibility, observability, exception rate, cost of failure
 4. **Terminal Action Check** (RULE-04) — identifies what the workflow actually does last, not what it is called; applies the hard gate to the terminal action
 5. **Adversarial Check** (RULE-05) — challenges the base verdict with three mandatory questions before issuing it
-6. **Hard Gate Application and Confidence Calibration** (RULE-06) — applies the five gate conditions; assigns surface; calibrates confidence; packages the Autonomy Decision Packet
+6. **Hard Gate Application and Confidence Calibration** (RULE-06) — applies the five gate conditions; separates assessment, execution, and builder surfaces; calibrates confidence; packages the Autonomy Decision Packet
 
 Phase 1 ends with the Autonomy Decision Packet. It does not end with a question.
 
@@ -38,15 +38,15 @@ The Gate reads the packet and executes four steps:
 1. **Template Selection** (RULE-10) — selects the artifact template that matches the verdict
 2. **Template Completion Check** (RULE-11) — names information gaps before filling
 3. **Document Production** (RULE-12) — fills the template as a presentable document, not a form
-4. **Build Handoff Pack Generation** (RULE-14) — translates the verdict into complete surface-specific configuration or a named blocked-input list
+4. **Build Handoff Pack Generation** (RULE-14) — translates the selected architecture into complete build configuration or a named evidence-block list
 
 Phase 2 ends with a complete execution artifact — readable in a meeting without explanation — whose final subsection is a ready-to-apply BUILD HANDOFF PACK. Users do not fill blank governance templates.
 
 ---
 
-## Two Output Axes — Always Both
+## Decision and Implementation Fields — Always Distinct
 
-Every verdict has two independent dimensions:
+Every verdict names the autonomy level and three independent implementation roles. The canonical definitions and lifecycle are in `reference/operating-contract.md`.
 
 **Autonomy axis** — how much authority the workflow deserves:
 - `AUTONOMOUS` (AUT-1) — AI executes without a human approval checkpoint
@@ -54,13 +54,9 @@ Every verdict has two independent dimensions:
 - `SOP_FIRST` (AUT-3) — process too unstable to assign any autonomy level
 - `HUMAN_ONLY` (AUT-4) — judgment or risk cannot be delegated
 
-**Surface axis** — where the workflow should run:
-- `PROJECT` (SURFACE-1) — structured recurring workspace; human-initiated cadence; Claude Project or ChatGPT Project
-- `COWORK` (SURFACE-2) — multi-step local work with files, schedules, or connectors; Claude Cowork
-- `CODE_AGENT` (SURFACE-3) — deterministic workflows, scripts, integrations, enforcement; Claude Code or Codex
-- `NO_AI` (SURFACE-4) — no surface assigned; pairs with SOP_FIRST and HUMAN_ONLY
+**Assessment surface** names where the Gate ran. **Execution architecture** names how the workflow operates in production. **Builder surface** names who or what implements it. `PROJECT`, `COWORK`, and `CODE_AGENT` remain useful implementation patterns, but they do not substitute for these three fields.
 
-Verdicts are always expressed as both axes: `SUPERVISED / CODE_AGENT`, `AUTONOMOUS / PROJECT`, `HUMAN_ONLY / NO_AI`. Never one axis alone.
+Verdicts are expressed as an autonomy level plus the three implementation fields and decision confidence. A handoff status is reported separately as `BUILD_READY`, `BLOCKED_FOR_EVIDENCE`, or `NOT_APPLICABLE`.
 
 ---
 
@@ -80,7 +76,7 @@ If the consequence cannot be bounded, observed, reversed, or assigned to a human
 
 These are not limitations or disclaimers. They are deliberate architectural decisions. The Gate is explicitly designed to not do these things.
 
-**The Gate does not execute workflows.** It assesses them and produces the artifact the operator acts on. Execution belongs to the surface named in the verdict.
+**The Gate does not execute workflows.** It assesses them, compares implementation architectures, and produces the artifact the operator acts on. Execution belongs to the selected production architecture, not the platform where the assessment ran.
 
 **The Gate does not ask clarifying questions.** It normalizes sparse input, names evidence gaps, routes conservatively when uncertain, and produces an artifact regardless. The operator always delivers. This is RULE-00.
 
