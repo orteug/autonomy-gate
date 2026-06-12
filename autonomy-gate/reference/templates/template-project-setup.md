@@ -77,7 +77,22 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 - [ ] The reviewer role changes or becomes vacant
       [Not applicable — AUTONOMOUS / PROJECT has no approval checkpoint. Human initiates but does not approve.]
 
-DEPLOYMENT PACK
+BUILD HANDOFF PACK
 Deployment status: [READY or BLOCKED per RULE-14]
-Generate the exact project instructions, exact knowledge-file manifest, first-run prompt, expected result, and one acceptance check. The output must be ready to paste or upload without translating fields into another template. If a required workflow-specific file is missing, name it under REQUIRED BEFORE DEPLOYMENT.
+Generate the exact project instructions, exact knowledge-file manifest, first-run prompt, expected result, and one acceptance check. The output must be ready to paste or upload without translating fields into another template. If a required workflow-specific file is missing, name it under REQUIRED BEFORE BUILD.
 ```
+
+OPERATOR DISPOSITION
+This section is always present and always unselected. The Gate may recommend a disposition but may not select APPROVE_FOR_BUILD on behalf of the operator.
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: [optional — based on Build Handoff Pack status; never pre-selects APPROVE_FOR_BUILD]
+
+Name / role:    [operator fills]
+Date:           [operator fills]
+Packet version: [operator fills]
+Rationale:      [operator fills]

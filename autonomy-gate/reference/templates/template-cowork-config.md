@@ -88,7 +88,22 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 - [ ] The reviewer role changes or becomes vacant
       [Not applicable — AUTONOMOUS / COWORK has no approval checkpoint.]
 
-DEPLOYMENT PACK
+BUILD HANDOFF PACK
 Deployment status: [READY or BLOCKED per RULE-14]
-Generate the exact folder tree, complete project instructions, run trigger, terminal-status log format, failure behavior, and one non-production acceptance run. Do not leave placeholders. If schedule, path, or connector details are missing, name them under REQUIRED BEFORE DEPLOYMENT and configure manual trigger as the conservative fallback.
+Generate the exact folder tree, complete project instructions, run trigger, terminal-status log format, failure behavior, and one non-production acceptance run. Do not leave placeholders. If schedule, path, or connector details are missing, name them under REQUIRED BEFORE BUILD and configure manual trigger as the conservative fallback.
 ```
+
+OPERATOR DISPOSITION
+This section is always present and always unselected. The Gate may recommend a disposition but may not select APPROVE_FOR_BUILD on behalf of the operator.
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: [optional — based on Build Handoff Pack status; never pre-selects APPROVE_FOR_BUILD]
+
+Name / role:    [operator fills]
+Date:           [operator fills]
+Packet version: [operator fills]
+Rationale:      [operator fills]

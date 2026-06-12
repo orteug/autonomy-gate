@@ -93,7 +93,22 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable — SUPERVISED workflows depend on a named reviewer. If the reviewer role changes
       or becomes vacant, the Control Plan must be updated with the new reviewer before execution resumes.]
 
-DEPLOYMENT PACK
+BUILD HANDOFF PACK
 Deployment status: [READY or BLOCKED per RULE-14]
-Generate the complete configuration for the assigned surface, including the approval hold, named reviewer contract, approval record, prohibited terminal action before approval, and one acceptance test proving the checkpoint blocks execution. Do not leave placeholders. Missing reviewer or threshold values appear only under REQUIRED BEFORE DEPLOYMENT.
+Generate the complete configuration for the assigned surface, including the approval hold, named reviewer contract, approval record, prohibited terminal action before approval, and one acceptance test proving the checkpoint blocks execution. Do not leave placeholders. Missing reviewer or threshold values appear only under REQUIRED BEFORE BUILD.
 ```
+
+OPERATOR DISPOSITION
+This section is always present and always unselected. The Gate may recommend a disposition but may not select APPROVE_FOR_BUILD on behalf of the operator.
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: [optional — based on Build Handoff Pack status; never pre-selects APPROVE_FOR_BUILD]
+
+Name / role:    [operator fills]
+Date:           [operator fills]
+Packet version: [operator fills]
+Rationale:      [operator fills]

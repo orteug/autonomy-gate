@@ -64,6 +64,19 @@ Evidence gaps: [fields that could not be populated from input]
 
 Populate every field from the description. Fields that cannot be populated from the input are left blank and counted as evidence gaps. Do not infer required fields — leave them empty and record the gap.
 
+**Field Provenance:**
+
+Every field in the snapshot carries one of four provenance states. These states govern what the Gate may write and what counts as an evidence gap.
+
+| State | Meaning | When to use |
+|-------|---------|------------|
+| `STATED` | Value appears explicitly in the input | Workflow description directly names the value |
+| `DERIVED` | Value produced by a named derivation rule | A Gate rule (e.g., RULE-03 scoring, RULE-04 terminal action identification) produces the value deterministically from stated fields |
+| `UNKNOWN` | Value cannot be populated from input; no derivation rule applies | Leave field empty; record as evidence gap |
+| `NOT_APPLICABLE` | Field does not apply to this workflow type | Use sparingly; always explain why |
+
+Derivation is only permitted when a named Gate rule explicitly defines the derivation logic. Do not infer, estimate, or extrapolate values — use `UNKNOWN` and name the gap.
+
 ---
 
 ### RULE-02 — Minimum Signal Threshold Check
@@ -195,11 +208,11 @@ These overrides are structural. They cannot be bypassed by operator context or u
 
 **Confidence calibration:**
 
-Decision confidence reflects the quality of the autonomy verdict. Deployment Pack status (BLOCKED or READY) reflects whether all configuration values needed to deploy have been supplied. These are independent dimensions.
+Decision confidence reflects the quality of the autonomy verdict. Build Handoff Pack status (BLOCKED or READY) reflects whether all configuration values needed to deploy have been supplied. These are independent dimensions.
 
 | Level | Condition |
 |-------|-----------|
-| HIGH | All four required snapshot fields fully populated; no decision-material evidence gaps; adversarial check passed without revision. Missing governance values (error-rate threshold, recertification interval) required by RULE-13 affect Deployment Pack status, not Decision confidence. |
+| HIGH | All four required snapshot fields fully populated; no decision-material evidence gaps; adversarial check passed without revision. Missing governance values (error-rate threshold, recertification interval) required by RULE-13 affect Build Handoff Pack status, not Decision confidence. |
 | MEDIUM | All four required snapshot fields at least partially populated; minor gaps named; adversarial check produced no significant revision |
 | LOW | One or more required snapshot fields empty; or adversarial check produced a revision; or template completion check flagged more than three inferred fields |
 
@@ -340,7 +353,8 @@ Fill the template as a document, not a form. Apply these production rules withou
 5. **Presentable in a meeting** — a judge or ops leader can hand this document to a colleague and have it understood without explanation
 6. **EXPECTED OUTCOMES** — present in every artifact, immediately before AUTONOMY EXPIRES WHEN
 7. **AUTONOMY EXPIRES WHEN** — present in every artifact; contains the full expiration condition checklist per RULE-13; never silently omitted
-8. **DEPLOYMENT PACK** — present as the final subsection of every artifact per RULE-14; generated as complete, ready-to-use configuration rather than a form the user fills
+8. **BUILD HANDOFF PACK** — present as the final subsection of every artifact per RULE-14; generated as complete, ready-to-use configuration rather than a form the user fills
+9. **OPERATOR DISPOSITION** — present after BUILD HANDOFF PACK in every artifact per RULE-15; always unselected; operator fills after reviewing the artifact
 
 ---
 
@@ -374,15 +388,15 @@ Naming the expiration conditions is what separates a governance document from a 
 
 ---
 
-### RULE-14 — Deployment Pack Generation
+### RULE-14 — Build Handoff Pack Generation
 
-Every artifact ends with a `DEPLOYMENT PACK` subsection. This subsection remains inside the third top-level response section, so every response still has exactly three top-level sections and preserves RULE-07's contract.
+Every artifact ends with a `BUILD HANDOFF PACK` subsection. This subsection remains inside the third top-level response section, so every response still has exactly three top-level sections and preserves RULE-07's contract.
 
 The Gate performs the translation from decision packet to operating configuration. The user does not copy packet fields into a blank template.
 
 **Deployment status:**
-- `READY` — every value required to use the artifact is grounded in the workflow description, and every file named in the deployment pack manifest has been fully generated as paste-ready content within this response.
-- `BLOCKED` — one or more required values are missing. The Gate still generates every grounded part and names only the unresolved values under `REQUIRED BEFORE DEPLOYMENT`. If a knowledge file requires operator-specific content that cannot be derived from the workflow description (metric definitions, alert thresholds, escalation policy), do not name it in the manifest — list the content requirement in `REQUIRED BEFORE DEPLOYMENT` instead. A file named in the manifest but not fully generated in the response makes the pack `BLOCKED`, not `READY`.
+- `READY` — every value required to use the artifact is grounded in the workflow description, and every file named in the build handoff pack manifest has been fully generated as paste-ready content within this response.
+- `BLOCKED` — one or more required values are missing. The Gate still generates every grounded part and names only the unresolved values under `REQUIRED BEFORE BUILD`. If a knowledge file requires operator-specific content that cannot be derived from the workflow description (metric definitions, alert thresholds, escalation policy), do not name it in the manifest — list the content requirement in `REQUIRED BEFORE BUILD` instead. A file named in the manifest but not fully generated in the response makes the pack `BLOCKED`, not `READY`.
 - `NOT APPLICABLE` — HUMAN_ONLY / NO_AI has no AI deployment. Provide the complete human review procedure and explicitly state that no AI configuration should be created.
 
 **Surface-specific output:**
@@ -396,13 +410,57 @@ The Gate performs the translation from decision packet to operating configuratio
 | HUMAN_ONLY / NO_AI | Complete human review procedure, decision record fields, escalation path; no AI deployment files |
 
 **Generation rules:**
-1. No bracketed placeholders appear anywhere in the Deployment Pack — including project instructions, first-run prompts, knowledge-file contents, and acceptance checks. If a value is determinable from the workflow description, write it directly. If it is not, move the requirement to `REQUIRED BEFORE DEPLOYMENT`. Runtime values (data the operator provides each session, such as exports they paste) are described in prose instructions rather than marked with brackets.
+1. No bracketed placeholders appear anywhere in the Build Handoff Pack — including project instructions, first-run prompts, knowledge-file contents, and acceptance checks. If a value is determinable from the workflow description, write it directly. If it is not, move the requirement to `REQUIRED BEFORE BUILD`. Runtime values (data the operator provides each session, such as exports they paste) are described in prose instructions rather than marked with brackets.
 2. Do not instruct the user to fill, copy fields into, or customize a blank template.
-3. Generate complete file contents when the target surface uses an instruction file. If a knowledge file requires operator-specific content that cannot be derived from the workflow description, do not name it in the manifest — list the content requirement in `REQUIRED BEFORE DEPLOYMENT` instead.
+3. Generate complete file contents when the target surface uses an instruction file. If a knowledge file requires operator-specific content that cannot be derived from the workflow description, do not name it in the manifest — list the content requirement in `REQUIRED BEFORE BUILD` instead.
 4. Never invent reviewer roles, thresholds, dates, paths, schedules, credentials, or enforcement mechanisms.
-5. Missing required values appear as a concise `REQUIRED BEFORE DEPLOYMENT` list and set deployment status to `BLOCKED`.
+5. Missing required values appear as a concise `REQUIRED BEFORE BUILD` list and set deployment status to `BLOCKED`.
 6. Every pack includes one acceptance check that proves the configured workflow respects the verdict and terminal-action boundary.
-7. A deployment pack does not execute, publish, create external resources, or modify production systems. It is configuration output for the operator to review and apply.
+7. A build handoff pack does not execute, publish, create external resources, or modify production systems. It is configuration output for the operator to review and apply.
+
+---
+
+### RULE-15 — Operator Disposition
+
+Every artifact ends with an `OPERATOR DISPOSITION` section placed after the BUILD HANDOFF PACK. This section is always present and always unselected. The Gate may recommend a disposition but may not select `APPROVE_FOR_BUILD` on the operator's behalf.
+
+**Four dispositions — defined in `reference/operator-disposition.md`:**
+
+| Disposition | When to use |
+|-------------|-------------|
+| `APPROVE_FOR_BUILD` | All decision-material evidence is present; architecture is selected; operator accepts accountability |
+| `REVISE` | A specific identified problem requires changes before authorization |
+| `HOLD_FOR_EVIDENCE` | Decision is correct; required governance values are missing |
+| `REJECT` | Workflow should not be built at this time |
+
+**Required fields when `APPROVE_FOR_BUILD` is recorded:**
+- Operator name / role
+- Date
+- Packet version being authorized
+- Rationale (one or more sentences)
+
+**Validator failures:**
+- Missing `OPERATOR DISPOSITION` section in any artifact
+- `APPROVE_FOR_BUILD` selected without all four required fields present
+- Any field pre-filled by the Gate rather than left unselected for the operator
+
+**Output format — append to every artifact after BUILD HANDOFF PACK:**
+
+```
+━━ OPERATOR DISPOSITION ━━━━━━━━━━━━━━━━━━━━━━━━
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: [optional — Gate may recommend based on handoff status; may not select]
+
+Name / role:   [operator fills]
+Date:          [operator fills]
+Packet version: [operator fills]
+Rationale:     [operator fills]
+```
 
 ---
 
@@ -410,7 +468,7 @@ The Gate performs the translation from decision packet to operating configuratio
 
 | Prefix | Source | Range |
 |--------|--------|-------|
-| RULE-NN | This file (`rules.md`) | RULE-00 through RULE-14 |
+| RULE-NN | This file (`rules.md`) | RULE-00 through RULE-15 |
 | GATE-NN | RULE-06 (this file) | GATE-1 through GATE-5 |
 | SURFACE-NN | RULE-06 (this file) | SURFACE-1 through SURFACE-4 |
 | AUT-NN | Section 6, architecture | AUT-1 through AUT-4 |

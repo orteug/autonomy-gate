@@ -90,7 +90,22 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 - [ ] The reviewer role changes or becomes vacant
       [Not applicable — AUTONOMOUS / CODE_AGENT has no reviewer role]
 
-DEPLOYMENT PACK
+BUILD HANDOFF PACK
 Deployment status: [READY or BLOCKED per RULE-14]
-Generate complete `CLAUDE.md` and `AGENTS.md` configuration blocks appropriate to the named code-agent surface. Include allowed actions, prohibited actions, audit requirements, dry-run procedure, and one acceptance test. Do not leave placeholders. If a required value is absent, list it under REQUIRED BEFORE DEPLOYMENT and generate the remaining grounded configuration.
+Generate complete `CLAUDE.md` and `AGENTS.md` configuration blocks appropriate to the named code-agent surface. Include allowed actions, prohibited actions, audit requirements, dry-run procedure, and one acceptance test. Do not leave placeholders. If a required value is absent, list it under REQUIRED BEFORE BUILD and generate the remaining grounded configuration.
 ```
+
+OPERATOR DISPOSITION
+This section is always present and always unselected. The Gate may recommend a disposition but may not select APPROVE_FOR_BUILD on behalf of the operator.
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: [optional — based on Build Handoff Pack status; never pre-selects APPROVE_FOR_BUILD]
+
+Name / role:    [operator fills]
+Date:           [operator fills]
+Packet version: [operator fills]
+Rationale:      [operator fills]

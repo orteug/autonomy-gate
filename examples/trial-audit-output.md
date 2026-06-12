@@ -153,7 +153,7 @@ These preparation steps, scoped explicitly to not include authorization, can be 
 - [x] Recertification interval passes — Not specified — operator must define before deployment
 - [ ] The reviewer role changes — review and update the named approver(s) in the Human Review Process section when personnel changes occur
 
-**DEPLOYMENT PACK**
+**BUILD HANDOFF PACK**
 
 Deployment status: `NOT APPLICABLE`
 
@@ -163,6 +163,20 @@ No AI deployment file should be created for the terminal action of authorizing a
 - Designated owner role
 - Escalation role for suspected fraud
 - Organization-specific record-retention requirement
+
+**OPERATOR DISPOSITION**
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: APPROVE_FOR_BUILD — GATE-2 verdict is structurally clear; HUMAN_ONLY is the correct designation; human review procedure is complete; no AI configuration is required. Operator should verify that the named approver roles are assigned before operation begins.
+
+Name / role: _______________
+Date: _______________
+Packet version: Run 1 · 2026-06-11
+Rationale: _______________
 
 ---
 
@@ -311,17 +325,31 @@ Application record, scoring rationale per candidate, shortlist version and date,
 - [x] Recertification interval passes — Not specified — operator must define before deployment
 - [x] The reviewer role changes or becomes vacant — workflow paused until new recruiter/hiring manager is designated for the role
 
-**DEPLOYMENT PACK**
+**BUILD HANDOFF PACK**
 
 Deployment status: `BLOCKED`
 
 Create a dedicated Project after the required items below are supplied. Project instructions: assess each candidate only against the approved role criteria; produce a ranked shortlist with evidence per criterion; flag non-standard backgrounds for human review; never reject, contact, schedule, or update an ATS record; emit one terminal status and retain the scoring rationale. First-run acceptance check: use one known-fit, one known-non-fit, and one edge-case candidate; confirm the edge case is escalated and no external action occurs.
 
-**REQUIRED BEFORE DEPLOYMENT**
+**REQUIRED BEFORE BUILD**
 - Approved role-criteria document
 - Named recruiter or hiring-manager reviewer
 - Candidate input method or ATS integration boundary
 - Error threshold and recertification interval
+
+**OPERATOR DISPOSITION**
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: HOLD_FOR_EVIDENCE — verdict and controls are sound; four required values are missing before a build can begin. Operator should supply the role criteria document, reviewer designation, candidate input method, error threshold, and recertification interval, then revisit disposition.
+
+Name / role: _______________
+Date: _______________
+Packet version: Run 2 · 2026-06-11
+Rationale: _______________
 
 ---
 
@@ -456,12 +484,26 @@ One Slack-ready text block per run. Under 400 words. Four sections: Revenue / Pi
 - [x] Recertification interval passes — Not specified — operator must define before deployment
 - [ ] The reviewer role changes or becomes vacant — not applicable; AUTONOMOUS verdict, no designated reviewer required for this workflow
 
-**DEPLOYMENT PACK**
+**BUILD HANDOFF PACK**
 
 Deployment status: `BLOCKED`
 
 Project instructions: when the ops lead provides the Salesforce pipeline export, Stripe weekly revenue summary, and Zendesk ticket report, validate that all three cover the same reporting period; calculate the named metrics; produce Revenue, Pipeline, Support, and Notable Variances sections; use only supplied alert thresholds; keep the report under 400 words; return Slack-ready text without posting it; emit one terminal status. Knowledge manifest: `reporting-template.md`, `metric-definitions.md`, and `alert-thresholds.md`. First-run prompt: paste all three exports and state the reporting period. Acceptance check: verify all four sections appear, every stated number traces to an input, and no Slack-delivery claim is made.
 
-**REQUIRED BEFORE DEPLOYMENT**
+**REQUIRED BEFORE BUILD**
 - The three workflow-specific knowledge files named above
 - Error threshold and recertification interval
+
+**OPERATOR DISPOSITION**
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: HOLD_FOR_EVIDENCE — verdict is sound (AUTONOMOUS / PROJECT · HIGH); three knowledge files and two governance values are missing. Operator should provide metric definitions, alert thresholds, reporting template, error-rate threshold, and recertification interval, then revisit disposition.
+
+Name / role: _______________
+Date: _______________
+Packet version: Run 3 · 2026-06-11
+Rationale: _______________

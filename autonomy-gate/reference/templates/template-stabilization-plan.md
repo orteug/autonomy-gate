@@ -100,7 +100,22 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 - [ ] The reviewer role changes or becomes vacant
       [Applicable if re-assessment produces SUPERVISED verdict.]
 
-DEPLOYMENT PACK
+BUILD HANDOFF PACK
 Deployment status: BLOCKED
-Generate a ready-to-use stabilization worksheet with process-step, exception, failure-path, baseline, and evidence-log fields derived from this workflow. Include the exact evidence required for re-submission and one completion check. This is an operations pack, not an AI deployment pack. Do not leave bracketed placeholders or invent thresholds.
+Generate a ready-to-use stabilization worksheet with process-step, exception, failure-path, baseline, and evidence-log fields derived from this workflow. Include the exact evidence required for re-submission and one completion check. This is an operations pack, not an AI build handoff pack. Do not leave bracketed placeholders or invent thresholds.
 ```
+
+OPERATOR DISPOSITION
+This section is always present and always unselected. The Gate may recommend a disposition but may not select APPROVE_FOR_BUILD on behalf of the operator.
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: [optional — based on Build Handoff Pack status; never pre-selects APPROVE_FOR_BUILD]
+
+Name / role:    [operator fills]
+Date:           [operator fills]
+Packet version: [operator fills]
+Rationale:      [operator fills]

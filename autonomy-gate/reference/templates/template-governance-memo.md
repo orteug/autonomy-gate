@@ -98,7 +98,22 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable — if the named Owner role changes or becomes vacant, the Governance Memo must be
       updated with a new designated owner before the workflow can proceed.]
 
-DEPLOYMENT PACK
+BUILD HANDOFF PACK
 Deployment status: NOT APPLICABLE
 State explicitly that no AI deployment files should be created for the gate-triggering terminal action. Generate the complete human review procedure, decision-record fields, required verification evidence, escalation path, and one audit check. If the owner or escalation role is unknown, list it under REQUIRED BEFORE OPERATION rather than inventing it.
 ```
+
+OPERATOR DISPOSITION
+This section is always present and always unselected. The Gate may recommend a disposition but may not select APPROVE_FOR_BUILD on behalf of the operator.
+
+[ ] APPROVE_FOR_BUILD
+[ ] REVISE
+[ ] HOLD_FOR_EVIDENCE
+[ ] REJECT
+
+Gate recommendation: [optional — based on Build Handoff Pack status; never pre-selects APPROVE_FOR_BUILD]
+
+Name / role:    [operator fills]
+Date:           [operator fills]
+Packet version: [operator fills]
+Rationale:      [operator fills]
