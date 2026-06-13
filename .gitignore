@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
+.DS_Store
+graphify-out/
 testing/results/
 testing/openai/results/
 testing/claude/results/

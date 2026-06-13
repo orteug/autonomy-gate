@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Autonomy Gate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{background:#E7E3DB}
+  body{font-family:'Hanken Grotesk',sans-serif;-webkit-font-smoothing:antialiased;color:#1B1A17}
+  ::selection{background:#1B1A17;color:#FCFAF6}
+  a{text-decoration:none;color:inherit}
+  .navlink{color:#4A4843;transition:color .15s;white-space:nowrap}
+  .btn-ink{white-space:nowrap}
+  .navlink:hover{color:#1B1A17}
+  .card-lift{transition:transform .18s ease, box-shadow .18s ease}
+  .card-lift:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(0,0,0,.05),0 28px 60px -30px rgba(0,0,0,.42)}
+  .card-lift:hover .cue{opacity:1;transform:translateX(0)}
+  .btn-ink{transition:background .15s, transform .15s}
+  .btn-ink:hover{background:#000;transform:translateY(-1px)}
+  .btn-line{transition:background .15s,border-color .15s}
+  .btn-line:hover{background:#FCFAF6;border-color:#1B1A17}
+</style>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<div style="background:#E7E3DB;font-family:'Hanken Grotesk',sans-serif;overflow-x:hidden">
+
+  <!-- ===== STICKY NAV ===== -->
+  <div style="position:sticky;top:0;z-index:50;background:rgba(231,227,219,.86);backdrop-filter:blur(10px);border-bottom:1px solid #D2CCBE">
+    <div style="max-width:1180px;margin:0 auto;padding:15px 40px;display:flex;align-items:center;gap:18px">
+      <div style="display:flex;align-items:center;gap:9px">
+        <div style="width:22px;height:22px;border:1.5px solid #1B1A17;border-radius:2px;display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;background:#1B1A17"></div></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase">The Autonomy Gate</span>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;align-items:center;gap:26px">
+        <a href="#how" class="navlink" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase">How it works</a>
+        <a href="#verdicts" class="navlink" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Verdicts</a>
+        <a href="#receipts" class="navlink" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Receipts</a>
+        <a href="#artifacts" class="navlink" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Artifacts</a>
+        <a href="https://github.com/orteug/autonomy-gate" class="navlink" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase">GitHub&nbsp;↗</a>
+        <a href="#try" class="btn-ink" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:#1B1A17;color:#FCFAF6;padding:9px 16px;border-radius:3px">Try it</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <div style="max-width:1180px;margin:0 auto;padding:78px 40px 88px">
+    <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:26px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8a857a">Autonomy verdicts for business workflows</span>
+        </div>
+        <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:62px;line-height:1.02;letter-spacing:-.02em;text-wrap:balance;margin-bottom:24px">Other tools route work to AI. This one decides whether AI is <span style="font-style:italic;color:#8E2A2A">allowed</span> to touch it.</h1>
+        <p style="font-size:17px;line-height:1.6;color:#4A4843;max-width:52ch;margin-bottom:32px">The Autonomy Gate is a specialist judge. Describe any workflow and it issues a binding verdict — automate, supervise, stabilize, or refuse — then hands you the execution artifact built to walk into a meeting and be acted on.</p>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <a href="#try" class="btn-ink" style="display:inline-flex;align-items:center;gap:10px;background:#1B1A17;color:#FCFAF6;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:14px 22px;border-radius:3px">Run a workflow through the Gate <span style="opacity:.6">→</span></a>
+          <a href="https://github.com/orteug/autonomy-gate" class="btn-line" style="display:inline-flex;align-items:center;gap:9px;background:transparent;border:1px solid #C2BBAC;color:#1B1A17;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:14px 22px;border-radius:3px">View on GitHub ↗</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;margin-top:30px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:#8a857a">
+          <span style="width:7px;height:7px;border-radius:50%;background:#1F6B4A"></span>
+          16 files · Claude Projects, ChatGPT, Claude Code, Codex · ~2 minutes to first verdict
+        </div>
+      </div>
+
+      <!-- HERO SPECIMEN: a verdict document peeking -->
+      <div style="position:relative;height:430px">
+        <!-- back card: HUMAN_ONLY -->
+        <div style="position:absolute;right:-14px;top:18px;width:300px;transform:rotate(4deg);background:#FCFAF6;border:1px solid #DDD7CA;border-radius:4px;box-shadow:0 30px 60px -34px rgba(0,0,0,.4);overflow:hidden">
+          <div style="height:4px;background:#8E2A2A"></div>
+          <div style="padding:18px 20px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#9b968b;margin-bottom:8px">Autonomy verdict</div>
+            <div style="font-family:'Newsreader',serif;font-size:30px;color:#8E2A2A;line-height:1">Human Only</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:#8E2A2A;border:1px solid #D9B7B3;background:#F4E5E3;border-radius:2px;padding:3px 7px;display:inline-block;margin-top:11px">GATE-2 · NOT_APPLICABLE</div>
+          </div>
+        </div>
+        <!-- front card: AUTONOMOUS -->
+        <div style="position:absolute;left:-6px;top:96px;width:330px;transform:rotate(-3deg);background:#FCFAF6;border:1px solid #DDD7CA;border-radius:4px;box-shadow:0 36px 70px -36px rgba(0,0,0,.5);overflow:hidden">
+          <div style="height:5px;background:#1F6B4A"></div>
+          <div style="padding:24px 26px 26px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#9b968b;margin-bottom:9px">Autonomy verdict</div>
+                <div style="font-family:'Newsreader',serif;font-size:42px;color:#1F6B4A;line-height:.95">Autonomous</div>
+              </div>
+              <div style="flex-shrink:0;transform:rotate(-6deg);border:1.5px solid #1F6B4A;border-radius:3px;padding:7px 10px;text-align:center">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.18em;color:#1F6B4A;border-bottom:1px solid #1F6B4A;padding-bottom:3px;margin-bottom:3px">CLEARED</div>
+                <div style="font-family:'Newsreader',serif;font-size:13px;color:#1F6B4A;line-height:1">RULE-03</div>
+              </div>
+            </div>
+            <div style="font-size:12.5px;color:#4A4843;line-height:1.5;margin-bottom:16px">Weekly KPI narrative · bounded, reversible, reviewed before it posts.</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.06em;color:#1F6B4A;background:#E9F1EB;border:1px solid #BcD6C4;border-radius:2px;padding:4px 8px">CONFIDENCE · HIGH</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.06em;color:#1F6B4A;background:#E9F1EB;border:1px solid #BcD6C4;border-radius:2px;padding:4px 8px">BUILD_READY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== THE PROBLEM (ink band) ===== -->
+  <div style="background:#1B1A17;color:#EDE8DE">
+    <div style="max-width:1180px;margin:0 auto;padding:74px 40px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8f8a7e;margin-bottom:26px">The gap nobody owns</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+        <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:40px;line-height:1.12;letter-spacing:-.01em;text-wrap:balance">There is a gap between <span style="color:#7FB894">"AI can do this"</span> and <span style="color:#D98A82">"AI is allowed to do this."</span> Most tools live on the first side and assume the second.</h2>
+        <div style="padding-top:6px">
+          <p style="font-size:16px;line-height:1.66;color:#C8C2B6;margin-bottom:22px">Capability is cheap now. Authority is not. The question that stalls every automation project isn't whether the model is good enough — it's who is accountable when it acts, whether the action can be undone, and whether it should have been a machine's call at all.</p>
+          <p style="font-size:16px;line-height:1.66;color:#C8C2B6">The Gate answers that question and refuses, structurally, when the honest answer is no. <span style="color:#EDE8DE;font-weight:600">Other tools route. This one blocks.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <div id="how" style="max-width:1180px;margin:0 auto;padding:80px 40px 26px">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17">How it works</span>
+      <span style="flex:1;height:1px;background:#CFC9BC"></span>
+    </div>
+    <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:38px;line-height:1.1;letter-spacing:-.01em;max-width:20ch;margin-bottom:44px">One input. One verdict. One artifact you can act on.</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+      <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;padding:26px 24px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -26px rgba(0,0,0,.22)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#9b968b;margin-bottom:18px">01</div>
+        <div style="font-family:'Newsreader',serif;font-size:22px;line-height:1.15;margin-bottom:10px">Describe the workflow</div>
+        <p style="font-size:13.5px;line-height:1.55;color:#4A4843">Plain language. The Gate normalizes it into an intake snapshot and identifies the <em>terminal action</em> — the last thing that actually executes.</p>
+      </div>
+      <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;padding:26px 24px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -26px rgba(0,0,0,.22)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#9b968b;margin-bottom:18px">02</div>
+        <div style="font-family:'Newsreader',serif;font-size:22px;line-height:1.15;margin-bottom:10px">It scores &amp; gates it</div>
+        <p style="font-size:13.5px;line-height:1.55;color:#4A4843">Reversibility, observability, exception rate, cost of failure — then an adversarial check and five hard gates that cannot be overridden.</p>
+      </div>
+      <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;padding:26px 24px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -26px rgba(0,0,0,.22)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#9b968b;margin-bottom:18px">03</div>
+        <div style="font-family:'Newsreader',serif;font-size:22px;line-height:1.15;margin-bottom:10px">Verdict + artifact</div>
+        <p style="font-size:13.5px;line-height:1.55;color:#4A4843">A decision packet and the matching execution artifact — setup brief, control plan, governance memo — ending in a build handoff pack.</p>
+      </div>
+      <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;padding:26px 24px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -26px rgba(0,0,0,.22)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#9b968b;margin-bottom:18px">04</div>
+        <div style="font-family:'Newsreader',serif;font-size:22px;line-height:1.15;margin-bottom:10px">The operator signs</div>
+        <p style="font-size:13.5px;line-height:1.55;color:#4A4843">Every artifact ends in an Operator Disposition. The Gate may recommend — it may never pre-approve. A human signs for the build.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOUR VERDICTS ===== -->
+  <div id="verdicts" style="max-width:1180px;margin:0 auto;padding:64px 40px 26px">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17">The four verdicts</span>
+      <span style="flex:1;height:1px;background:#CFC9BC"></span>
+    </div>
+    <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:38px;line-height:1.1;letter-spacing:-.01em;max-width:22ch;margin-bottom:14px">Four answers — and the discipline to give the fourth.</h2>
+    <p style="font-size:15.5px;line-height:1.6;color:#4A4843;max-width:60ch;margin-bottom:40px">Most systems only know how to say yes. The proof that this one judges rather than sells is that it will tell you no — by name, with the gate cited, and no path to override it.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+      <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;padding:24px 26px;position:relative;overflow:hidden">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#1F6B4A"></div>
+        <div style="font-family:'Newsreader',serif;font-size:28px;color:#1F6B4A;margin-bottom:6px">Autonomous</div>
+        <p style="font-size:13.5px;line-height:1.5;color:#4A4843">AI executes without a human approval checkpoint. Bounded, observed, reversible, owned.</p>
+      </div>
+      <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;padding:24px 26px;position:relative;overflow:hidden">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#B07514"></div>
+        <div style="font-family:'Newsreader',serif;font-size:28px;color:#B07514;margin-bottom:6px">Supervised</div>
+        <p style="font-size:13.5px;line-height:1.5;color:#4A4843">AI prepares the work; a named human approves before anything executes. The checkpoint is the control.</p>
+      </div>
+      <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;padding:24px 26px;position:relative;overflow:hidden">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#2E5B8C"></div>
+        <div style="font-family:'Newsreader',serif;font-size:28px;color:#2E5B8C;margin-bottom:6px">SOP First</div>
+        <p style="font-size:13.5px;line-height:1.5;color:#4A4843">The process is too unstable for any autonomy level. Stabilize and produce evidence before reassessment.</p>
+      </div>
+      <!-- HUMAN_ONLY emphasized: spans full width -->
+      <div style="grid-column:span 3;background:#FCFAF6;border:1.5px solid #8E2A2A;border-radius:3px;padding:30px 32px;display:grid;grid-template-columns:1fr 1.3fr;gap:34px;align-items:center;box-shadow:0 20px 50px -34px rgba(142,42,42,.5);position:relative;overflow:hidden">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:5px;background:#8E2A2A"></div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8E2A2A;margin-bottom:10px">The proof it refuses</div>
+          <div style="font-family:'Newsreader',serif;font-size:46px;color:#8E2A2A;line-height:.98">Human Only</div>
+        </div>
+        <div>
+          <p style="font-size:15px;line-height:1.6;color:#4A4843;margin-bottom:14px">Judgment or risk that cannot be delegated — a structural block. When the terminal action is an irreversible external commitment or regulated personal data, the verdict is HUMAN_ONLY and the artifact is a governance memo, not a build.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#8E2A2A;background:#F4E5E3;border:1px solid #D9B7B3;border-radius:2px;padding:5px 10px">GATE-2 · IRREVERSIBLE COMMITMENT</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#8E2A2A;background:#F4E5E3;border:1px solid #D9B7B3;border-radius:2px;padding:5px 10px">GATE-3 · REGULATED DATA</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#8E2A2A;background:#F4E5E3;border:1px solid #D9B7B3;border-radius:2px;padding:5px 10px">NO OVERRIDE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== THREE RECEIPTS ===== -->
+  <div id="receipts" style="max-width:1180px;margin:0 auto;padding:64px 40px 26px">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17">Committed receipts</span>
+      <span style="flex:1;height:1px;background:#CFC9BC"></span>
+    </div>
+    <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:38px;line-height:1.1;letter-spacing:-.01em;max-width:24ch;margin-bottom:14px">Three real submissions. Three honest verdicts.</h2>
+    <p style="font-size:15.5px;line-height:1.6;color:#4A4843;max-width:60ch;margin-bottom:40px">Not demos — committed runs. A clean autonomous pass, a supervised pass with a blocking checkpoint, and a hard-gate refusal that cites GATE-2 by name. Open any one to read the full artifact.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+
+      <!-- receipt 1: autonomous -->
+      <a href="examples/artifacts/project-setup-brief.html" class="card-lift" style="display:block;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -26px rgba(0,0,0,.24)">
+        <div style="height:4px;background:#1F6B4A"></div>
+        <div style="padding:24px 26px 22px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:14px">Receipt 01 · clean pass</div>
+          <div style="font-size:14px;font-weight:600;color:#1B1A17;margin-bottom:18px">Weekly KPI report from CRM &amp; analytics exports</div>
+          <div style="display:flex;flex-direction:column;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px">
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">VERDICT</span><span style="color:#1F6B4A;font-weight:600">AUTONOMOUS</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">CONFIDENCE</span><span style="color:#1B1A17">HIGH</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">HANDOFF</span><span style="color:#1F6B4A;font-weight:600">BUILD_READY</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #EAE4D7;padding-top:14px;margin-top:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8a857a">Project Setup Brief</span>
+            <span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1B1A17;opacity:.45;transform:translateX(-4px);transition:opacity .18s,transform .18s">Read →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- receipt 2: supervised -->
+      <a href="examples/artifacts/control-plan.html" class="card-lift" style="display:block;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -26px rgba(0,0,0,.24)">
+        <div style="height:4px;background:#B07514"></div>
+        <div style="padding:24px 26px 22px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:14px">Receipt 02 · checkpoint pass</div>
+          <div style="font-size:14px;font-weight:600;color:#1B1A17;margin-bottom:18px">Customer win-back email batch to lapsed accounts</div>
+          <div style="display:flex;flex-direction:column;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px">
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">VERDICT</span><span style="color:#B07514;font-weight:600">SUPERVISED</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">CONFIDENCE</span><span style="color:#1B1A17">MEDIUM</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">HANDOFF</span><span style="color:#B07514;font-weight:600">BUILD_READY</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #EAE4D7;padding-top:14px;margin-top:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8a857a">Control Plan</span>
+            <span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1B1A17;opacity:.45;transform:translateX(-4px);transition:opacity .18s,transform .18s">Read →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- receipt 3: hard gate refusal -->
+      <a href="examples/artifacts/governance-memo.html" class="card-lift" style="display:block;background:#FCFAF6;border:1.5px solid #8E2A2A;border-radius:3px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04),0 18px 44px -26px rgba(142,42,42,.4)">
+        <div style="height:4px;background:#8E2A2A"></div>
+        <div style="padding:24px 26px 22px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8E2A2A;margin-bottom:14px">Receipt 03 · hard refusal</div>
+          <div style="font-size:14px;font-weight:600;color:#1B1A17;margin-bottom:18px">Vendor emails asking to change its bank account</div>
+          <div style="display:flex;flex-direction:column;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px">
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">VERDICT</span><span style="color:#8E2A2A;font-weight:600">HUMAN_ONLY</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">CONFIDENCE</span><span style="color:#1B1A17">HIGH</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">HANDOFF</span><span style="color:#8E2A2A;font-weight:600">NOT_APPLICABLE</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9b968b">GATE</span><span style="color:#8E2A2A;font-weight:600">GATE-2 cited</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #F0DCD9;padding-top:14px;margin-top:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8a857a">Governance Memo</span>
+            <span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#8E2A2A;opacity:.55;transform:translateX(-4px);transition:opacity .18s,transform .18s">Read →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- operator disposition proof strip -->
+    <div style="margin-top:18px;background:#F7F4EC;border:1px solid #DDD7CA;border-radius:3px;padding:22px 26px;display:flex;align-items:center;gap:26px;flex-wrap:wrap">
+      <div style="flex:1;min-width:280px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:7px">Every artifact ends the same way</div>
+        <div style="font-size:15px;line-height:1.5;color:#2a2924"><strong>The Operator Disposition.</strong> The Gate may recommend a decision — it may never pre-select <span style="font-family:'JetBrains Mono',monospace;font-size:13px">APPROVE_FOR_BUILD</span>. The human signs.</div>
+      </div>
+      <div style="display:flex;gap:18px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:9px"><span style="width:16px;height:16px;border:1.5px solid #1B1A17;border-radius:2px"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#1B1A17">APPROVE_FOR_BUILD</span></div>
+        <div style="display:flex;align-items:center;gap:9px"><span style="width:16px;height:16px;border:1.5px solid #b5b0a4;border-radius:2px"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8a857a">REVISE</span></div>
+        <div style="display:flex;align-items:center;gap:9px"><span style="width:16px;height:16px;border:1.5px solid #b5b0a4;border-radius:2px"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8a857a">REJECT</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ARTIFACT SET (embedded index) ===== -->
+  <div id="artifacts" style="max-width:1180px;margin:0 auto;padding:64px 40px 26px">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17">The artifact set</span>
+      <span style="flex:1;height:1px;background:#CFC9BC"></span>
+      <a href="examples/artifacts/index.html" class="navlink" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Open the index ↗</a>
+    </div>
+    <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:38px;line-height:1.1;letter-spacing:-.01em;max-width:18ch;margin-bottom:14px">Six verdicts. One binding instrument.</h2>
+    <p style="font-size:15.5px;line-height:1.6;color:#4A4843;max-width:62ch;margin-bottom:36px">Every workflow produces exactly one execution artifact, named by its verdict. Each is built to walk into a meeting and be acted on without explanation. Select one to open the full document.</p>
+
+    <!-- AUTONOMOUS row -->
+    <div style="display:flex;align-items:center;gap:13px;margin-bottom:16px">
+      <span style="width:9px;height:9px;border-radius:50%;background:#1F6B4A"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1F6B4A">Autonomous</span>
+      <span style="font-size:13px;font-style:italic;font-family:'Newsreader',serif;color:#8a857a">AI executes without a human approval checkpoint</span>
+      <span style="flex:1;height:1px;background:#D6D0C3"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:30px">
+      <a href="examples/artifacts/project-setup-brief.html" class="card-lift" style="display:block;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -24px rgba(0,0,0,.24);overflow:hidden">
+        <div style="height:4px;background:#1F6B4A"></div>
+        <div style="padding:22px 24px 24px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#9b968b;margin-bottom:16px">Artifact 01</div>
+          <div style="font-family:'Newsreader',serif;font-size:25px;line-height:1.1;color:#1B1A17;margin-bottom:10px">Project Setup Brief</div>
+          <p style="font-size:13px;line-height:1.5;color:#4A4843;margin-bottom:22px">A bounded Claude Project that produces a reviewed internal deliverable from operator-supplied exports.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #EAE4D7;padding-top:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#1F6B4A">BUILD_READY</span><span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1B1A17;opacity:.45;transform:translateX(-4px);transition:opacity .18s,transform .18s">Open →</span></div>
+        </div>
+      </a>
+      <a href="examples/artifacts/cowork-project-config.html" class="card-lift" style="display:block;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -24px rgba(0,0,0,.24);overflow:hidden">
+        <div style="height:4px;background:#1F6B4A"></div>
+        <div style="padding:22px 24px 24px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#9b968b;margin-bottom:16px">Artifact 02</div>
+          <div style="font-family:'Newsreader',serif;font-size:25px;line-height:1.1;color:#1B1A17;margin-bottom:10px">Cowork Project Config</div>
+          <p style="font-size:13px;line-height:1.5;color:#4A4843;margin-bottom:22px">A scheduled, unattended Cowork project — folder structure, run cadence, and step sequence for the builder.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #EAE4D7;padding-top:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#1F6B4A">BUILD_READY</span><span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1B1A17;opacity:.45;transform:translateX(-4px);transition:opacity .18s,transform .18s">Open →</span></div>
+        </div>
+      </a>
+      <a href="examples/artifacts/automation-architecture.html" class="card-lift" style="display:block;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -24px rgba(0,0,0,.24);overflow:hidden">
+        <div style="height:4px;background:#1F6B4A"></div>
+        <div style="padding:22px 24px 24px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#9b968b;margin-bottom:16px">Artifact 03</div>
+          <div style="font-family:'Newsreader',serif;font-size:25px;line-height:1.1;color:#1B1A17;margin-bottom:10px">Automation Architecture</div>
+          <p style="font-size:13px;line-height:1.5;color:#4A4843;margin-bottom:22px">A code-first pipeline — trigger, inputs, execution sequence, error handling, and recommended stack.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #EAE4D7;padding-top:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#1F6B4A">BUILD_READY</span><span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1B1A17;opacity:.45;transform:translateX(-4px);transition:opacity .18s,transform .18s">Open →</span></div>
+        </div>
+      </a>
+    </div>
+
+    <!-- SUPERVISED / SOP_FIRST / HUMAN_ONLY -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+      <div>
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px">
+          <span style="width:9px;height:9px;border-radius:50%;background:#B07514"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#B07514">Supervised</span>
+          <span style="flex:1;height:1px;background:#D6D0C3"></span>
+        </div>
+        <a href="examples/artifacts/control-plan.html" class="card-lift" style="display:block;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -24px rgba(0,0,0,.24);overflow:hidden">
+          <div style="height:4px;background:#B07514"></div>
+          <div style="padding:22px 24px 24px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#9b968b;margin-bottom:16px">Artifact 04</div>
+            <div style="font-family:'Newsreader',serif;font-size:25px;line-height:1.1;color:#1B1A17;margin-bottom:10px">Control Plan</div>
+            <p style="font-size:13px;line-height:1.5;color:#4A4843;margin-bottom:22px">AI prepares; a named reviewer approves before the terminal action executes. The checkpoint is the document.</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #EAE4D7;padding-top:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#B07514">BUILD_READY</span><span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1B1A17;opacity:.45;transform:translateX(-4px);transition:opacity .18s,transform .18s">Open →</span></div>
+          </div>
+        </a>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px">
+          <span style="width:9px;height:9px;border-radius:50%;background:#2E5B8C"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#2E5B8C">SOP First</span>
+          <span style="flex:1;height:1px;background:#D6D0C3"></span>
+        </div>
+        <a href="examples/artifacts/stabilization-plan.html" class="card-lift" style="display:block;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -24px rgba(0,0,0,.24);overflow:hidden">
+          <div style="height:4px;background:#2E5B8C"></div>
+          <div style="padding:22px 24px 24px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#9b968b;margin-bottom:16px">Artifact 05</div>
+            <div style="font-family:'Newsreader',serif;font-size:25px;line-height:1.1;color:#1B1A17;margin-bottom:10px">Stabilization Plan</div>
+            <p style="font-size:13px;line-height:1.5;color:#4A4843;margin-bottom:22px">Not a rejection — a "not yet." A sequenced checklist to stabilize the process before reassessment.</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #EAE4D7;padding-top:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#2E5B8C">BLOCKED_FOR_EVIDENCE</span><span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1B1A17;opacity:.45;transform:translateX(-4px);transition:opacity .18s,transform .18s">Open →</span></div>
+          </div>
+        </a>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px">
+          <span style="width:9px;height:9px;border-radius:50%;background:#8E2A2A"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#8E2A2A">Human Only</span>
+          <span style="flex:1;height:1px;background:#D6D0C3"></span>
+        </div>
+        <a href="examples/artifacts/governance-memo.html" class="card-lift" style="display:block;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -24px rgba(0,0,0,.24);overflow:hidden">
+          <div style="height:4px;background:#8E2A2A"></div>
+          <div style="padding:22px 24px 24px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#9b968b;margin-bottom:16px">Artifact 06</div>
+            <div style="font-family:'Newsreader',serif;font-size:25px;line-height:1.1;color:#1B1A17;margin-bottom:10px">Governance Memo</div>
+            <p style="font-size:13px;line-height:1.5;color:#4A4843;margin-bottom:22px">A structural block. A hard gate prohibits AI execution — the artifact documents the human procedure.</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #EAE4D7;padding-top:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#8E2A2A">NOT_APPLICABLE</span><span class="cue" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#1B1A17;opacity:.45;transform:translateX(-4px);transition:opacity .18s,transform .18s">Open →</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TRY IT (ink terminal band) ===== -->
+  <div id="try" style="background:#1B1A17;color:#EDE8DE;margin-top:70px">
+    <div style="max-width:1180px;margin:0 auto;padding:78px 40px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8f8a7e;margin-bottom:22px">Try it · ~2 minutes</div>
+      <div style="display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start">
+        <div>
+          <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:40px;line-height:1.08;letter-spacing:-.01em;margin-bottom:22px">Upload sixteen files. Paste a workflow. Get a verdict.</h2>
+          <ol style="list-style:none;display:flex;flex-direction:column;gap:16px;margin-bottom:30px">
+            <li style="display:flex;gap:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7FB894;font-weight:600;flex-shrink:0">01</span><span style="font-size:15px;line-height:1.5;color:#C8C2B6">Create a Project in Claude or ChatGPT (or open Claude Code / Codex) and upload the 16 Gate files.</span></li>
+            <li style="display:flex;gap:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7FB894;font-weight:600;flex-shrink:0">02</span><span style="font-size:15px;line-height:1.5;color:#C8C2B6">Paste one of the prompts. The Gate produces three sections: intake snapshot, decision packet, artifact.</span></li>
+            <li style="display:flex;gap:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7FB894;font-weight:600;flex-shrink:0">03</span><span style="font-size:15px;line-height:1.5;color:#C8C2B6">Read the verdict. Sign the Operator Disposition. Hand the artifact to your builder.</span></li>
+          </ol>
+          <a href="https://github.com/orteug/autonomy-gate" class="btn-line" style="display:inline-flex;align-items:center;gap:9px;background:transparent;border:1px solid #4a4842;color:#EDE8DE;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:14px 22px;border-radius:3px">Get the 16 files on GitHub ↗</a>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="background:#15140F;border:1px solid #322F28;border-radius:5px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid #322F28;background:#1d1b15">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7FB894">Prompt A · expects AUTONOMOUS</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#6b665c">paste into the project</span>
+            </div>
+            <div style="padding:18px 18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.65;color:#C9D3C2">Every Monday we pull a CRM export and an analytics export and write a standardized internal KPI summary. A teammate reviews it and posts it to Slack. <span style="color:#6b665c">Assess this workflow.</span></div>
+          </div>
+          <div style="background:#15140F;border:1px solid #3a2723;border-radius:5px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid #3a2723;background:#1f1714">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#D98A82">Prompt B · expects HUMAN_ONLY</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#6b665c">the refusal test</span>
+            </div>
+            <div style="padding:18px 18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.65;color:#E4CBC6">A vendor emailed asking us to update their bank account for future payments. Can we automate verifying and applying the change? <span style="color:#6b665c">Assess this workflow.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div style="background:#15140F;color:#9b968b;border-top:1px solid #322F28">
+    <div style="max-width:1180px;margin:0 auto;padding:40px 40px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:9px">
+        <div style="width:20px;height:20px;border:1.5px solid #EDE8DE;border-radius:2px;display:flex;align-items:center;justify-content:center"><div style="width:7px;height:7px;background:#EDE8DE"></div></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#EDE8DE">The Autonomy Gate</span>
+      </div>
+      <span style="flex:1"></span>
+      <div style="display:flex;align-items:center;gap:24px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em">
+        <a href="https://github.com/orteug/autonomy-gate" class="navlink" style="color:#9b968b">GitHub ↗</a>
+        <a href="https://the-autonomy-gate-ariel-ortizs-projects.vercel.app" class="navlink" style="color:#9b968b">the-autonomy-gate-ariel-ortizs-projects.vercel.app</a>
+        <a href="examples/artifacts/index.html" class="navlink" style="color:#9b968b">Artifact index</a>
+      </div>
+      <span style="width:100%;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:#5f5b52;margin-top:14px">MINIMUM JUSTIFIED AUTONOMY · THE OPERATOR SIGNS · OTHER TOOLS ROUTE, THIS ONE BLOCKS</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

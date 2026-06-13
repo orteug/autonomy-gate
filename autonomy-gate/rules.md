@@ -384,6 +384,8 @@ Fill the template as a document, not a form. Apply these production rules withou
 9. **State-aware next action** — present after BUILD HANDOFF PACK; identifies Current state, What the Gate completed, What is blocked, Who acts next, and Exact next action
 10. **OPERATOR DISPOSITION** — present after the state-aware next action in every artifact per RULE-15; always unselected; operator fills after reviewing the artifact
 
+**Rendered Artifact delivery:** The canonical Markdown Execution Artifact is the auditable source record. When the assessment surface supports a rendered HTML Artifact, create it as a separate operator-facing deliverable using `artifact-rendered.html` as the visual reference. Do not print HTML source in the conversation or place it in a fenced code block. The rendered version must contain every substantive section, field, architecture option, exact status token, control, state-aware next action, and disposition field from the Markdown. Presentation may change; meaning may not. If the surface cannot create the rendered Artifact, state `ARTIFACT_RENDERING_UNAVAILABLE` and return canonical Markdown only.
+
 ---
 
 ### RULE-13 — Autonomy Expiration

@@ -54,10 +54,10 @@ For a single operator assessing workflows on their own.
 **Setup:**
 
 1. Create a new Claude Project or ChatGPT Project named "Autonomy Gate" (or equivalent).
-2. Upload the 14 canonical files listed above.
+2. Upload the 16 canonical runtime files listed above. In Claude Project, also upload `artifact-rendered.html` as the seventeenth project file.
 3. Set the project instruction to:
    ```
-   You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
+   You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md. Produce canonical Markdown, then create a separate rendered Claude Artifact for the complete Execution Artifact using artifact-rendered.html. Do not print HTML source in chat. Preserve exact semantic parity. If rendering is unavailable, state ARTIFACT_RENDERING_UNAVAILABLE and return Markdown only.
    ```
 4. At the start of each session, paste your organization profile using CONFIGURE mode:
    ```
@@ -65,7 +65,7 @@ For a single operator assessing workflows on their own.
    ```
 5. Submit workflow descriptions. Receive governed assessments. Record operator dispositions. Store completed artifacts externally.
 
-**What persists across sessions:** The 14 canonical files and any uploaded organization profile. Conversation history where supported.
+**What persists across sessions:** The 16 canonical runtime files, the Claude HTML design reference where used, and any uploaded organization profile. Conversation history where supported.
 
 **What does not persist:** Evidence supplied mid-session that was not saved to a file. Operator dispositions not recorded in an external artifact.
 
@@ -78,7 +78,7 @@ For a team of operators assessing workflows together, with shared governance def
 **Setup:**
 
 1. Create a shared Claude Project or ChatGPT Project with access for all operators.
-2. Upload the 14 canonical files.
+2. Upload the 16 canonical runtime files. In Claude Project, also upload `artifact-rendered.html`.
 3. Upload your organization profile as a 15th file (`organization-profile.md`).
 4. Set the project instruction to:
    ```
@@ -113,11 +113,11 @@ Examples:
 
 ## File Upload Limits
 
-**Claude Project:** Upload the 14 canonical files as knowledge files. Check current plan limits before installation.
+**Claude Project:** Upload the 16 canonical runtime files plus `artifact-rendered.html`, for 17 uploaded files total. Check current plan limits before installation.
 
 **ChatGPT Project:** Maximum 10 files per upload batch. Upload in two batches:
 - Batch 1 (10 files): `identity.md`, `rules.md`, `examples.md`, `operating-contract.md`, `autonomy-criteria.md`, `risk-classification.md`, `surface-capability-matrix.md`, `precedents.md`, `template-project-setup.md`, `template-control-plan.md`
-- Batch 2 (4 files): `template-automation-architecture.md`, `template-cowork-config.md`, `template-governance-memo.md`, `template-stabilization-plan.md`
+- Batch 2 (6 files): `template-automation-architecture.md`, `template-project-setup.md`, `template-control-plan.md`, `template-cowork-config.md`, `template-governance-memo.md`, `template-stabilization-plan.md`
 
 All 16 files must be present before use. Verify by asking the Gate to list accessible runtime files and confirm `operating-contract.md` is included.
 

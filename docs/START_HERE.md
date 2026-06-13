@@ -113,7 +113,7 @@ The Gate governs workflows. It does not assist with tasks.
 3. Set the project instruction:
 
 ```text
-You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
+You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md. Produce the canonical Markdown governance record, then create a separate rendered Claude Artifact containing the complete self-contained HTML Execution Artifact using artifact-rendered.html. Do not print HTML source in chat. Preserve every substantive section and exact canonical value from the Markdown. If Artifact rendering is unavailable, state ARTIFACT_RENDERING_UNAVAILABLE and return Markdown only.
 ```
 
 4. Upload these files from `autonomy-gate/`:
@@ -137,7 +137,9 @@ reference/templates/template-stabilization-plan.md
 reference/templates/template-governance-memo.md
 ```
 
-That is 16 runtime files. Do not upload `README.md`, `JUDGE_GUIDE.md`, `WRITEUP.md`, or the `examples/` subfolder; those are human-facing references.
+That is 16 runtime files. Also upload `examples/artifact-rendered.html` as the design reference, for 17 uploaded files total. Do not upload `README.md`, `JUDGE_GUIDE.md`, `WRITEUP.md`, or other files from `examples/`.
+
+The rendered Claude Artifact is the operator-facing deliverable. The Markdown output is the auditable source record. Confirm both formats contain the same verdict, confidence, handoff status, terminal action, architecture options, controls, exact status tokens, and disposition fields.
 
 5. Start a new chat in the project.
 6. Paste a workflow description.

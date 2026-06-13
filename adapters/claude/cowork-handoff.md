@@ -17,7 +17,7 @@ Read the full Cowork Project Config artifact before touching Cowork. Its generat
 
 Every field in the artifact is a requirement, not a suggestion.
 
-The Gate delivers this artifact in two formats: Markdown (structured reference) and styled HTML (operator-facing document). The HTML renders the complete artifact using the design system in `examples/artifact-rendered.html`. To receive the HTML artifact from the Gate, the Gate's project must include `artifact-rendered.html` in its knowledge files and its custom instructions must include the HTML rendering directive (see `adapters/claude/claude-project-setup.md`).
+The Gate delivers this artifact in two synchronized formats: Markdown (the auditable source record) and a rendered Claude Artifact (the operator-facing document). The rendered Claude Artifact must reproduce the complete Execution Artifact using the design system in `examples/artifact-rendered.html`; it may not omit, rename, summarize, or condense any section. To receive it, include `artifact-rendered.html` in the Gate project's knowledge files and use the Artifact delivery instruction in `adapters/claude/claude-project-setup.md`. Do not print HTML source in chat.
 
 ---
 

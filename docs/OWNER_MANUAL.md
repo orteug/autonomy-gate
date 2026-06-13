@@ -18,11 +18,13 @@ The Gate may recommend. The operator selects architecture and records dispositio
 
 ## 2. First Use
 
-Create a persistent Claude Project or supported ChatGPT Project, upload the 16 runtime files listed in `START_HERE.md`, and set this instruction:
+Create a persistent Claude Project or supported ChatGPT Project and upload the 16 runtime files listed in `START_HERE.md`. A Claude Project also receives `artifact-rendered.html`, for 17 uploaded files total. Set this instruction:
 
 ```text
-You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
+You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md. Produce the canonical Markdown governance record, then create a separate rendered Claude Artifact containing the complete self-contained HTML Execution Artifact using artifact-rendered.html. Do not print HTML source in chat. The rendered Artifact must preserve every substantive section and exact canonical value from the Markdown. If Artifact rendering is unavailable, state ARTIFACT_RENDERING_UNAVAILABLE and return Markdown only.
 ```
+
+The rendered Claude Artifact is the operator-facing deliverable. The Markdown record remains authoritative for validation and audit. Presentation may change; meaning may not.
 
 Use five primary commands:
 

@@ -17,13 +17,25 @@ In Claude (claude.ai), create a new Project. Name it: `The Autonomy Gate` or any
 In Project Settings → Custom Instructions, paste exactly:
 
 ```
-You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md. When you produce an Execution Artifact, render it as styled HTML immediately after the Markdown output. Output the HTML in a fenced code block labeled html. Use the design system in artifact-rendered.html as the exact style reference.
+You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
+
+For every full assessment:
+1. Produce the canonical Markdown governance record using the exact required headings and field names.
+2. Create a separate rendered Claude Artifact containing a complete, self-contained HTML rendering of the Execution Artifact.
+3. Use artifact-rendered.html as the exact visual design system.
+4. Do not print HTML source in the conversation and do not place HTML in a fenced code block.
+5. Open the HTML as a rendered Claude Artifact.
+6. Preserve every substantive section, field, architecture option, status token, control, and operator-disposition field from the Markdown. Do not omit, rename, summarize, or condense content in the HTML. Presentation may change; meaning may not.
+7. Preserve canonical terminal-status tokens exactly, including COMPLETED_WITH_WARNINGS.
+8. A handoff with an unselected architecture, unresolved REQUIRED BEFORE BUILD inputs, or an unrecorded required acknowledgement is BLOCKED_FOR_EVIDENCE, never BUILD_READY.
+9. If Claude cannot create the rendered Artifact, state ARTIFACT_RENDERING_UNAVAILABLE and return the canonical Markdown only. Never dump raw HTML into chat.
 ```
 
 **Step 3 — Upload the operator files**
 
-Upload the contents of the `autonomy-gate/` folder plus the rendered artifact reference. Upload all files flat — Claude Projects do not support folders. Files to upload:
+Upload the 16 runtime Markdown files plus the rendered artifact reference. Upload all files flat. This is 17 uploaded files total.
 
+<!-- CLAUDE_UPLOAD_MANIFEST_START -->
 ```
 identity.md
 rules.md
@@ -33,6 +45,8 @@ surface-capability-matrix.md
 risk-classification.md
 precedents.md
 operating-contract.md
+operator-disposition.md
+tool-selection-rules.md
 template-automation-architecture.md
 template-project-setup.md
 template-cowork-config.md
@@ -41,12 +55,15 @@ template-stabilization-plan.md
 template-governance-memo.md
 artifact-rendered.html
 ```
+<!-- CLAUDE_UPLOAD_MANIFEST_END -->
 
 `artifact-rendered.html` is in `examples/` in the repository. Upload it as the HTML style reference — it defines every color, font, spacing, and layout rule the Gate must reproduce. Do not upload `README.md`.
 
 **Step 4 — Run**
 
-Paste any workflow description. The Gate produces three sections in order: Workflow Intake Snapshot → Autonomy Decision Packet → Execution Artifact, followed by a styled HTML rendering of the artifact in a fenced code block. Save the HTML block to a file to open it in a browser.
+Paste any workflow description. The Gate produces the canonical three-section Markdown record in order: Workflow Intake Snapshot → Autonomy Decision Packet → Execution Artifact. It then opens the complete Execution Artifact as a separate rendered Claude Artifact. The rendered Artifact is the operator-facing deliverable; the Markdown is its auditable source record.
+
+Before relying on the result, confirm that the rendered Artifact and Markdown agree on autonomy, confidence, handoff status, terminal action, architecture options and selection, controls, canonical terminal-status tokens, and operator disposition. The Artifact may change presentation only; it may not change or shorten meaning.
 
 ---
 

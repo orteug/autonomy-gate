@@ -31,6 +31,98 @@ class ReleaseContractTests(unittest.TestCase):
             with self.subTest(path=path):
                 self.assertIn("operating-contract.md", path.read_text(encoding="utf-8"))
 
+    def test_claude_project_requires_rendered_artifact_not_raw_html(self):
+        paths = [
+            ROOT / "adapters" / "claude" / "claude-project-setup.md",
+            ROOT / "adapters" / "claude" / "cowork-handoff.md",
+            ROOT / "docs" / "OWNER_MANUAL.md",
+            ROOT / "docs" / "START_HERE.md",
+        ]
+        combined = "\n".join(path.read_text(encoding="utf-8") for path in paths)
+        lowered = combined.lower()
+        self.assertIn("rendered claude artifact", lowered)
+        self.assertIn("do not print html source", lowered)
+        self.assertNotIn("fenced code block labeled html", lowered)
+        self.assertNotIn("save the html block", lowered)
+
+    def test_claude_project_upload_manifest_is_16_runtime_plus_style_reference(self):
+        setup = (ROOT / "adapters" / "claude" / "claude-project-setup.md").read_text(
+            encoding="utf-8"
+        )
+        manifest = setup.split("<!-- CLAUDE_UPLOAD_MANIFEST_START -->", 1)[1].split(
+            "<!-- CLAUDE_UPLOAD_MANIFEST_END -->", 1
+        )[0]
+        files = re.findall(r"(?m)^([a-z0-9-]+\.(?:md|html))$", manifest)
+        expected_runtime = {
+            "identity.md",
+            "rules.md",
+            "examples.md",
+            "autonomy-criteria.md",
+            "surface-capability-matrix.md",
+            "risk-classification.md",
+            "precedents.md",
+            "operating-contract.md",
+            "operator-disposition.md",
+            "tool-selection-rules.md",
+            "template-automation-architecture.md",
+            "template-project-setup.md",
+            "template-cowork-config.md",
+            "template-control-plan.md",
+            "template-stabilization-plan.md",
+            "template-governance-memo.md",
+        }
+        self.assertEqual(17, len(files))
+        self.assertEqual(expected_runtime, set(files) - {"artifact-rendered.html"})
+        self.assertIn("artifact-rendered.html", files)
+
+    def test_setup_docs_use_canonical_runtime_and_claude_upload_counts(self):
+        paths = [
+            ROOT / "README.md",
+            ROOT / "docs" / "OWNER_MANUAL.md",
+            ROOT / "docs" / "START_HERE.md",
+            ROOT / "docs" / "PROJECT_WORKSPACE_SETUP.md",
+            ROOT / "adapters" / "claude" / "claude-project-setup.md",
+        ]
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            with self.subTest(path=path):
+                self.assertNotRegex(text, r"\b14(?:-file| files| runtime)")
+        claude_setup = paths[-1].read_text(encoding="utf-8")
+        self.assertIn("16 runtime Markdown files", claude_setup)
+        self.assertIn("17 uploaded files total", claude_setup)
+
+    def test_artifact_rendering_contract_requires_semantic_parity(self):
+        setup = (ROOT / "adapters" / "claude" / "claude-project-setup.md").read_text(
+            encoding="utf-8"
+        )
+        lowered = setup.lower()
+        for requirement in (
+            "presentation may change; meaning may not",
+            "do not omit, rename, summarize, or condense",
+            "canonical terminal-status tokens",
+            "blocked_for_evidence",
+            "artifact_rendering_unavailable",
+        ):
+            self.assertIn(requirement, lowered)
+
+    def test_published_execution_artifacts_include_required_governance_sections(self):
+        artifact_dir = ROOT / "examples" / "artifacts"
+        for path in artifact_dir.glob("*.html"):
+            if path.name == "index.html":
+                continue
+            text = path.read_text(encoding="utf-8").lower()
+            with self.subTest(path=path):
+                for required in (
+                    "expected outcomes",
+                    "autonomy expires",
+                    "build handoff pack",
+                    "operator disposition",
+                    "packet version",
+                    "rationale",
+                ):
+                    self.assertIn(required, text)
+                self.assertNotIn("completed_w_warnings", text)
+
     def test_normative_docs_do_not_use_deployment_pack(self):
         paths = [
             ROOT / "README.md",

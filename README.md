@@ -1,6 +1,6 @@
 # The Autonomy Gate
 
-The Autonomy Gate receives a workflow description, assigns the minimum justified autonomy, compares provider-neutral implementation architectures, and produces a governed Build Handoff Pack. Create a Claude Project or supported ChatGPT Project, set the instruction to `You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.`, upload the 14 runtime files below, then submit a workflow description.
+The Autonomy Gate receives a workflow description, assigns the minimum justified autonomy, compares provider-neutral implementation architectures, and produces a governed Build Handoff Pack. Create a Claude Project or supported ChatGPT Project, set the instruction to `You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.`, upload the 16 runtime files below, then submit a workflow description. Claude Projects also receive `examples/artifact-rendered.html` as the seventeenth upload so the Execution Artifact opens as the operator-facing rendered deliverable.
 
 ## Judge Path
 
@@ -26,6 +26,8 @@ reference/surface-capability-matrix.md
 reference/risk-classification.md
 reference/precedents.md
 reference/operating-contract.md
+reference/operator-disposition.md
+reference/tool-selection-rules.md
 reference/templates/template-automation-architecture.md
 reference/templates/template-project-setup.md
 reference/templates/template-cowork-config.md
@@ -34,7 +36,7 @@ reference/templates/template-stabilization-plan.md
 reference/templates/template-governance-memo.md
 ```
 
-Claude Projects can receive these in their folder structure. For ChatGPT Projects, upload the files flat and follow the plan and batching notes in `adapters/openai/chatgpt-project-setup.md`.
+These are the 16 canonical runtime files. For Claude Projects, upload them flat together with `examples/artifact-rendered.html` and use `adapters/claude/claude-project-setup.md`. For ChatGPT Projects, follow the plan and batching notes in `adapters/openai/chatgpt-project-setup.md`.
 
 ---
 
@@ -155,9 +157,10 @@ SOP_FIRST is not a failure verdict. It is often the correct automation decision.
 
 The repository uses progressive disclosure:
 
-- `autonomy-gate/` contains the 14-file runtime and supporting contracts.
+- `autonomy-gate/` contains the 16-file runtime and supporting contracts.
 - `examples/` contains committed receipts.
 - `docs/` is optional operator documentation; it is not required for judging or first use.
+- `site/` is the isolated Vercel deployment root for the landing page and rendered artifact gallery.
 - `print-manual/` and `testing/` are supporting product and validation material, not part of the fast path.
 
 Depth remains available on demand, but no judge or first-time operator must traverse it to understand the product.
@@ -184,8 +187,11 @@ repo-root/
 │   └── trial-audit-output.md  ← Three complete Gate runs with sources
 ├── docs/
 │   └── AUTONOMY_GATE_FIELD_MANUAL.pdf
+├── site/                    ← Vercel deployment root; includes Web Analytics
+│   ├── index.html
+│   └── examples/artifacts/
 │
-├── autonomy-gate/           ← Runtime source; upload only the 14 files listed above
+├── autonomy-gate/           ← Runtime source; upload only the 16 files listed above
 │   ├── identity.md
 │   ├── rules.md
 │   ├── examples.md

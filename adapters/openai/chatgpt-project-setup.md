@@ -15,7 +15,7 @@ In ChatGPT, create a new Project. Name it: `The Autonomy Gate`.
 In Project Settings → Instructions, paste exactly:
 
 ```
-You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md. When you produce an Execution Artifact, render it as styled HTML immediately after the Markdown output. Output the HTML in a fenced code block labeled html. Use the design system in artifact-rendered.html as the exact style reference.
+You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md. Produce the canonical Markdown governance record first. When the interface supports a rendered HTML canvas or artifact, create the complete Execution Artifact there using artifact-rendered.html as the visual reference. Do not print raw HTML source in chat. Preserve every substantive section and exact canonical value from the Markdown. If rendered delivery is unavailable, state ARTIFACT_RENDERING_UNAVAILABLE and return Markdown only.
 ```
 
 **Step 3 — Upload the operator files**
@@ -57,7 +57,7 @@ artifact-rendered.html
 
 **Step 4 — Run**
 
-Paste any workflow description. The required output contract is the same three-section sequence used on the Claude stack: Workflow Intake Snapshot → Autonomy Decision Packet → Execution Artifact, followed by a styled HTML rendering of the artifact in a fenced code block. Save the HTML block to a file to open it in a browser. Validate verdict and artifact parity using `testing/openai/TEST_MATRIX.md`; do not infer parity from format alone.
+Paste any workflow description. The required output contract is the same three-section sequence used on the Claude stack: Workflow Intake Snapshot → Autonomy Decision Packet → Execution Artifact. When rendered delivery is available, the interface opens a separate complete operator-facing rendering rather than dumping raw HTML into chat. Validate verdict and artifact parity using `testing/openai/TEST_MATRIX.md`; do not infer parity from format alone.
 
 ---
 

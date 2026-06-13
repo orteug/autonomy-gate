@@ -2,6 +2,7 @@
 """Validate the explicit public release manifest."""
 
 from pathlib import Path
+import subprocess
 import sys
 
 
@@ -18,20 +19,19 @@ def main() -> int:
     forbidden = []
     extras = []
     if (root / ".git").is_dir():
-        actual = {
-            str(path.relative_to(root))
-            for path in root.rglob("*")
-            if path.is_file()
-            and ".git" not in path.relative_to(root).parts
-            and path.name not in {".DS_Store"}
-            and "__pycache__" not in path.relative_to(root).parts
-            and path.suffix != ".pyc"
-        }
+        result = subprocess.run(
+            ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+            cwd=root,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        actual = {line for line in result.stdout.splitlines() if line}
         extras = sorted(actual - expected)
         forbidden = sorted(
-            str(path.relative_to(root))
-            for path in root.rglob("*")
-            if path.is_file() and any(part in {"_build", "print-manual", "_marketing"} for part in path.relative_to(root).parts)
+            path
+            for path in actual
+            if any(part in {"_build", "print-manual", "_marketing"} for part in Path(path).parts)
         )
     print(f"Manifest files: {len(expected)}")
     print(f"Missing: {missing}")
