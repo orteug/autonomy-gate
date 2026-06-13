@@ -149,3 +149,15 @@ Present the Build Handoff Pack directly. Walk through:
 | Recertification window triggered | RECERTIFY | 20-30 min | New packet + new disposition |
 | Someone asks why a decision was made | EXPLAIN | 5 min | Rule citations |
 | New team member needs org context loaded | CONFIGURE | 10 min | Workspace ready for assessments |
+
+## Value Metrics
+
+Record these in each workflow registry record and aggregate them monthly:
+
+- **Assessment time:** elapsed operator minutes from request receipt to defensible packet.
+- **Unsafe requests rejected:** count of requests where a hard gate or unstable process prevented unjustified autonomy.
+- **Build rework avoided:** estimated builder hours avoided because architecture, controls, permissions, and acceptance criteria were resolved before implementation.
+- **Time to approved handoff:** elapsed hours from request receipt to a `BUILD_READY` pack with recorded disposition.
+- **Recertification compliance:** whether active workflows were paused and reassessed when an expiration trigger fired.
+
+These metrics measure decision and implementation quality. They do not claim financial impact without retained organizational evidence.

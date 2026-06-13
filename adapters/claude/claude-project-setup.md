@@ -17,12 +17,12 @@ In Claude (claude.ai), create a new Project. Name it: `The Autonomy Gate` or any
 In Project Settings → Custom Instructions, paste exactly:
 
 ```
-You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
+You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md. When you produce an Execution Artifact, render it as styled HTML immediately after the Markdown output. Output the HTML in a fenced code block labeled html. Use the design system in artifact-rendered.html as the exact style reference.
 ```
 
 **Step 3 — Upload the operator files**
 
-Upload the contents of the `autonomy-gate/` folder. Upload all files flat — Claude Projects do not support folders. Files to upload:
+Upload the contents of the `autonomy-gate/` folder plus the rendered artifact reference. Upload all files flat — Claude Projects do not support folders. Files to upload:
 
 ```
 identity.md
@@ -39,19 +39,20 @@ template-cowork-config.md
 template-control-plan.md
 template-stabilization-plan.md
 template-governance-memo.md
+artifact-rendered.html
 ```
 
-Do not upload `README.md` — it is for the repository, not the operator.
+`artifact-rendered.html` is in `examples/` in the repository. Upload it as the HTML style reference — it defines every color, font, spacing, and layout rule the Gate must reproduce. Do not upload `README.md`.
 
 **Step 4 — Run**
 
-Paste any workflow description. The Gate produces three sections in order: Workflow Intake Snapshot → Autonomy Decision Packet → Execution Artifact.
+Paste any workflow description. The Gate produces three sections in order: Workflow Intake Snapshot → Autonomy Decision Packet → Execution Artifact, followed by a styled HTML rendering of the artifact in a fenced code block. Save the HTML block to a file to open it in a browser.
 
 ---
 
 ## Scenario 2 — Deploying a Gate-Governed Workflow (PROJECT Surface)
 
-Use this after the Gate has issued an `AUTONOMOUS / PROJECT` or `SUPERVISED / PROJECT` verdict and produced a Project Setup Brief or Control Plan.
+Use this when the operator-selected execution architecture uses a human-triggered Claude Project pattern and the Gate has produced a Project Setup Brief or Control Plan.
 
 **Step 1 — Read the generated build handoff pack**
 
@@ -96,4 +97,4 @@ The artifact's AUTONOMY EXPIRES WHEN section lists the conditions that invalidat
 - Make external API calls (Salesforce, Stripe, Zendesk, Slack, etc.)
 - Initiate actions without human input
 
-If the workflow requires any of the "cannot do" capabilities, the Gate will route to COWORK or CODE_AGENT. Use the fallback note in the artifact if those surfaces are unavailable.
+If the workflow requires any of the "cannot do" capabilities, the selected architecture must use an implementation pattern that provides them, such as Cowork, a code agent, a low-code platform, or a service. Use the fallback note if the preferred tool is unavailable.

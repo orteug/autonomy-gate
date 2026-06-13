@@ -63,12 +63,12 @@ Claude Code and Codex support deterministic workflows, scripts, integrations, an
 |-----------|---------|-----------------|---------------|-----------------|---------|
 | Code generation and execution | CODE_AGENT | Yes — verified | Anthropic Claude Code docs, 2026-06 | Sandboxed; requires explicit system permissions | COWORK for file-based workflows |
 | System-to-system integration via API | CODE_AGENT | Yes — verified | Anthropic Claude Code docs, 2026-06 | API credentials must be provisioned separately | Manual export/import as interim |
-| Deterministic logic enforcement | CODE_AGENT | Yes — verified | Anthropic Claude Code docs, 2026-06 | Logic must be explicitly specified; no inference | SUPERVISED / PROJECT for ambiguous rules |
+| Deterministic logic enforcement | CODE_AGENT | Yes — verified | Anthropic Claude Code docs, 2026-06 | Logic must be explicitly specified; no inference | SUPERVISED with a human-triggered review architecture for ambiguous rules |
 | Scheduled execution via cron or trigger | CODE_AGENT | Yes — verified | Anthropic Claude Code docs, 2026-06 | Scheduling infrastructure must be set up by operator | COWORK for simpler scheduling |
 | Database read/write | CODE_AGENT | Yes — verified | Anthropic Claude Code docs, 2026-06 | Permissions scoped to minimum required | Read-only by default; write requires explicit provisioning |
 | Audit log generation | CODE_AGENT | Yes — verified | Anthropic Claude Code docs, 2026-06 | Log destination must be configured | Output to flat file if no log service |
-| Rollback execution | CODE_AGENT | Yes — conditional | Anthropic Claude Code docs, 2026-06 | Only if rollback logic is coded explicitly | SUPERVISED / PROJECT if rollback not implemented |
-| Human approval checkpoint (pre-execution) | CODE_AGENT | Yes — conditional | Anthropic Claude Code docs, 2026-06 | Approval must be coded as blocking step | SUPERVISED / PROJECT for natural-language review |
+| Rollback execution | CODE_AGENT | Yes — conditional | Anthropic Claude Code docs, 2026-06 | Only if rollback logic is coded explicitly | SUPERVISED with human-triggered review if rollback is not implemented |
+| Human approval checkpoint (pre-execution) | CODE_AGENT | Yes — conditional | Anthropic Claude Code docs, 2026-06 | Approval must be coded as blocking step | SUPERVISED with human-triggered review for natural-language approval |
 | Self-scheduling / autonomous recurrence | CODE_AGENT | Yes — conditional | Anthropic Claude Code docs, 2026-06 | Requires cron or event trigger configured by operator | COWORK |
 | External UI rendering | CODE_AGENT | No | Anthropic Claude Code docs, 2026-06 | Terminal/API output only | PROJECT for human-readable formatted output |
 
@@ -108,7 +108,7 @@ Does ANY gate condition apply? → NO_AI (paired with HUMAN_ONLY or SOP_FIRST)
 
 ## Fallback Logic — Required in Every Artifact
 
-Per RULE-06: if the recommended surface requires access the user is unlikely to have (Cowork, Claude Code), the artifact must name a fallback. Silent omission of the fallback is not acceptable.
+Per RULE-06: if the preferred implementation tool is unavailable, the architecture comparison must name a fallback and explain any control, trigger, logging, or operating adjustments. Silent substitution is not acceptable.
 
 **Standard fallback text by surface:**
 

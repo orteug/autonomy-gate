@@ -89,7 +89,7 @@ def main() -> int:
     adapter_checks = {
         "Claude Project": "Claude Project" in claude_setup,
         "Claude Code": "CLAUDE.md" in claude_code,
-        "Cowork": "COWORK" in cowork,
+        "Cowork": "cowork" in cowork.lower(),
     }
     results.append(result(
         "CLAUDE-ADAPT-01",

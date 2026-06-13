@@ -21,6 +21,8 @@ CANONICAL_CHATGPT_FILES = {
     "risk-classification.md",
     "precedents.md",
     "operating-contract.md",
+    "operator-disposition.md",
+    "tool-selection-rules.md",
     "template-automation-architecture.md",
     "template-project-setup.md",
     "template-cowork-config.md",
@@ -83,6 +85,8 @@ def flat_gate_files() -> dict[str, Path]:
             "template-governance-memo.md",
         )],
         GATE / "reference" / "operating-contract.md",
+        GATE / "reference" / "operator-disposition.md",
+        GATE / "reference" / "tool-selection-rules.md",
     ]
     return {path.name: path for path in paths}
 

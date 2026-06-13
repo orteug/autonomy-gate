@@ -87,7 +87,7 @@ Risk levels combine failure consequence and reversibility. They are assigned dur
 - Regulatory filing submission — FINRA, SEC, OFAC (GATE-2: submission is irreversible; "Responsibility cannot be delegated to technology" per Consult CRA compliance guidance)
 - Press release publication (GATE-2: published record; retraction does not erase)
 
-**Gate implication:** HUMAN_ONLY / NO_AI. GATE-2 or GATE-3 override. No controls can reduce this to SUPERVISED. The action cannot be delegated.
+**Gate implication:** `HUMAN_ONLY` with `NOT_APPLICABLE` handoff status. GATE-2 or GATE-3 overrides. No controls can reduce this terminal action to SUPERVISED; it cannot be delegated.
 
 ---
 

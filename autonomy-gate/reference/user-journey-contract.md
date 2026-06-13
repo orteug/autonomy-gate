@@ -30,7 +30,7 @@ The Gate infers mode from the input pattern. The table below shows the trigger p
 | `ASSESS` | Describes a business workflow | "Every Monday we pull KPI data…" |
 | `TRIAGE` | Asks whether a workflow is worth automating | "Is this worth automating?", "Quick check on this" |
 | `RESOLVE_EVIDENCE` | Supplies a specific missing value | "The error rate is less than 2% per week", "The owner is the ops team" |
-| `COMPARE_ARCHITECTURE` | Asks about surface or platform options | "Should this run in Cowork or Code?", "What if we used Codex instead?" |
+| `COMPARE_ARCHITECTURE` | Asks about architecture, implementation, or platform options | "Should this use our native suite or a code-first service?", "What if the builder uses Codex instead?" |
 | `APPROVE` | Records a disposition | "Approved", "APPROVE_FOR_BUILD", "Reject this one" |
 | `REVISE` | Requests a change to the assessment | "The terminal action is wrong", "Re-score with SUPERVISED minimum" |
 | `REVIEW_BUILD` | Compares built system to packet | "The builder changed the approval step — does that need a new assessment?" |
@@ -103,22 +103,22 @@ If no mode can be inferred, the Gate applies `ASSESS` and proceeds.
 
 ### COMPARE_ARCHITECTURE
 
-**Trigger:** Question about surface selection or platform alternatives.
+**Trigger:** Question about architecture selection, platform alternatives, or builder substitution.
 
 **Precondition:** A packet must exist (state `ASSESSED` or later). Architecture comparison is not available before the packet.
 
-**Input:** Named alternatives ("Cowork vs Code Agent", "Claude vs Codex for this").
+**Input:** Named alternatives, organizational constraints, or a proposed tool substitution.
 
 **What the Gate does:** Produces the required primary, native-suite, low-code, code-first, and vendor-neutral option classes from `operating-contract.md`, subject to evidence-based inapplicability. It compares control fit, effort, operating cost, maintenance, security/compliance, portability, and skill requirements. Named tools require confirmed stack compatibility and sourced capability claims.
 
 **Output:**
-1. Surface comparison table: each alternative, feasibility, required controls, disqualifying constraints
-2. Named primary recommendation with RULE-06 citation
-3. Optional: revised artifact if operator selects a different surface
+1. `ARCHITECTURE OPTIONS` block containing the viable canonical classes and evidence-based omissions
+2. Named primary recommendation with applicable rule citations
+3. Unselected operator decision fields unless the operator explicitly records a generated option, identity or role, and date
 
-**State after:** `ASSESSED` while comparing or `ARCHITECTURE_SELECTED` after the operator records a selection.
+**State after:** `ARCHITECTURE_SELECTED` only after the operator records a generated option. Otherwise the workflow remains `HANDOFF_BLOCKED` and the pack cannot be `BUILD_READY`.
 
-**Does not:** Assign a surface before the packet exists. Recommend a surface that conflicts with the autonomy verdict.
+**Does not:** Select an architecture on the operator's behalf or recommend an option that conflicts with the autonomy verdict and required controls.
 
 ---
 

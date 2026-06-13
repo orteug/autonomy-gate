@@ -49,7 +49,7 @@ files + instructions + human-pasted workflow
 You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.
 ```
 
-4. Confirm the Project supports at least 14 files. Verify current official plan limits before installation.
+4. Confirm the Project supports at least 16 files. Verify current official plan limits before installation.
 
 5. Upload the operator files flat in two batches because ChatGPT currently accepts at most 10 files per upload action.
 
@@ -64,14 +64,16 @@ risk-classification.md
 surface-capability-matrix.md
 precedents.md
 operating-contract.md
-template-automation-architecture.md
-template-project-setup.md
-template-control-plan.md
+operator-disposition.md
+tool-selection-rules.md
 ```
 
 Batch 2:
 
 ```text
+template-automation-architecture.md
+template-project-setup.md
+template-control-plan.md
 template-cowork-config.md
 template-stabilization-plan.md
 template-governance-memo.md
@@ -85,7 +87,7 @@ If your upload UI does not preserve folders, upload flat and keep filenames reco
 
 ## Setup: Gate-Governed Workflow
 
-Use this after the Gate returns `AUTONOMOUS / PROJECT` or `SUPERVISED / PROJECT`.
+Use this when the operator-selected execution architecture uses a human-triggered ChatGPT Project pattern.
 
 1. Create a new Project for that workflow.
 2. Paste the artifact's custom instructions.

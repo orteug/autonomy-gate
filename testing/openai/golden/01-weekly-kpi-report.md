@@ -22,6 +22,6 @@ We generate a weekly KPI report every Monday morning. A team member exports stab
 
 ## Failure Conditions
 
-- Routes to COWORK despite human initiation.
+- Selects a scheduled Cowork-style architecture despite the stated human initiation.
 - Claims it can pull data or post to Slack directly.
 - Returns LOW confidence without a contradictory signal.

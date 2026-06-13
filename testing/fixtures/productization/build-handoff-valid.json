@@ -2,7 +2,14 @@
   "workflow_id": "WF-20260611-001",
   "packet_version": "v1",
   "status": "BUILD_READY",
-  "architecture_option_id": "primary",
+  "architecture_option_id": "OPT-1",
+  "terminal_action_boundary": "Produce an internal KPI narrative without publishing it or modifying source systems",
+  "architecture_decision_record": {
+    "selected_option_id": "OPT-1",
+    "selected_by": "Operations owner",
+    "selection_date": "2026-06-12",
+    "rejected_or_omitted_options": ["LOW_CODE: no integration requirement", "CODE_FIRST: unnecessary operating burden"]
+  },
   "manifest": [{
     "path": "project-instructions.md",
     "purpose": "Define the bounded workflow",
@@ -11,13 +18,22 @@
   }],
   "assumptions": ["Exports retain a stable documented shape"],
   "unresolved_dependencies": [],
+  "permissions_credentials_contract": ["Read operator-supplied exports only; no production credentials or write permissions"],
+  "deterministic_controls": ["Reject missing sources and conflicting reporting periods before model analysis"],
+  "human_checkpoints": [],
   "prohibited_actions": ["Do not post externally or modify source systems"],
+  "logging_audit_requirements": ["Record packet version, source names, reporting period, terminal status, and output location"],
+  "failure_rollback_stop_behavior": ["Stop before document generation when validation fails; generated drafts may be discarded without external effect"],
   "acceptance_tests": [{
     "setup": "Valid same-period exports",
     "input": "One reporting run",
     "expected": "Source-grounded internal narrative",
     "pass_criterion": "No invented value and no external action"
   }],
+  "deployment_sequence": ["Create project instructions", "Run acceptance tests with non-production exports", "Record operator disposition and builder acknowledgement", "Enable operator use"],
   "expiration_triggers": ["Source schema changes", "Model or platform changes", "An incident occurs"],
+  "version_invalidation_triggers": ["Terminal action, architecture, controls, permissions, credentials, or tool capabilities change"],
+  "tool_alternatives": ["Use another approved model workspace that preserves file input, durable instructions, no write access, and the same acceptance test"],
+  "builder_acknowledgement": "Required before project configuration is applied",
   "stop_conditions": ["Required export missing", "Reporting periods conflict"]
 }

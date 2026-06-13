@@ -93,8 +93,35 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
       [Applicable — SUPERVISED workflows depend on a named reviewer. If the reviewer role changes
       or becomes vacant, the Control Plan must be updated with the new reviewer before execution resumes.]
 
+ARCHITECTURE OPTIONS
+Generate the canonical PRIMARY, NATIVE_SUITE, LOW_CODE, CODE_FIRST, and VENDOR_NEUTRAL options required by RULE-10. Use one `OPT-N` heading per viable class. Every option states Execution architecture, Builder surface, Control fit, Implementation effort, Operating cost, Maintenance burden, Security fit, Portability, Skill requirements, and Source evidence. Reject any option that cannot enforce the blocking approval checkpoint deterministically. List every absent class under Omitted option classes with an evidence-based reason.
+
+Selected option: [generated option ID or NOT_SELECTED]
+Selection by: [operator identity or role, or NOT_RECORDED]
+Selection date: [ISO date or NOT_RECORDED]
+
 BUILD HANDOFF PACK
 Handoff status: [BUILD_READY or BLOCKED_FOR_EVIDENCE per RULE-14]
+Terminal-action boundary: [exact authorized terminal action and explicit out-of-scope boundary]
+Architecture decision record: [selected option, selection metadata, and rejected or omitted alternatives; use NOT_APPLICABLE where no AI architecture is authorized]
+Permissions and credentials: [least-privilege access, credential owner, storage, rotation, and unavailable values]
+Deterministic controls: [controls implemented in code or configuration rather than model prompts]
+Human checkpoints: [blocking checkpoint contract, or None with rationale]
+Prohibited actions: [implementation constraints that may not execute]
+Logging and audit: [events, fields, location, retention, and reviewer]
+Failure, rollback, and stop behavior: [failure paths, halt conditions, rollback or compensation, and irreversible limits]
+Deployment sequence: [ordered non-production setup, validation, approval, and activation steps]
+Assumptions: [grounded assumptions, or None]
+Unresolved dependencies: [irreducible missing inputs only, or None]
+Expiration and reassessment triggers: [observable events that end authorization]
+Version invalidation triggers: [material changes that create a new packet version and invalidate prior selection, disposition, and acknowledgement]
+Tool alternatives: [selected option plus viable fallback or safe capability-neutral alternative]
+Builder acknowledgement: [required acknowledgement state and reference to the complete acknowledgement contract]
+Current state: [canonical lifecycle state]
+What the Gate completed: [assessment, architecture, and handoff work completed]
+What is blocked: [specific blocker or None]
+Who acts next: [operator, evidence owner, builder, or human procedure owner]
+Exact next action: [one executable action]
 Generate the complete configuration for the assigned surface, including the approval hold, named reviewer contract, approval record, prohibited terminal action before approval, and one acceptance test proving the checkpoint blocks execution. Do not leave placeholders. Missing reviewer or threshold values appear only under REQUIRED BEFORE BUILD.
 ```
 

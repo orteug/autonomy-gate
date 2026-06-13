@@ -1,6 +1,6 @@
 # Cowork Handoff — Autonomy Gate Adapter
 
-Use this after the Gate has issued an `AUTONOMOUS / COWORK` or `SUPERVISED / COWORK` verdict. The artifact's BUILD HANDOFF PACK already contains the exact configuration; this adapter explains how to apply and verify it without translating fields manually.
+Use this when the operator-selected execution architecture uses a Cowork implementation pattern. The artifact's BUILD HANDOFF PACK already contains the exact configuration and autonomy controls; this adapter explains how to apply and verify it without translating fields manually.
 
 ---
 
@@ -16,6 +16,8 @@ Read the full Cowork Project Config artifact before touching Cowork. Its generat
 - The AUTONOMY EXPIRES WHEN conditions
 
 Every field in the artifact is a requirement, not a suggestion.
+
+The Gate delivers this artifact in two formats: Markdown (structured reference) and styled HTML (operator-facing document). The HTML renders the complete artifact using the design system in `examples/artifact-rendered.html`. To receive the HTML artifact from the Gate, the Gate's project must include `artifact-rendered.html` in its knowledge files and its custom instructions must include the HTML rendering directive (see `adapters/claude/claude-project-setup.md`).
 
 ---
 

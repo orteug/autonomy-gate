@@ -1,5 +1,6 @@
 # Template: Governance Memo
-**Verdict:** HUMAN_ONLY / NO_AI
+**Autonomy:** HUMAN_ONLY  
+**Handoff status:** NOT_APPLICABLE
 **Section 20 additions applied:** EXPECTED OUTCOMES (Addition 2) · AUTONOMY EXPIRES WHEN (Addition 5)
 
 ---
@@ -12,7 +13,7 @@ A Governance Memo is not a dead end. It names exactly what would have to be true
 
 ```
 GOVERNANCE MEMO
-[Workflow Name] · HUMAN_ONLY / NO_AI · [Confidence]
+[Workflow Name] · HUMAN_ONLY · No AI execution handoff · [Confidence]
 
 [One paragraph: what this workflow does, why it cannot be delegated to AI,
 and what the specific risk or judgment requirement blocks automation.
@@ -50,10 +51,10 @@ These are specific, concrete conditions that would permit re-assessment. Not "wh
 
 • [Condition 1 — e.g., "If the transaction value is capped below $[X] and a pre-approved rules table
   exists defining the exact conditions under which a routing change can proceed, re-submit as
-  SUPERVISED / CODE_AGENT with GATE-1 acknowledged."]
+  SUPERVISED with a code-first execution architecture and GATE-1 acknowledged."]
 • [Condition 2 — e.g., "If the terminal action is changed to 'prepare a recommendation for human authorization'
   rather than 'authorize the account change,' the workflow splits: AI prepares the verification packet
-  (SUPERVISED / CODE_AGENT); human authorizes (HUMAN_ONLY remains for the authorization step)."]
+  (SUPERVISED with a code-first execution architecture); a human authorizes the terminal action, which remains HUMAN_ONLY."]
 • [Condition 3 — if applicable — e.g., "If a second independent verification channel is added and
   the workflow scope is limited to flagging rather than acting, re-submit with updated terminal action."]
 
@@ -82,7 +83,7 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 - [ ] The workflow's steps, inputs, or outputs change materially
       [Applicable — if scope changes to remove the gate-triggering terminal action, re-assess.]
 - [ ] The AI surface or tool used changes
-      [Not applicable — HUMAN_ONLY / NO_AI assigns no AI surface. If future re-assessment assigns a surface,
+      [Not applicable — HUMAN_ONLY authorizes no AI execution architecture for this terminal action. If future reassessment authorizes bounded preparatory work,
       this condition becomes applicable at that time.]
 - [ ] The policy or compliance context changes
       [Applicable — regulatory or policy changes may tighten or relax the gate condition. Re-assess if context changes.]
@@ -100,6 +101,28 @@ Mark each condition as applicable or not applicable. Do not omit conditions — 
 
 BUILD HANDOFF PACK
 Handoff status: NOT_APPLICABLE
+Terminal-action boundary: [exact authorized terminal action and explicit out-of-scope boundary]
+Architecture decision record: [selected option, selection metadata, and rejected or omitted alternatives; use NOT_APPLICABLE where no AI architecture is authorized]
+Permissions and credentials: [least-privilege access, credential owner, storage, rotation, and unavailable values]
+Deterministic controls: [controls implemented in code or configuration rather than model prompts]
+Human checkpoints: [blocking checkpoint contract, or None with rationale]
+Prohibited actions: [implementation constraints that may not execute]
+Logging and audit: [events, fields, location, retention, and reviewer]
+Failure, rollback, and stop behavior: [failure paths, halt conditions, rollback or compensation, and irreversible limits]
+Deployment sequence: [ordered non-production setup, validation, approval, and activation steps]
+Assumptions: [grounded assumptions, or None]
+Unresolved dependencies: [irreducible missing inputs only, or None]
+Expiration and reassessment triggers: [observable events that end authorization]
+Version invalidation triggers: [material changes that create a new packet version and invalidate prior selection, disposition, and acknowledgement]
+Tool alternatives: [selected option plus viable fallback or safe capability-neutral alternative]
+Builder acknowledgement: [required acknowledgement state and reference to the complete acknowledgement contract]
+Current state: [canonical lifecycle state]
+What the Gate completed: [assessment, architecture, and handoff work completed]
+What is blocked: [specific blocker or None]
+Who acts next: [operator, evidence owner, builder, or human procedure owner]
+Exact next action: [one executable action]
+Human operating procedure: [complete owner, verification, decision, escalation, record, and audit procedure]
+Safe decomposition opportunities: [bounded preparation work that may proceed without executing the prohibited terminal action, or a grounded explanation that none is safe]
 State explicitly that no AI deployment files should be created for the gate-triggering terminal action. Generate the complete human review procedure, decision-record fields, required verification evidence, escalation path, and one audit check. If the owner or escalation role is unknown, list it under REQUIRED BEFORE OPERATION rather than inventing it.
 ```
 

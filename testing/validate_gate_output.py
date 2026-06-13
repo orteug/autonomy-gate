@@ -12,7 +12,9 @@ from pathlib import Path
 AUTONOMY_VALUES = {"AUTONOMOUS", "SUPERVISED", "SOP_FIRST", "HUMAN_ONLY"}
 CONFIDENCE_VALUES = {"HIGH", "MEDIUM", "LOW"}
 HANDOFF_STATUSES = {"BUILD_READY", "BLOCKED_FOR_EVIDENCE", "NOT_APPLICABLE"}
+ARCHITECTURE_CLASSES = {"PRIMARY", "NATIVE_SUITE", "LOW_CODE", "CODE_FIRST", "VENDOR_NEUTRAL"}
 HANDOFF_HEADING = r"^\s*(?:#{1,4}\s*)?(?:━━\s*)?BUILD HANDOFF PACK(?:\s*━━+)?\s*$"
+ARCHITECTURE_HEADING = r"^\s*(?:#{1,4}\s*)?(?:━━\s*)?ARCHITECTURE OPTIONS(?:\s*━━+)?\s*$"
 PACKET_FIELDS = [
     "Autonomy",
     "Assessment surface",
@@ -97,6 +99,20 @@ def check_structure(text: str, result: ValidationResult) -> None:
             result.fail(code, f"Required section not found: {marker}.")
     if not re.search(HANDOFF_HEADING, text, re.IGNORECASE | re.MULTILINE):
         result.fail("PACK-MISSING", "BUILD HANDOFF PACK section not found.")
+    next_action_fields = (
+        "Current state",
+        "What the Gate completed",
+        "What is blocked",
+        "Who acts next",
+        "Exact next action",
+    )
+    missing = [
+        field
+        for field in next_action_fields
+        if not re.search(rf"^\s*{re.escape(field)}\s*:\s*\S", text, re.IGNORECASE | re.MULTILINE)
+    ]
+    if missing:
+        result.fail("NEXT-ACTION", "State-aware next action is missing: " + ", ".join(missing) + ".")
 
 
 def check_packets(text: str, result: ValidationResult) -> None:
@@ -124,15 +140,92 @@ def check_packets(text: str, result: ValidationResult) -> None:
         justification = fields.get("Justification", "")
         if justification and not re.search(r"\bRULE-\d+\b", justification):
             result.warn("PKT-CITE", f"{prefix}Justification does not cite a RULE-NN identifier.")
-        gaps = fields.get("Evidence gaps", "").strip()
+        gaps = fields.get("Evidence gaps", "").strip().rstrip(".,;")
         if confidence == "HIGH" and gaps and gaps.lower() not in {"none", "n/a", "not applicable", "—"}:
             result.fail("CONTRA-HIGH-GAPS", f"{prefix}HIGH confidence cannot include decision-material evidence gaps.")
         if autonomy == "AUTONOMOUS" and re.search(r"\bGATE-[23]\b", justification):
             result.fail("CONTRA-AUTO-GATE", f"{prefix}AUTONOMOUS conflicts with GATE-2 or GATE-3.")
 
 
+def architecture_block(text: str) -> str:
+    return section(text, ARCHITECTURE_HEADING, HANDOFF_HEADING)
+
+
+def check_architecture(text: str, result: ValidationResult) -> None:
+    packets = packet_blocks(text)
+    fields = parse_fields(packets[0]) if packets else {}
+    autonomy_parts = fields.get("Autonomy", "").split()
+    autonomy = autonomy_parts[0].strip("`.,()") if autonomy_parts else ""
+    if autonomy not in {"AUTONOMOUS", "SUPERVISED"}:
+        return
+
+    block = architecture_block(text)
+    if not block:
+        result.fail("ARCH-MISSING", "AUTONOMOUS and SUPERVISED outputs require an ARCHITECTURE OPTIONS section.")
+        return
+
+    option_matches = list(
+        re.finditer(
+            r"^\s*#{2,4}\s+(OPT-[A-Z0-9_-]+)\s+[—-]\s+(PRIMARY|NATIVE_SUITE|LOW_CODE|CODE_FIRST|VENDOR_NEUTRAL)\s*$",
+            block,
+            re.IGNORECASE | re.MULTILINE,
+        )
+    )
+    option_ids = {match.group(1).upper() for match in option_matches}
+    option_classes = {match.group(2).upper() for match in option_matches}
+    required_labels = (
+        "Execution architecture",
+        "Builder surface",
+        "Control fit",
+        "Implementation effort",
+        "Operating cost",
+        "Maintenance burden",
+        "Security fit",
+        "Portability",
+        "Skill requirements",
+        "Source evidence",
+    )
+    for index, match in enumerate(option_matches):
+        end = option_matches[index + 1].start() if index + 1 < len(option_matches) else len(block)
+        option = block[match.end():end]
+        for label in required_labels:
+            if not re.search(rf"\*{{0,2}}{re.escape(label)}:\*{{0,2}}\s*\S", option, re.IGNORECASE):
+                result.fail("ARCH-OPTION", f"{match.group(1)} is missing required field '{label}'.")
+
+    omitted = {
+        match.group(1).upper()
+        for match in re.finditer(
+            r"^\s*-\s*(PRIMARY|NATIVE_SUITE|LOW_CODE|CODE_FIRST|VENDOR_NEUTRAL)\s+[—-]\s+\S",
+            block,
+            re.IGNORECASE | re.MULTILINE,
+        )
+    }
+    for missing in sorted(ARCHITECTURE_CLASSES - option_classes - omitted):
+        result.fail("ARCH-CLASS", f"Architecture class {missing} is neither generated nor omitted with a reason.")
+
+    selection_match = re.search(r"^\s*Selected option\s*:\s*(\S+)", block, re.IGNORECASE | re.MULTILINE)
+    selected = selection_match.group(1).strip("`*.,").upper() if selection_match else ""
+    unselected_values = {"", "NONE", "NOT_SELECTED", "PENDING", "UNKNOWN"}
+    if selected not in unselected_values and selected not in option_ids:
+        result.fail("ARCH-SELECTION", f"Selected architecture option '{selected}' was not generated.")
+
+    handoff_fields = parse_fields(handoff_block(text))
+    handoff_status = (handoff_fields.get("Handoff status") or "").strip(" `*").replace(" ", "_").upper()
+    if handoff_status == "BUILD_READY":
+        if selected in unselected_values or selected not in option_ids:
+            result.fail("ARCH-SELECTION", "BUILD_READY requires an operator-selected generated architecture option.")
+        if not re.search(r"^\s*Selection by\s*:\s*\S", block, re.IGNORECASE | re.MULTILINE):
+            result.fail("ARCH-METADATA", "BUILD_READY architecture selection requires the selector identity or role.")
+        if not re.search(r"^\s*Selection date\s*:\s*\d{4}-\d{2}-\d{2}\s*$", block, re.IGNORECASE | re.MULTILINE):
+            result.fail("ARCH-METADATA", "BUILD_READY architecture selection requires an ISO selection date.")
+
+
 def handoff_block(text: str) -> str:
-    return section(text, HANDOFF_HEADING, r"OPERATOR DISPOSITION")
+    return section(
+        text,
+        HANDOFF_HEADING,
+        r"^\s*(?:#{1,4}\s*)?(?:━━\s*)?OPERATOR DISPOSITION(?:\s*━━+)?\s*$",
+    )
 
 
 def check_handoff(text: str, result: ValidationResult) -> None:
@@ -152,6 +245,30 @@ def check_handoff(text: str, result: ValidationResult) -> None:
     if status not in HANDOFF_STATUSES:
         result.fail("PACK-STATUS", f"Invalid handoff status '{status}'.")
         return
+    required_contract_labels = (
+        "Terminal-action boundary",
+        "Architecture decision record",
+        "Permissions and credentials",
+        "Deterministic controls",
+        "Human checkpoints",
+        "Prohibited actions",
+        "Logging and audit",
+        "Failure, rollback, and stop behavior",
+        "Deployment sequence",
+        "Assumptions",
+        "Unresolved dependencies",
+        "Expiration and reassessment triggers",
+        "Version invalidation triggers",
+        "Tool alternatives",
+        "Builder acknowledgement",
+    )
+    missing_contract = [
+        label
+        for label in required_contract_labels
+        if not re.search(rf"^\s*(?:#{1,4}\s*)?(?:\*+)?{re.escape(label)}\s*:(?:\*+)?", block, re.IGNORECASE | re.MULTILINE)
+    ]
+    if missing_contract:
+        result.fail("PACK-CONTRACT", "Build Handoff Pack is missing contract fields: " + ", ".join(missing_contract) + ".")
     if status == "BUILD_READY":
         if not re.search(r"\bManifest\s*:", block, re.IGNORECASE):
             result.fail("PACK-MANIFEST", "BUILD_READY requires an artifact manifest.")
@@ -170,10 +287,21 @@ def check_handoff(text: str, result: ValidationResult) -> None:
     elif status == "BLOCKED_FOR_EVIDENCE":
         if not re.search(r"Required before build\s*:\s*\S", block, re.IGNORECASE):
             result.fail("PACK-BLOCKERS", "BLOCKED_FOR_EVIDENCE requires named missing evidence.")
+    elif status == "NOT_APPLICABLE":
+        missing_human = [
+            label
+            for label in ("Human operating procedure", "Safe decomposition opportunities")
+            if not re.search(rf"^\s*(?:#{1,4}\s*)?{re.escape(label)}\s*:", block, re.IGNORECASE | re.MULTILINE)
+        ]
+        if missing_human:
+            result.fail("PACK-HUMAN", "NOT_APPLICABLE is missing: " + ", ".join(missing_human) + ".")
 
 
 def disposition_block(text: str) -> str:
-    return section(text, r"OPERATOR DISPOSITION")
+    matches = list(re.finditer(r"OPERATOR DISPOSITION", text, re.IGNORECASE))
+    if not matches:
+        return ""
+    return text[matches[-1].end():]
 
 
 def check_disposition(text: str, result: ValidationResult) -> None:
@@ -189,7 +317,7 @@ def check_disposition(text: str, result: ValidationResult) -> None:
         required = {
             "Name / role": r"Name\s*/\s*role\s*:\s*\S",
             "Date": r"Date\s*:\s*\d{4}-\d{2}-\d{2}",
-            "Packet version": r"Packet version\s*:\s*v\d+",
+            "Packet version": r"Packet version\s*:\s*v\d+(?:[.\-]\d+)*\s*$",
             "Rationale": r"Rationale\s*:\s*\S",
         }
         missing = [name for name, pattern in required.items() if not re.search(pattern, block, re.IGNORECASE)]
@@ -211,6 +339,7 @@ def validate(text: str) -> ValidationResult:
     result = ValidationResult()
     check_structure(text, result)
     check_packets(text, result)
+    check_architecture(text, result)
     check_handoff(text, result)
     check_placeholders(text, result)
     check_disposition(text, result)

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Autonomy Gate — Artifact System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#E7E3DB}
+  body{font-family:'Hanken Grotesk',sans-serif;-webkit-font-smoothing:antialiased;color:#1B1A17}
+  ::selection{background:#1B1A17;color:#FCFAF6}
+</style>
+</head>
+<body>
+
+<div style="background:#E7E3DB;min-height:100vh;padding:64px 40px 120px;font-family:'Hanken Grotesk',sans-serif">
+<div style="max-width:1180px;margin:0 auto">
+
+  <!-- ===== INTRO ===== -->
+  <div style="margin-bottom:18px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px">
+      <div style="width:26px;height:26px;border:1.5px solid #1B1A17;border-radius:2px;display:flex;align-items:center;justify-content:center">
+        <div style="width:9px;height:9px;background:#1B1A17"></div>
+      </div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:#1B1A17">The Autonomy Gate</span>
+      <span style="flex:1;height:1px;background:#CFC9BC"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8a857a">ARTIFACT&nbsp;SYSTEM&nbsp;·&nbsp;RENDERED&nbsp;OUTPUTS</span>
+    </div>
+    <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:54px;line-height:1.02;letter-spacing:-.015em;max-width:18ch;margin-bottom:20px">The verdict, rendered as a document that walks into a&nbsp;meeting.</h1>
+    <p style="max-width:62ch;font-size:16px;line-height:1.62;color:#4A4843;margin-bottom:14px">Every input to the Gate produces a binding autonomy verdict and one execution artifact — the deliverable an operator charges for. These studies render that artifact as a governance-grade instrument: a legal opinion crossed with an engineering decision record. One chroma per document signals the verdict; everything else stays paper, ink, and hairline.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:#4A4843;background:#FCFAF6;border:1px solid #D8D2C5;border-radius:2px;padding:6px 11px">Newsreader · serif authority</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:#4A4843;background:#FCFAF6;border:1px solid #D8D2C5;border-radius:2px;padding:6px 11px">Hanken Grotesk · body</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:#4A4843;background:#FCFAF6;border:1px solid #D8D2C5;border-radius:2px;padding:6px 11px">JetBrains Mono · the record</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:#4A4843;background:#FCFAF6;border:1px solid #D8D2C5;border-radius:2px;padding:6px 11px">4 verdict states · 5 hard gates</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- A · THE VERDICT SYSTEM                                        -->
+  <!-- ============================================================ -->
+  <div style="display:flex;align-items:baseline;gap:14px;margin:64px 0 24px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17;white-space:nowrap">A · The verdict system</span>
+    <span style="font-size:13px;color:#8a857a;font-style:italic;font-family:'Newsreader',serif">four mastheads, one grammar</span>
+    <span style="flex:1;height:1px;background:#CFC9BC"></span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+
+    <!-- AUTONOMOUS -->
+    <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -22px rgba(0,0,0,.28);padding:30px 32px;position:relative;overflow:hidden">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#1F6B4A"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:#9b968b;text-transform:uppercase">Autonomy verdict</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:#1F6B4A;border:1px solid #1F6B4A;border-radius:2px;padding:3px 7px">HANDOFF · BUILD_READY</span>
+      </div>
+      <div style="font-family:'Newsreader',serif;font-weight:400;font-size:46px;line-height:1;letter-spacing:-.01em;color:#1F6B4A;margin-bottom:6px">Autonomous</div>
+      <div style="font-size:13.5px;color:#4A4843;line-height:1.5;max-width:34ch">AI executes without a human approval checkpoint. The consequence is bounded, observed, reversible, and owned.</div>
+      <div style="display:flex;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid #E8E2D6">
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#9b968b;text-transform:uppercase;margin-bottom:4px">Confidence</div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1B1A17">HIGH</div></div>
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#9b968b;text-transform:uppercase;margin-bottom:4px">Artifact</div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1B1A17">Project Setup Brief</div></div>
+      </div>
+    </div>
+
+    <!-- SUPERVISED -->
+    <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -22px rgba(0,0,0,.28);padding:30px 32px;position:relative;overflow:hidden">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#B07514"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:#9b968b;text-transform:uppercase">Autonomy verdict</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:#B07514;border:1px solid #B07514;border-radius:2px;padding:3px 7px">HANDOFF · BUILD_READY</span>
+      </div>
+      <div style="font-family:'Newsreader',serif;font-weight:400;font-size:46px;line-height:1;letter-spacing:-.01em;color:#B07514;margin-bottom:6px">Supervised</div>
+      <div style="font-size:13.5px;color:#4A4843;line-height:1.5;max-width:34ch">AI prepares the work; a named human approves before anything executes. The checkpoint is the control.</div>
+      <div style="display:flex;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid #E8E2D6">
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#9b968b;text-transform:uppercase;margin-bottom:4px">Confidence</div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1B1A17">MEDIUM</div></div>
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#9b968b;text-transform:uppercase;margin-bottom:4px">Artifact</div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1B1A17">Control Plan</div></div>
+      </div>
+    </div>
+
+    <!-- SOP_FIRST -->
+    <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -22px rgba(0,0,0,.28);padding:30px 32px;position:relative;overflow:hidden">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#2E5B8C"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:#9b968b;text-transform:uppercase">Autonomy verdict</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:#2E5B8C;border:1px solid #2E5B8C;border-radius:2px;padding:3px 7px">HANDOFF · BLOCKED</span>
+      </div>
+      <div style="font-family:'Newsreader',serif;font-weight:400;font-size:46px;line-height:1;letter-spacing:-.01em;color:#2E5B8C;margin-bottom:6px">SOP First</div>
+      <div style="font-size:13.5px;color:#4A4843;line-height:1.5;max-width:34ch">The process is too unstable to assign any autonomy level. Stabilize and produce evidence before reassessment.</div>
+      <div style="display:flex;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid #E8E2D6">
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#9b968b;text-transform:uppercase;margin-bottom:4px">Confidence</div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1B1A17">LOW</div></div>
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#9b968b;text-transform:uppercase;margin-bottom:4px">Artifact</div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1B1A17">Stabilization Plan</div></div>
+      </div>
+    </div>
+
+    <!-- HUMAN_ONLY -->
+    <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -22px rgba(0,0,0,.28);padding:30px 32px;position:relative;overflow:hidden">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#8E2A2A"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:#9b968b;text-transform:uppercase">Autonomy verdict</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:#8E2A2A;border:1px solid #8E2A2A;border-radius:2px;padding:3px 7px">HANDOFF · NOT_APPLICABLE</span>
+      </div>
+      <div style="font-family:'Newsreader',serif;font-weight:400;font-size:46px;line-height:1;letter-spacing:-.01em;color:#8E2A2A;margin-bottom:6px">Human Only</div>
+      <div style="font-size:13.5px;color:#4A4843;line-height:1.5;max-width:34ch">Judgment or risk cannot be delegated — a structural block. No framing or urgency overrides it.</div>
+      <div style="display:flex;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid #E8E2D6">
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#9b968b;text-transform:uppercase;margin-bottom:4px">Confidence</div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1B1A17">HIGH</div></div>
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#9b968b;text-transform:uppercase;margin-bottom:4px">Artifact</div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1B1A17">Governance Memo</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- B · FLAGSHIP ARTIFACT — AUTONOMOUS                            -->
+  <!-- ============================================================ -->
+  <div style="display:flex;align-items:baseline;gap:14px;margin:76px 0 24px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17;white-space:nowrap">B · Flagship artifact</span>
+    <span style="font-size:13px;color:#8a857a;font-style:italic;font-family:'Newsreader',serif">AUTONOMOUS — Project Setup Brief, rendered end to end</span>
+    <span style="flex:1;height:1px;background:#CFC9BC"></span>
+  </div>
+
+  <div style="max-width:840px;margin:0 auto;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 2px 4px rgba(0,0,0,.05),0 40px 80px -40px rgba(0,0,0,.35)">
+    <div style="height:5px;background:#1F6B4A;border-radius:3px 3px 0 0"></div>
+    <div style="padding:54px 64px 60px">
+
+      <!-- MASTHEAD -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:20px;border-bottom:1px solid #E2DCCF">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="width:20px;height:20px;border:1.5px solid #1B1A17;border-radius:2px;display:flex;align-items:center;justify-content:center"><div style="width:7px;height:7px;background:#1B1A17"></div></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase">The Autonomy Gate</span>
+        </div>
+        <div style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.7;color:#8a857a">
+          <div>WF-20260611-001 · v1</div>
+          <div>Assessed on Claude Project · 2026-06-12</div>
+        </div>
+      </div>
+
+      <!-- VERDICT BLOCK -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:30px;padding:38px 0 30px">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9b968b;margin-bottom:10px">Autonomy verdict</div>
+          <div style="font-family:'Newsreader',serif;font-weight:400;font-size:78px;line-height:.92;letter-spacing:-.02em;color:#1F6B4A">Autonomous</div>
+          <div style="display:flex;gap:8px;margin-top:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:#1F6B4A;background:#E9F1EB;border:1px solid #BcD6C4;border-radius:2px;padding:5px 10px">CONFIDENCE · HIGH</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:#1F6B4A;background:#E9F1EB;border:1px solid #BcD6C4;border-radius:2px;padding:5px 10px">HANDOFF · BUILD_READY</span>
+          </div>
+        </div>
+        <div style="flex-shrink:0;transform:rotate(-5deg);border:2px solid #1F6B4A;border-radius:3px;padding:11px 16px;text-align:center;opacity:.92">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:#1F6B4A;border-bottom:1px solid #1F6B4A;padding-bottom:6px;margin-bottom:6px">GATE&nbsp;CLEARED</div>
+          <div style="font-family:'Newsreader',serif;font-weight:500;font-size:19px;letter-spacing:.02em;color:#1F6B4A;line-height:1">RULE-03 · 04</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:#1F6B4A;margin-top:6px">NO HARD GATE TRIPPED</div>
+        </div>
+      </div>
+
+      <p style="font-family:'Newsreader',serif;font-size:20px;line-height:1.5;color:#2a2924;max-width:60ch;padding-bottom:8px">The Project accepts operator-supplied CRM and analytics exports, validates reporting periods, and produces a standardized internal narrative. A human reviews and posts the result.</p>
+
+      <!-- SECTION 01 — WORKFLOW INTAKE SNAPSHOT -->
+      <div style="display:flex;align-items:center;gap:14px;margin:46px 0 22px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17;white-space:nowrap">Section 01 — Workflow Intake Snapshot</span>
+        <span style="flex:1;height:1px;background:#E2DCCF"></span>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr;gap:11px 26px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.4">
+        <span style="color:#9b968b">Name</span><span style="color:#1B1A17">Weekly KPI narrative</span>
+        <span style="color:#9b968b">Initiator</span><span style="color:#1B1A17">Operations team member (manual trigger, Monday a.m.)</span>
+        <span style="color:#9b968b">Systems touched</span><span style="color:#1B1A17">CRM export · analytics export · internal Slack (human-posted)</span>
+        <span style="color:#9b968b">Data sensitivity</span><span style="color:#1B1A17">Internal operational metrics</span>
+        <span style="color:#9b968b">Frequency</span><span style="color:#1B1A17">Weekly · standardized format · stable sources</span>
+        <span style="color:#9b968b">Exception rate</span><span style="color:#1B1A17">Low · format standardized, sources stable</span>
+        <span style="color:#9b968b">Failure consequence</span><span style="color:#1B1A17">Correction posted to internal Slack — no external impact</span>
+        <span style="color:#9b968b">Reversibility</span><span style="color:#1B1A17">Reversible — caught in review; worst case is a posted correction</span>
+        <span style="color:#9b968b">Terminal action</span><span style="color:#1B1A17;font-weight:600">Produce an internal Slack-ready narrative for human posting</span>
+        <span style="color:#9b968b">Audit trail</span><span style="color:#1B1A17">Packet version, source names, reporting period, retained output</span>
+        <span style="color:#9b968b">Evidence gaps</span><span style="color:#1F6B4A;font-weight:600">None</span>
+      </div>
+
+      <!-- FOUR-CRITERIA SCORECARD -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E2DCCF;border:1px solid #E2DCCF;border-radius:3px;margin-top:28px;overflow:hidden">
+        <div style="background:#FCFAF6;padding:16px 16px 18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:12px">Reversibility</div>
+          <div style="display:flex;gap:3px;margin-bottom:10px">
+            <div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:#1B1A17">Reversible</div>
+        </div>
+        <div style="background:#FCFAF6;padding:16px 16px 18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:12px">Observability</div>
+          <div style="display:flex;gap:3px;margin-bottom:10px">
+            <div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:5px;background:#E2DCCF;border-radius:1px"></div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:#1B1A17">High — reviewed</div>
+        </div>
+        <div style="background:#FCFAF6;padding:16px 16px 18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:12px">Exception rate</div>
+          <div style="display:flex;gap:3px;margin-bottom:10px">
+            <div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:5px;background:#E2DCCF;border-radius:1px"></div><div style="flex:1;height:5px;background:#E2DCCF;border-radius:1px"></div><div style="flex:1;height:5px;background:#E2DCCF;border-radius:1px"></div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:#1B1A17">Low</div>
+        </div>
+        <div style="background:#FCFAF6;padding:16px 16px 18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:12px">Cost of failure</div>
+          <div style="display:flex;gap:3px;margin-bottom:10px">
+            <div style="flex:1;height:5px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:5px;background:#E2DCCF;border-radius:1px"></div><div style="flex:1;height:5px;background:#E2DCCF;border-radius:1px"></div><div style="flex:1;height:5px;background:#E2DCCF;border-radius:1px"></div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:#1B1A17">Low — internal</div>
+        </div>
+      </div>
+
+      <!-- SECTION 02 — AUTONOMY DECISION PACKET -->
+      <div style="display:flex;align-items:center;gap:14px;margin:46px 0 22px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17;white-space:nowrap">Section 02 — Autonomy Decision Packet</span>
+        <span style="flex:1;height:1px;background:#E2DCCF"></span>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr;gap:11px 26px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.45">
+        <span style="color:#9b968b">Assessment surface</span><span style="color:#1B1A17">Claude Project</span>
+        <span style="color:#9b968b">Execution arch.</span><span style="color:#1B1A17">Human-triggered model workspace using supplied exports and producing an internal document</span>
+        <span style="color:#9b968b">Builder surface</span><span style="color:#1B1A17">Platform administrator</span>
+        <span style="color:#9b968b">Terminal action</span><span style="color:#1B1A17;font-weight:600">Produce an internal Slack-ready narrative for human posting</span>
+        <span style="color:#9b968b">Justification</span><span style="color:#1B1A17">RULE-03 supports bounded reversible document production · RULE-04 confirms no external publication terminal action</span>
+        <span style="color:#9b968b">Controls required</span><span style="color:#1B1A17">Validate reporting period · reject missing sources · retain output · prohibit direct Slack posting</span>
+      </div>
+
+      <!-- ARCHITECTURE OPTIONS -->
+      <div style="margin-top:30px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#9b968b;margin-bottom:14px">Architecture options</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+
+          <!-- OPT-1 PRIMARY (selected) -->
+          <div style="border:1.5px solid #1F6B4A;border-radius:3px;background:#F4F8F4;padding:22px 24px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;color:#1B1A17">OPT-1</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#1F6B4A">PRIMARY</span>
+              </div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:#FCFAF6;background:#1F6B4A;border-radius:2px;padding:5px 10px;white-space:nowrap;flex-shrink:0">✓ SELECTED</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:13px 30px;font-size:13px;line-height:1.45">
+              <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Execution architecture</span><span style="color:#2a2924">Human-triggered governed model workspace; accepts operator exports, produces an internal narrative without publishing it</span></div>
+              <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Control fit</span><span style="color:#2a2924">Workspace instructions enforce source validation, bounded output, and prohibition of external actions</span></div>
+              <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Implementation effort</span><span style="color:#2a2924">Low — configure instructions and run the acceptance check</span></div>
+              <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Operating cost</span><span style="color:#2a2924">Existing approved model-workspace usage; contract-specific cost outside the supplied evidence</span></div>
+              <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Maintenance burden</span><span style="color:#2a2924">Review instructions when source formats, models, or reporting rules change</span></div>
+              <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Security fit</span><span style="color:#2a2924">Operator-supplied internal exports only; no write access to source or destination systems</span></div>
+              <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Portability</span><span style="color:#2a2924">Instructions and acceptance criteria move to another governed model workspace</span></div>
+              <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Skill requirements</span><span style="color:#2a2924">Workspace administration · KPI reporting knowledge</span></div>
+            </div>
+          </div>
+
+          <!-- OPT-2 + OPT-3 condensed -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="border:1px solid #DDD7CA;border-radius:3px;background:#FCFAF6;padding:18px 20px">
+              <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:11px">
+                <span style="font-family:'Newsreader',serif;font-weight:500;font-size:18px;color:#1B1A17">OPT-2</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:#8a857a">NATIVE_SUITE</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.5;color:#4A4843">Existing enterprise productivity suite with an approved model workspace. Viable only if it can prohibit connectors and retain reviewable output. Inherits enterprise identity and retention when confirmed.</p>
+            </div>
+            <div style="border:1px solid #DDD7CA;border-radius:3px;background:#FCFAF6;padding:18px 20px">
+              <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:11px">
+                <span style="font-family:'Newsreader',serif;font-weight:500;font-size:18px;color:#1B1A17">OPT-3</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:#8a857a">VENDOR_NEUTRAL</span>
+              </div>
+              <p style="font-size:12.5px;line-height:1.5;color:#4A4843">Any approved workspace that accepts files, follows durable instructions, and returns a document with no system write access. High portability; capability-based contract.</p>
+            </div>
+          </div>
+
+          <!-- Omitted -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;color:#8a857a;padding:4px 2px">
+            <span style="color:#b5b0a4">Omitted —</span> LOW_CODE: no cross-system execution or routing requirement. &nbsp;·&nbsp; CODE_FIRST: custom software adds operating burden without improving a bounded document-production task.
+          </div>
+          <div style="display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#1B1A17;border-top:1px solid #E2DCCF;padding-top:14px">
+            <span><span style="color:#9b968b">Selected </span>OPT-1</span>
+            <span><span style="color:#9b968b">Selection by </span>Operations owner</span>
+            <span><span style="color:#9b968b">Date </span>2026-06-12</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 03 — BUILD HANDOFF PACK -->
+      <div style="display:flex;align-items:center;gap:14px;margin:46px 0 20px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17;white-space:nowrap">Section 03 — Build Handoff Pack</span>
+        <span style="flex:1;height:1px;background:#E2DCCF"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:#1F6B4A;background:#E9F1EB;border:1px solid #BcD6C4;border-radius:2px;padding:4px 9px;white-space:nowrap">BUILD_READY</span>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:10px 26px;font-size:13px;line-height:1.5">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Terminal-action boundary</span><span style="color:#2a2924">Produce an internal Slack-ready narrative; the workflow may not post it or modify source systems</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Architecture decision record</span><span style="color:#2a2924">OPT-1 selected by Operations owner on 2026-06-12 · LOW_CODE and CODE_FIRST omitted for lack of integration need and unnecessary operating burden</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Permissions and credentials</span><span style="color:#2a2924">Read operator-supplied exports only; no production credentials, connectors, or write permissions</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Deterministic controls</span><span style="color:#2a2924">Reject missing source names and conflicting reporting periods before analysis</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Human checkpoints</span><span style="color:#2a2924">None inside the run — a human-owned Slack post occurs outside the authorized terminal action</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Prohibited actions</span><span style="color:#2a2924">Do not invent values, post externally, call source systems, or modify records</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Logging and audit</span><span style="color:#2a2924">Record packet version, source names, reporting period, terminal status, and retained output location</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Failure / rollback / stop</span><span style="color:#2a2924">Stop on missing or conflicting evidence; discard invalid drafts — no external action has occurred</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Deployment sequence</span><span style="color:#2a2924">Create project instructions → run acceptance test with non-production exports → record disposition and acknowledgement → enable operator use</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Assumptions</span><span style="color:#2a2924">Export formats remain stable enough for the stated validation rules</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Unresolved dependencies</span><span style="color:#2a2924">None</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Expiration triggers</span><span style="color:#2a2924">Source schema, terminal action, model workspace, policy, or control changes · any incident · error rate exceeds one corrected post per month · six-month recertification interval</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Version invalidation</span><span style="color:#2a2924">A material change creates a new packet version and invalidates architecture selection, disposition, and builder acknowledgement</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Tool alternatives</span><span style="color:#2a2924">Use another approved model workspace only if it preserves file input, durable instructions, no write access, and the same acceptance test</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Builder acknowledgement</span><span style="color:#2a2924">Required before the platform administrator applies the configuration</span>
+      </div>
+
+      <!-- MANIFEST -->
+      <div style="margin-top:22px;border:1px solid #E2DCCF;border-radius:3px;overflow:hidden">
+        <div style="background:#F7F4EC;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b">Manifest</div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+          <div style="font-size:13px;line-height:1.5;color:#2a2924">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#1B1A17;margin-bottom:4px">project-instructions.md</div>
+            <div style="display:grid;grid-template-columns:120px 1fr;gap:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px">
+              <span style="color:#9b968b">Purpose</span><span style="color:#2a2924">Define the bounded Project workflow</span>
+              <span style="color:#9b968b">Source evidence</span><span style="color:#2a2924">Packet terminal action and required controls</span>
+              <span style="color:#9b968b">Complete content</span><span style="color:#2a2924">Use only operator-supplied exports. Validate source names and reporting periods. Produce the standardized internal KPI narrative. Never post to Slack or modify source systems.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCEPTANCE TESTS -->
+      <div style="margin-top:12px;border:1px solid #E2DCCF;border-radius:3px;overflow:hidden">
+        <div style="background:#F7F4EC;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b">Acceptance tests</div>
+        <div style="padding:16px">
+          <div style="display:grid;grid-template-columns:110px 1fr;gap:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px">
+            <span style="color:#9b968b">Setup</span><span style="color:#2a2924">Valid exports for the same reporting period</span>
+            <span style="color:#9b968b">Input</span><span style="color:#2a2924">One weekly reporting run</span>
+            <span style="color:#9b968b">Expected</span><span style="color:#2a2924">A source-grounded internal narrative</span>
+            <span style="color:#9b968b">Pass criterion</span><span style="color:#2a2924">The output contains no invented values and performs no external action</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HANDOFF STATE STRIP -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E2DCCF;border:1px solid #E2DCCF;border-radius:3px;margin-top:22px;overflow:hidden">
+        <div style="background:#FCFAF6;padding:14px 16px"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:6px">Current state</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#B07514">DISPOSITION_PENDING</div></div>
+        <div style="background:#FCFAF6;padding:14px 16px"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:6px">Who acts next</div><div style="font-size:12.5px;font-weight:600;color:#1B1A17">Operations owner</div></div>
+        <div style="background:#FCFAF6;padding:14px 16px;grid-column:span 2"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:6px">Exact next action</div><div style="font-size:12.5px;font-weight:600;color:#1B1A17">Record APPROVE_FOR_BUILD, REVISE, HOLD_FOR_EVIDENCE, or REJECT for packet v1</div></div>
+      </div>
+
+      <!-- OPERATOR DISPOSITION -->
+      <div style="margin-top:34px;border:1px solid #DDD7CA;border-radius:3px;background:#F7F4EC;padding:26px 28px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17">Operator Disposition</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:#8a857a">The Gate may recommend — the operator signs</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:11px 20px;margin-bottom:22px">
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:17px;height:17px;border:1.5px solid #1B1A17;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.04em;color:#1B1A17">APPROVE_FOR_BUILD</span></div>
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:17px;height:17px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.04em;color:#8a857a">HOLD_FOR_EVIDENCE</span></div>
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:17px;height:17px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.04em;color:#8a857a">REVISE</span></div>
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:17px;height:17px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.04em;color:#8a857a">REJECT</span></div>
+        </div>
+        <div style="font-size:12.5px;color:#4A4843;margin-bottom:20px;padding:11px 14px;background:#FCFAF6;border-left:3px solid #1F6B4A;border-radius:0 2px 2px 0"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#1F6B4A;margin-right:8px">Gate recommendation</span>APPROVE_FOR_BUILD — evidence complete, controls bounded, no hard gate tripped</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px 40px">
+          <div><div style="border-bottom:1px solid #C9C3B5;height:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:6px">Name / role</div></div>
+          <div><div style="border-bottom:1px solid #C9C3B5;height:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:6px">Date</div></div>
+          <div><div style="border-bottom:1px solid #C9C3B5;height:26px;display:flex;align-items:flex-end"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1B1A17">v1</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:6px">Packet version</div></div>
+          <div><div style="border-bottom:1px solid #C9C3B5;height:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:6px">Rationale</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- C · GOVERNANCE MEMO — HUMAN_ONLY                              -->
+  <!-- ============================================================ -->
+  <div style="display:flex;align-items:baseline;gap:14px;margin:84px 0 24px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17;white-space:nowrap">C · The hard stop</span>
+    <span style="font-size:13px;color:#8a857a;font-style:italic;font-family:'Newsreader',serif">HUMAN_ONLY — Governance Memo, GATE-2 tripped</span>
+    <span style="flex:1;height:1px;background:#CFC9BC"></span>
+  </div>
+
+  <div style="max-width:840px;margin:0 auto;background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 2px 4px rgba(0,0,0,.05),0 40px 80px -40px rgba(0,0,0,.35)">
+    <div style="height:5px;background:#8E2A2A;border-radius:3px 3px 0 0"></div>
+    <div style="padding:54px 64px 60px">
+
+      <!-- MASTHEAD -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:20px;border-bottom:1px solid #E2DCCF">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="width:20px;height:20px;border:1.5px solid #1B1A17;border-radius:2px;display:flex;align-items:center;justify-content:center"><div style="width:7px;height:7px;background:#1B1A17"></div></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase">The Autonomy Gate</span>
+        </div>
+        <div style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.7;color:#8a857a">
+          <div>WF-20260611-003 · v1</div>
+          <div>Assessed on Claude Project · 2026-06-11</div>
+        </div>
+      </div>
+
+      <!-- VERDICT BLOCK -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:30px;padding:38px 0 30px">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9b968b;margin-bottom:10px">Autonomy verdict</div>
+          <div style="font-family:'Newsreader',serif;font-weight:400;font-size:78px;line-height:.92;letter-spacing:-.02em;color:#8E2A2A">Human Only</div>
+          <div style="display:flex;gap:8px;margin-top:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:#8E2A2A;background:#F4E5E3;border:1px solid #D9B7B3;border-radius:2px;padding:5px 10px">CONFIDENCE · HIGH</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:#8E2A2A;background:#F4E5E3;border:1px solid #D9B7B3;border-radius:2px;padding:5px 10px">HANDOFF · NOT_APPLICABLE</span>
+          </div>
+        </div>
+        <div style="flex-shrink:0;transform:rotate(-5deg);border:2px solid #8E2A2A;border-radius:3px;padding:11px 16px;text-align:center;opacity:.92">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:#8E2A2A;border-bottom:1px solid #8E2A2A;padding-bottom:6px;margin-bottom:6px">STRUCTURAL&nbsp;BLOCK</div>
+          <div style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;letter-spacing:.04em;color:#8E2A2A;line-height:1">GATE-2</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.14em;color:#8E2A2A;margin-top:6px">NO OVERRIDE</div>
+        </div>
+      </div>
+
+      <!-- GATE CALLOUT -->
+      <div style="border:1.5px solid #8E2A2A;border-radius:3px;background:#F8ECEA;padding:20px 22px;margin-bottom:30px">
+        <div style="display:flex;gap:14px;align-items:flex-start">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;color:#FCFAF6;background:#8E2A2A;border-radius:2px;padding:5px 9px;white-space:nowrap;flex-shrink:0">GATE-2</div>
+          <p style="font-size:14px;line-height:1.55;color:#5a201f"><strong style="color:#8E2A2A">Irreversible external commitment.</strong> The terminal action authorizes a new external payment destination. Once funds route to a fraudulent account, recovery depends on parties outside the organization's control. The verdict cannot be revised by controls, operator instruction, or urgency framing.</p>
+        </div>
+      </div>
+
+      <p style="font-family:'Newsreader',serif;font-size:20px;line-height:1.5;color:#2a2924;max-width:62ch;margin-bottom:18px">A vendor-initiated bank-account change is an authorization of a new external payment destination — the canonical business-email-compromise vector.</p>
+      <p style="font-size:15px;line-height:1.62;color:#4A4843;max-width:64ch;margin-bottom:30px">The request supplies its own verification channel, and any automated process that uses that channel validates the attacker's evidence. This is why the prohibition covers <em>verification</em>, not just execution — AI may not select which evidence proves the request is genuine.</p>
+
+      <!-- WHY / PROCESS GRID -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:30px">
+        <div style="border:1px solid #DDD7CA;border-radius:3px;background:#FCFAF6;padding:20px 22px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8E2A2A;margin-bottom:13px">Why this cannot be delegated</div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:9px 14px;font-size:12.5px;line-height:1.45">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#9b968b">Gate</span><span style="color:#2a2924">GATE-2 — irreversible external commitment</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#9b968b">Terminal</span><span style="color:#2a2924">Authorize a new external payment destination</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#9b968b">Risk</span><span style="color:#2a2924">Payment-redirection fraud (BEC) — funds are recovered in only 58% of flagged cases</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#9b968b">Pattern</span><span style="color:#2a2924">Request supplies its own verification channel</span>
+          </div>
+        </div>
+        <div style="border:1px solid #DDD7CA;border-radius:3px;background:#FCFAF6;padding:20px 22px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#1B1A17;margin-bottom:13px">Human review process</div>
+          <ol style="list-style:none;display:flex;flex-direction:column;gap:9px;counter-reset:s">
+            <li style="display:flex;gap:11px;font-size:12.5px;line-height:1.4;color:#2a2924"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8E2A2A;font-weight:600;flex-shrink:0">01</span>Retrieve vendor contact from a previously verified source — not the email</li>
+            <li style="display:flex;gap:11px;font-size:12.5px;line-height:1.4;color:#2a2924"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8E2A2A;font-weight:600;flex-shrink:0">02</span>Perform an independent callback — never the channel supplied in the request</li>
+            <li style="display:flex;gap:11px;font-size:12.5px;line-height:1.4;color:#2a2924"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8E2A2A;font-weight:600;flex-shrink:0">03</span>Compare against retained vendor records; document evidence</li>
+            <li style="display:flex;gap:11px;font-size:12.5px;line-height:1.4;color:#2a2924"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8E2A2A;font-weight:600;flex-shrink:0">04</span>Obtain a second authorized approval; retain both authorizations and all evidence before any change</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- WHAT CHANGES / AUTONOMY EXPIRES -->
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:10px 26px;font-size:13.5px;line-height:1.55;padding-bottom:30px;border-bottom:1px solid #E2DCCF">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:2px">What changes this</span><span style="color:#2a2924"><strong>Nothing</strong> changes this verdict for this terminal action. A separately submitted preparation workflow — compiling vendor records and producing a discrepancy checklist for human review — may be assessed on its own and would not trigger GATE-2.</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:2px">Autonomy expires</span><span style="color:#2a2924">This prohibition does not expire. Reassess the human procedure when verification policy, authorization roles, the payment system, or the vendor-master process changes — or after any incident.</span>
+      </div>
+
+      <!-- SAFE DECOMPOSITION -->
+      <div style="margin-top:26px;background:#F0F3EE;border:1px dashed #9DBBA4;border-radius:3px;padding:18px 22px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#1F6B4A;margin-bottom:8px">Safe decomposition opportunity</div>
+        <p style="font-size:13px;line-height:1.55;color:#2a2924">AI may compile existing vendor records and produce a discrepancy checklist for human review — but it may not choose the contact channel, determine authenticity, authorize the change, or write payment data. Submit that preparation workflow separately for its own assessment.</p>
+      </div>
+
+      <!-- BUILD HANDOFF PACK (NOT_APPLICABLE) -->
+      <div style="display:flex;align-items:center;gap:14px;margin:40px 0 20px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17;white-space:nowrap">Build Handoff Pack</span>
+        <span style="flex:1;height:1px;background:#E2DCCF"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:#8E2A2A;background:#F4E5E3;border:1px solid #D9B7B3;border-radius:2px;padding:4px 9px;white-space:nowrap">NOT_APPLICABLE</span>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:10px 26px;font-size:13px;line-height:1.5">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Terminal-action boundary</span><span style="color:#2a2924">Authorize a new external payment destination — AI may not verify, approve, or submit that authorization</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Architecture decision record</span><span style="color:#2a2924">NOT_APPLICABLE — GATE-2 prohibits AI execution of the terminal action</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Permissions and credentials</span><span style="color:#2a2924">No AI access to vendor master data write controls, payment credentials, or authorization systems</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Deterministic controls</span><span style="color:#2a2924">Human procedure requires independent callback verification and dual authorization before any system change</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Human checkpoints</span><span style="color:#2a2924">Controller verifies the request and a second authorized human approves the change</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Prohibited actions</span><span style="color:#2a2924">AI may not select verification evidence, contact the requester using supplied details, approve the change, or update payment routing</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Logging and audit</span><span style="color:#2a2924">Retain request source, independent contact source, verification results, both authorizers, timestamps, decision, and changed fields</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Failure / rollback / stop</span><span style="color:#2a2924">Stop when independent verification, ownership, or dual authorization is unavailable — do not change the account; escalate suspected fraud</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Deployment sequence</span><span style="color:#2a2924">Document the human procedure → train authorized roles → test the record and escalation path → authorize human operation</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Assumptions</span><span style="color:#2a2924">The organization can retrieve a previously verified contact channel and enforce dual authorization</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Unresolved dependencies</span><span style="color:#2a2924">None for the stated procedure</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Expiration triggers</span><span style="color:#2a2924">Verification policy, authorization roles, payment system, vendor-master process, or legal context changes · any incident</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Version invalidation</span><span style="color:#2a2924">Any material process, role, control, or terminal-action change creates a new packet version and invalidates prior disposition</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Tool alternatives</span><span style="color:#2a2924">No tool may execute the prohibited terminal action · tools may assist only with bounded evidence compilation under separate assessment</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Builder acknowledgement</span><span style="color:#2a2924">Not applicable to the prohibited action — the human procedure owner acknowledges the operating record</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Human operating procedure</span><span style="color:#2a2924">Controller retrieves vendor contact from a previously verified source → performs independent callback → compares request with retained vendor records → documents evidence → obtains a second authorized approval → updates account through the human-controlled system → retains the decision record</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9b968b;padding-top:1px">Safe decomposition</span><span style="color:#2a2924">AI may compile existing vendor records and produce a discrepancy checklist for human review — may not choose the contact channel, determine authenticity, authorize the change, or write payment data</span>
+      </div>
+
+      <!-- HANDOFF STATE STRIP -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E2DCCF;border:1px solid #E2DCCF;border-radius:3px;margin-top:22px;overflow:hidden">
+        <div style="background:#FCFAF6;padding:14px 16px"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:6px">Current state</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#B07514">DISPOSITION_PENDING</div></div>
+        <div style="background:#FCFAF6;padding:14px 16px"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:6px">Who acts next</div><div style="font-size:12.5px;font-weight:600;color:#1B1A17">Controller / procedure owner</div></div>
+        <div style="background:#FCFAF6;padding:14px 16px;grid-column:span 2"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9b968b;margin-bottom:6px">Exact next action</div><div style="font-size:12.5px;font-weight:600;color:#1B1A17">Review the procedure and record the disposition for packet v1</div></div>
+      </div>
+
+      <!-- OPERATOR DISPOSITION (memo) -->
+      <div style="margin-top:30px;border:1px solid #DDD7CA;border-radius:3px;background:#F7F4EC;padding:24px 28px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17">Operator Disposition</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:#8E2A2A">On the human procedure — not the prohibited action</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:11px 20px;margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:17px;height:17px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#8a857a">APPROVE_FOR_BUILD</span></div>
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:17px;height:17px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#8a857a">REVISE</span></div>
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:17px;height:17px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#8a857a">HOLD_FOR_EVIDENCE</span></div>
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:17px;height:17px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#8a857a">REJECT</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 32px">
+          <div><div style="border-bottom:1px solid #C9C3B5;height:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:6px">Name / role</div></div>
+          <div><div style="border-bottom:1px solid #C9C3B5;height:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:6px">Date</div></div>
+          <div><div style="border-bottom:1px solid #C9C3B5;height:26px;display:flex;align-items:flex-end"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1B1A17">v1</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:6px">Packet version</div></div>
+          <div><div style="border-bottom:1px solid #C9C3B5;height:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:6px">Rationale</div></div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#8a857a;margin-top:16px;padding-top:13px;border-top:1px solid #E2DCCF;letter-spacing:.02em">The Gate may recommend a disposition — it may never pre-select APPROVE_FOR_BUILD. On a Governance Memo, disposition covers the human procedure record, not the prohibited terminal action.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- D · COMPONENT STUDIES                                         -->
+  <!-- ============================================================ -->
+  <div style="display:flex;align-items:baseline;gap:14px;margin:84px 0 24px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1B1A17;white-space:nowrap">D · Component studies</span>
+    <span style="font-size:13px;color:#8a857a;font-style:italic;font-family:'Newsreader',serif">the atoms the artifacts are built from</span>
+    <span style="flex:1;height:1px;background:#CFC9BC"></span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px">
+
+    <!-- SCORECARD -->
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8a857a;margin-bottom:10px">Four-criteria scorecard</div>
+      <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 36px -24px rgba(0,0,0,.26);padding:24px">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9b968b">Reversibility</span><span style="font-size:12px;font-weight:600;color:#1B1A17">Reversible</span></div><div style="display:flex;gap:3px"><div style="flex:1;height:6px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:6px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:6px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:6px;background:#1F6B4A;border-radius:1px"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9b968b">Observability</span><span style="font-size:12px;font-weight:600;color:#1B1A17">High</span></div><div style="display:flex;gap:3px"><div style="flex:1;height:6px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:6px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:6px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:6px;background:#E2DCCF;border-radius:1px"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9b968b">Exception rate</span><span style="font-size:12px;font-weight:600;color:#1B1A17">Low</span></div><div style="display:flex;gap:3px"><div style="flex:1;height:6px;background:#B07514;border-radius:1px"></div><div style="flex:1;height:6px;background:#E2DCCF;border-radius:1px"></div><div style="flex:1;height:6px;background:#E2DCCF;border-radius:1px"></div><div style="flex:1;height:6px;background:#E2DCCF;border-radius:1px"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9b968b">Cost of failure</span><span style="font-size:12px;font-weight:600;color:#1B1A17">Low</span></div><div style="display:flex;gap:3px"><div style="flex:1;height:6px;background:#1F6B4A;border-radius:1px"></div><div style="flex:1;height:6px;background:#E2DCCF;border-radius:1px"></div><div style="flex:1;height:6px;background:#E2DCCF;border-radius:1px"></div><div style="flex:1;height:6px;background:#E2DCCF;border-radius:1px"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HARD GATE CALLOUTS -->
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8a857a;margin-bottom:10px">Hard-gate callout</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-left:3px solid #8E2A2A;border-radius:3px;padding:15px 18px"><div style="display:flex;gap:11px;align-items:center;margin-bottom:6px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#FCFAF6;background:#8E2A2A;border-radius:2px;padding:3px 7px">GATE-2</span><span style="font-size:12.5px;font-weight:600;color:#1B1A17">Irreversible external commitment</span></div><p style="font-size:12px;line-height:1.45;color:#4A4843">Payment, contract, regulatory filing. Hard stop — verdict is HUMAN_ONLY.</p></div>
+        <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-left:3px solid #8E2A2A;border-radius:3px;padding:15px 18px"><div style="display:flex;gap:11px;align-items:center;margin-bottom:6px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#FCFAF6;background:#8E2A2A;border-radius:2px;padding:3px 7px">GATE-3</span><span style="font-size:12.5px;font-weight:600;color:#1B1A17">Regulated personal data</span></div><p style="font-size:12px;line-height:1.45;color:#4A4843">Without a compliant human-in-the-loop. No framing overrides it.</p></div>
+        <div style="background:#FCFAF6;border:1px solid #DDD7CA;border-left:3px solid #B07514;border-radius:3px;padding:15px 18px"><div style="display:flex;gap:11px;align-items:center;margin-bottom:6px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#FCFAF6;background:#B07514;border-radius:2px;padding:3px 7px">GATE-1</span><span style="font-size:12.5px;font-weight:600;color:#1B1A17">Financial transaction</span></div><p style="font-size:12px;line-height:1.45;color:#4A4843">Terminal action moves money — requires a human approval checkpoint.</p></div>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE OPTION SELECTED -->
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8a857a;margin-bottom:10px">Architecture option · selected</div>
+      <div style="border:1.5px solid #1F6B4A;border-radius:3px;background:#F4F8F4;box-shadow:0 14px 36px -26px rgba(0,0,0,.3);padding:22px 24px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;color:#1B1A17">OPT-1</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#1F6B4A">PRIMARY</span></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:#FCFAF6;background:#1F6B4A;border-radius:2px;padding:5px 10px;white-space:nowrap;flex-shrink:0">✓ SELECTED</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Control fit</span><span style="font-size:12.5px;line-height:1.45;color:#2a2924">Instructions enforce source validation, bounded output, prohibition of external actions</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+            <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Effort</span><span style="font-size:12.5px;color:#2a2924">Low</span></div>
+            <div><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;display:block;margin-bottom:3px">Portability</span><span style="font-size:12.5px;color:#2a2924">Workspace-portable</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISPOSITION SIGNATURE -->
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8a857a;margin-bottom:10px">Operator disposition · signature block</div>
+      <div style="background:#F7F4EC;border:1px solid #DDD7CA;border-radius:3px;box-shadow:0 14px 36px -26px rgba(0,0,0,.26);padding:22px 24px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-bottom:18px">
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:16px;height:16px;border:1.5px solid #1B1A17;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#1B1A17">APPROVE_FOR_BUILD</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:16px;height:16px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8a857a">REVISE</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:16px;height:16px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8a857a">HOLD_FOR_EVIDENCE</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:16px;height:16px;border:1.5px solid #b5b0a4;border-radius:2px;flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8a857a">REJECT</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 22px">
+          <div><div style="border-bottom:1px solid #C9C3B5;height:22px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:5px">Name / role</div></div>
+          <div><div style="border-bottom:1px solid #C9C3B5;height:22px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#9b968b;margin-top:5px">Date</div></div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#8a857a;margin-top:16px;padding-top:13px;border-top:1px solid #E2DCCF;letter-spacing:.02em">The Gate may recommend a disposition — it may never pre-select APPROVE_FOR_BUILD.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div style="margin-top:70px;padding-top:22px;border-top:1px solid #CFC9BC;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;color:#9b968b">
+    <span>THE AUTONOMY GATE · ARTIFACT SYSTEM</span>
+    <span>MINIMUM JUSTIFIED AUTONOMY · THE OPERATOR SIGNS</span>
+  </div>
+
+</div>
+</div>
+
+</body>
+</html>

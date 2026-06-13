@@ -22,14 +22,16 @@ These files are uploaded once and never removed. They define the Gate's behavior
 | `surface-capability-matrix.md` | What each execution surface can and cannot do |
 | `precedents.md` | Prior decisions and governance precedents |
 | `operating-contract.md` | Canonical lifecycle, architecture selection, handoff statuses, and authority boundaries |
-| `template-project-setup.md` | Artifact template: AUTONOMOUS / PROJECT |
+| `template-project-setup.md` | Artifact template: AUTONOMOUS with a human-triggered knowledge-work architecture |
 | `template-control-plan.md` | Artifact template: SUPERVISED |
-| `template-automation-architecture.md` | Artifact template: AUTONOMOUS / CODE_AGENT or COWORK |
+| `template-automation-architecture.md` | Artifact template: AUTONOMOUS with a code-first, service, or integration architecture |
 | `template-cowork-config.md` | Artifact template: COWORK |
 | `template-governance-memo.md` | Artifact template: HUMAN_ONLY |
 | `template-stabilization-plan.md` | Artifact template: SOP_FIRST |
+| `operator-disposition.md` | Four disposition states and transition rules |
+| `tool-selection-rules.md` | Tool substitution and selection constraints |
 
-Total: 14 files. These are the canonical runtime files. Do not remove or rename them.
+Total: 16 files. These are the canonical runtime files. Do not remove or rename them.
 
 **Organization profile — loaded at session start:**
 
@@ -37,7 +39,7 @@ Your organization profile (`organization-profile.md`) is either:
 - Uploaded to the workspace as a permanent file (recommended for team workspaces), or
 - Pasted at the beginning of each session using the CONFIGURE trigger
 
-For a personal workspace, paste the profile. For a shared team workspace, upload it as a 15th permanent file.
+For a personal workspace, paste the profile. For a shared team workspace, upload it as a 17th permanent file.
 
 **Workflow artifacts — session-specific:**
 
@@ -117,7 +119,7 @@ Examples:
 - Batch 1 (10 files): `identity.md`, `rules.md`, `examples.md`, `operating-contract.md`, `autonomy-criteria.md`, `risk-classification.md`, `surface-capability-matrix.md`, `precedents.md`, `template-project-setup.md`, `template-control-plan.md`
 - Batch 2 (4 files): `template-automation-architecture.md`, `template-cowork-config.md`, `template-governance-memo.md`, `template-stabilization-plan.md`
 
-All 14 files must be present before use. Verify by asking the Gate to list accessible runtime files and confirm `operating-contract.md` is included.
+All 16 files must be present before use. Verify by asking the Gate to list accessible runtime files and confirm `operating-contract.md` is included.
 
 ---
 

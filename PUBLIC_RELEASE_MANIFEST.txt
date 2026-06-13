@@ -4,6 +4,7 @@ PUBLIC_RELEASE_MANIFEST.txt
 WRITEUP.md
 JUDGE_GUIDE.md
 LICENSE
+ORIGIN.md
 adapters/README.md
 adapters/decision-packet-contract.md
 adapters/claude/claude-code-CLAUDE.md
@@ -43,6 +44,8 @@ docs/ADOPTION_PLAYBOOK.md
 docs/ARCHITECTURE_OPTIONS_GUIDE.md
 docs/AUTONOMY_GATE_FIELD_MANUAL.pdf
 docs/HANDOFF_REVIEW_CHECKLIST.md
+docs/MECHANISM_TRACEABILITY.md
+docs/OWNER_MANUAL.md
 docs/OPERATOR_WORKFLOW.md
 docs/PROJECT_WORKSPACE_SETUP.md
 docs/RELEASE_CRITERIA.md
@@ -50,10 +53,22 @@ docs/START_HERE.md
 docs/TECHNOLOGY_STACK_INTAKE.md
 docs/USER_MODES.md
 docs/WORKFLOW_LIFECYCLE.md
+docs/design-dossiers/automation-architecture.md
+docs/design-dossiers/control-plan.md
+docs/design-dossiers/cowork-project-config.md
+docs/design-dossiers/stabilization-plan.md
 docs/registry/README.md
 docs/registry/workflow-record.schema.json
 docs/surfaces/chatgpt-project.md
 examples/README.md
+examples/artifact-rendered.html
+examples/artifacts/index.html
+examples/artifacts/project-setup-brief.html
+examples/artifacts/cowork-project-config.html
+examples/artifacts/automation-architecture.html
+examples/artifacts/control-plan.html
+examples/artifacts/stabilization-plan.html
+examples/artifacts/governance-memo.html
 examples/trial-audit-output.md
 examples/receipts/01-autonomous-project.md
 examples/receipts/02-supervised-refund.md
@@ -87,3 +102,5 @@ testing/openai/golden/04-outbound-email-low-evidence.md
 testing/openai/golden/05-prompt-injection-bank-change.md
 testing/openai/golden/06-scheduled-project-fallback.md
 testing/claude/validate_calibration.py
+testing/claude/results/calibration-results.json
+testing/openai/results/structural-results.json

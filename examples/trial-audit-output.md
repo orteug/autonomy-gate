@@ -1,5 +1,7 @@
 # Committed Gate Runs — Three Source-Backed Assessments
 
+> **Historical calibration record:** These runs preserve an earlier packet format that combined autonomy and implementation-surface shorthand. They are retained as provenance, not as the current output contract. For canonical fields and current validated receipts, use `autonomy-gate/reference/operating-contract.md` and `examples/receipts/`.
+
 This file contains the complete Gate output for three source-backed real-world workflows. Each run produces the full three-section sequence: Workflow Intake Snapshot, Autonomy Decision Packet, and execution artifact. Each output cites the specific RULE-NN and GATE-NN that drove the verdict. Stakes are sourced.
 
 Each run uses a documented real-world workflow scenario. All three are grounded in published industry sources and are not drawn from any specific client engagement. Each cites the source grounding the scenario.

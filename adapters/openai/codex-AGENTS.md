@@ -149,3 +149,13 @@ Examples:
 - `AGENTS.md` shapes Codex's behavior but is not infrastructure-level enforcement. For workflows where prohibited actions involve financial commits, access changes, or external publication, implement hard blocking controls in code in addition to `AGENTS.md`.
 - Packet contract reference: `adapters/decision-packet-contract.md`
 - Surface capability reference: `autonomy-gate/reference/surface-capability-matrix.md`
+
+## HTML Artifact Delivery
+
+When the Gate is run via Codex (with the Gate's runtime files as context), it writes the styled HTML artifact to a file. Add this instruction to the Gate's context when running in Codex:
+
+```
+When you produce an Execution Artifact, also write it as styled HTML to artifacts/[workflow-id]-artifact.html. Use the design system in examples/artifact-rendered.html as the exact style reference. Create the artifacts/ directory if it does not exist.
+```
+
+The generated HTML file can be opened directly in a browser. It is self-contained and requires no build step.

@@ -12,13 +12,49 @@ sys.modules[SPEC.name] = validator
 SPEC.loader.exec_module(validator)
 
 
-def gate_output(*, pack: str, disposition: str = "Disposition: PENDING", confidence: str = "HIGH", gaps: str = "None") -> str:
+def architecture_options(*, selected: str = "OPT-1") -> str:
+    return f"""ARCHITECTURE OPTIONS
+### OPT-1 — PRIMARY
+**Execution architecture:** Human-triggered model workspace producing an internal document
+**Builder surface:** Platform administrator
+**Control fit:** Strong for bounded document production
+**Implementation effort:** Low
+**Operating cost:** Existing workspace plan
+**Maintenance burden:** Low
+**Security fit:** Subject to approved data policy
+**Portability:** Medium
+**Skill requirements:** Workspace administration
+**Source evidence:** Stated assessment and organization constraints
+
+Omitted option classes:
+- NATIVE_SUITE — No organization suite was stated.
+- LOW_CODE — No integration requirement was stated.
+- CODE_FIRST — No code or deterministic integration is required.
+- VENDOR_NEUTRAL — The primary option is already capability-defined.
+
+Selected option: {selected}
+Selection by: Operations owner
+Selection date: 2026-06-12
+"""
+
+
+def gate_output(
+    *,
+    pack: str,
+    disposition: str = "Disposition: PENDING",
+    confidence: str = "HIGH",
+    gaps: str = "None",
+    architecture: str | None = None,
+    autonomy: str = "AUTONOMOUS",
+) -> str:
+    if architecture is None:
+        architecture = architecture_options()
     return f"""━━ WORKFLOW INTAKE SNAPSHOT ━━━
 Name: Test workflow
 Evidence gaps: {gaps}
 
 ━━ AUTONOMY DECISION PACKET ━━━
-Autonomy: AUTONOMOUS
+Autonomy: {autonomy}
 Assessment surface: ChatGPT Project
 Execution architecture: Human-triggered model workspace producing an internal document
 Builder surface: Platform administrator
@@ -31,6 +67,7 @@ Build Handoff Pack: BUILD_READY
 
 ━━ PROJECT SETUP BRIEF ━━━
 Purpose: Produce an internal review document.
+{architecture}
 {pack}
 
 ━━ OPERATOR DISPOSITION ━━━
@@ -124,6 +161,58 @@ Required before build: Retention policy
         )
         result = validator.validate(text)
         self.assertNotIn("PACK-STATUS", {finding.code for finding in result.findings})
+
+    def test_rejects_applicable_output_without_architecture_options(self):
+        text = gate_output(
+            architecture="",
+            pack="BUILD HANDOFF PACK\nHandoff status: BLOCKED_FOR_EVIDENCE\nRequired before build: Architecture selection",
+            confidence="MEDIUM",
+        )
+        self.assert_fails_with(text, "ARCH-MISSING")
+
+    def test_rejects_build_ready_without_operator_architecture_selection(self):
+        pack = """BUILD HANDOFF PACK
+Handoff status: BUILD_READY
+Manifest:
+- Path: instructions.md
+  Purpose: Runtime instructions
+  Source evidence: selected architecture
+  Complete content: Produce only the bounded internal document.
+Acceptance tests: One bounded document is produced without external action.
+"""
+        self.assert_fails_with(gate_output(architecture=architecture_options(selected="NOT_SELECTED"), pack=pack), "ARCH-SELECTION")
+
+    def test_rejects_selected_architecture_option_that_was_not_generated(self):
+        self.assert_fails_with(
+            gate_output(
+                architecture=architecture_options(selected="OPT-9"),
+                pack="BUILD HANDOFF PACK\nHandoff status: BLOCKED_FOR_EVIDENCE\nRequired before build: Retention policy",
+                confidence="MEDIUM",
+            ),
+            "ARCH-SELECTION",
+        )
+
+    def test_rejects_handoff_missing_full_build_contract(self):
+        pack = """BUILD HANDOFF PACK
+Handoff status: BUILD_READY
+Manifest:
+- Path: instructions.md
+  Purpose: Runtime instructions
+  Source evidence: selected architecture
+  Complete content: Produce only the bounded internal document.
+Acceptance tests: One bounded document is produced without external action.
+"""
+        self.assert_fails_with(gate_output(pack=pack), "PACK-CONTRACT")
+
+    def test_not_applicable_requires_human_procedure_and_safe_decomposition(self):
+        pack = """BUILD HANDOFF PACK
+Handoff status: NOT_APPLICABLE
+Prohibited actions: AI may not authorize the terminal action.
+"""
+        self.assert_fails_with(
+            gate_output(pack=pack, architecture="", autonomy="HUMAN_ONLY", confidence="HIGH"),
+            "PACK-HUMAN",
+        )
 
 
 if __name__ == "__main__":
