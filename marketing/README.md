@@ -10,9 +10,15 @@ marketing/
   video/        — scripts, shot lists, and recorded assets
 ```
 
-## Status
+## Instagram Posts
 
-| Asset | Type | Status |
-|-------|------|--------|
-| Launch post | Instagram | Pending |
-| Demo video | Video | Pending |
+| File | Type | Timing | Status |
+|------|------|--------|--------|
+| [post-01-opinion-quote.md](instagram/post-01-opinion-quote.md) | Static quote card | Submission day | Copy approved · Visual pending |
+| [post-02-hard-case.md](instagram/post-02-hard-case.md) | Side-by-side GATE-2 mock | 24h after submission | Copy approved · Visual pending |
+
+## Video
+
+| Asset | Format | Status |
+|-------|--------|--------|
+| Demo video | Screen recording + Manim + voice | Pending |
