@@ -19,6 +19,7 @@ marketing/
 
 ## Video
 
-| Asset | Format | Status |
-|-------|--------|--------|
-| Demo video | Screen recording + Manim + voice | Pending |
+| File | Description | Status |
+|------|-------------|--------|
+| [NARRATION_SCRIPT_v2.md](video/NARRATION_SCRIPT_v2.md) | Full narration script, reviewed against live system | Ready for voice synthesis |
+| [ARTIFACT_REFERENCE.md](video/ARTIFACT_REFERENCE.md) | Artifact scroll paths + live URLs for OBS sessions | Reference |
