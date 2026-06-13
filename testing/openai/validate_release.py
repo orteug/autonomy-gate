@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 
@@ -266,12 +267,14 @@ def main() -> int:
         "failed": sum(r["status"] == "FAIL" for r in results),
         "results": results,
     }
-    output = RESULTS / "structural-results.json"
-    try:
-        RESULTS.mkdir(parents=True, exist_ok=True)
-        output.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
-    except OSError:
-        output = None
+    output = None
+    if os.environ.get("AUTONOMY_GATE_READ_ONLY") != "1":
+        output = RESULTS / "structural-results.json"
+        try:
+            RESULTS.mkdir(parents=True, exist_ok=True)
+            output.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+        except OSError:
+            output = None
 
     print(f"{summary['passed']}/{summary['total']} passed")
     for result in results:

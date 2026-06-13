@@ -1,22 +1,17 @@
 # The Autonomy Gate
 
-Most AI operators decide what to do. This one decides what AI may be trusted to do — including refusing to automate workflows that would expose your organization to irreversible risk.
+The Autonomy Gate receives a workflow description, assigns the minimum justified autonomy, compares provider-neutral implementation architectures, and produces a governed Build Handoff Pack. Create a Claude Project or supported ChatGPT Project, set the instruction to `You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.`, upload the 14 runtime files below, then submit a workflow description.
 
-The question isn't whether AI can execute the workflow. It's what happens when AI executes it wrong, and whether the system is prepared for that. Mapping where AI fits is the first decision. Whether AI is authorized to execute there — and what governance record backs that decision — is the second, and it's the one with consequences.
+## Judge Path
 
-The Autonomy Gate answers that second question for every workflow you bring to it: it assigns the minimum justified autonomy, compares provider-neutral implementation architectures, and produces a governed Build Handoff Pack. And when the terminal action crosses a hard gate condition — irreversible external commitment, regulated data, financial execution without a human approval checkpoint — it refuses. Structurally. No reframing changes it.
+You do not need to read the whole repository.
 
-Create a Claude Project or supported ChatGPT Project, set the instruction to `You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.`, upload the 16 runtime files below, then submit a workflow description.
+1. Run the vendor bank-change prompt in [Try These First](#try-these-first) to see `GATE-2` refuse an irreversible external commitment.
+2. Open [the validated productization receipts](examples/receipts/) to inspect autonomous, supervised, and refusal outcomes without installing anything.
+3. Use [JUDGE_GUIDE.md](JUDGE_GUIDE.md) to audit any named mechanism with a falsifiable prompt.
+4. Read [ORIGIN.md](ORIGIN.md) for the authentic problem provenance and [WRITEUP.md](WRITEUP.md) for the product argument.
 
-## Judge Path — five steps, no full read required
-
-1. **Try it (2 minutes).** Create a Claude Project, set the instruction to `You are The Autonomy Gate. Follow identity.md, rules.md, and operating-contract.md.`, upload the 16 runtime files above, and paste Test 1 from [Try These First](#try-these-first). You get a clean pass: `AUTONOMOUS · HIGH` and a complete Project Setup Brief.
-2. **Watch it refuse.** In the same session, paste Test 2 (the vendor bank-change). The verdict flips to `HUMAN_ONLY · HIGH`, GATE-2 is cited by name, and no framing talks it out of that.
-3. **Inspect without installing.** [examples/receipts/](examples/receipts/) holds three committed receipts — autonomous, supervised, and refusal — each with its verbatim input prompt.
-4. **Audit any mechanism.** [JUDGE_GUIDE.md](JUDGE_GUIDE.md) has a falsifiable prompt for every RULE and GATE: expected output, failure condition, no vibe-checking.
-5. **Provenance and argument.** [ORIGIN.md](ORIGIN.md) and [WRITEUP.md](WRITEUP.md), optional.
-
-The first proof is that it decides — cleanly, in your first two minutes. The second is that it refuses.
+The first meaningful proof is the refusal case, not the file tree.
 
 ### Runtime Files
 
@@ -31,8 +26,6 @@ reference/surface-capability-matrix.md
 reference/risk-classification.md
 reference/precedents.md
 reference/operating-contract.md
-reference/operator-disposition.md
-reference/tool-selection-rules.md
 reference/templates/template-automation-architecture.md
 reference/templates/template-project-setup.md
 reference/templates/template-cowork-config.md
@@ -65,7 +58,7 @@ These three inputs are copy-paste ready. Each produces a materially different ve
 ```
 We generate a weekly KPI report every Monday morning. A team member exports data from our CRM and analytics tools, pastes it in, and we need a formatted narrative summary delivered to our ops Slack channel. The format is standardized and the sources are stable. If the report has a mistake, it gets caught in review before we post it — and since it's just an internal Slack message, the worst case is we post a correction. Nothing irreversible happens.
 ```
-Expected autonomy: `AUTONOMOUS · HIGH`. Assessment surface: Project. Execution architecture: human-triggered document workflow. Build Handoff Pack: `BLOCKED_FOR_EVIDENCE` pending operator-defined error-rate threshold and recertification interval. [Receipt 01](examples/receipts/01-autonomous-project.md) shows this workflow after the operator supplied that evidence in a second turn — the BLOCKED_FOR_EVIDENCE → BUILD_READY promotion is the designed lifecycle, not a discrepancy.
+Expected autonomy: `AUTONOMOUS · HIGH`. Assessment surface: Project. Execution architecture: human-triggered document workflow. Build Handoff Pack: `BLOCKED_FOR_EVIDENCE` pending operator-defined error-rate threshold and recertification interval.
 
 **Test 2 — Hard gate case:**
 ```
@@ -152,11 +145,7 @@ These are design decisions, not workarounds.
 
 A workflow should not be automated because AI can perform it. It should receive only the minimum autonomy justified by its reversibility, observability, exception rate, and cost of failure.
 
-The gate question is not "Can AI do this?" It is "What happens when AI does this wrong — and is the system prepared for that?" If the consequence cannot be bounded, observed, reversed, or assigned to a human owner, the workflow cannot be autonomous. The Gate structurally cannot route something to AUTONOMOUS if it fails the consequence test. That structural refusal is not a guardrail bolted on after the fact — it is the product.
-
-Knowing where AI fits in a workflow is not the same as being authorized to put it there. The Gap between "this step could be automated" and "this step is cleared to be automated" is where most AI initiatives create liability. The Gate closes that gap: every decision is cited by rule ID, every artifact names the conditions that expire it, and the ones that can't be authorized are refused with a governance record that survives a meeting.
-
-Every operator that only routes has an implicit policy: all workflows are automatable, just with different levels of oversight. The Autonomy Gate rejects that. Some workflows should not be touched by AI regardless of how the request is framed. GATE-2 and GATE-3 encode that position as a decision, not a recommendation.
+The gate question is not "Can AI do this?" It is "What happens if AI does this wrong — and is the system prepared for that?" If the consequence cannot be bounded, observed, reversed, or assigned to a human owner, the workflow cannot be autonomous. The Gate structurally cannot route something to AUTONOMOUS if it fails the consequence test.
 
 SOP_FIRST is not a failure verdict. It is often the correct automation decision. The most common reason workflows return SOP_FIRST is undocumented exception handling — if the team cannot describe what happens when the workflow breaks, it is not ready to be autonomous. Documentation is not a delay to automation. It is the automation decision.
 
@@ -166,16 +155,12 @@ SOP_FIRST is not a failure verdict. It is often the correct automation decision.
 
 The repository uses progressive disclosure:
 
-- `autonomy-gate/` contains the 16-file runtime and supporting contracts.
+- `autonomy-gate/` contains the 14-file runtime and supporting contracts.
 - `examples/` contains committed receipts.
 - `docs/` is optional operator documentation; it is not required for judging or first use.
-- `testing/` is the validation suite — `python3 testing/run_release_suite.py` must pass before any release.
+- `print-manual/` and `testing/` are supporting product and validation material, not part of the fast path.
 
 Depth remains available on demand, but no judge or first-time operator must traverse it to understand the product.
-
-## Repository
-
-**GitHub:** [github.com/orteug/autonomy-gate](https://github.com/orteug/autonomy-gate)
 
 ## License
 
@@ -191,26 +176,32 @@ The Autonomy Decision Packet is a portable work order. Its Build Handoff Pack tr
 
 ```
 repo-root/
-├── README.md                  ← This file (GitHub landing page)
-├── JUDGE_GUIDE.md             ← Falsifiable test prompts per RULE-NN and GATE-NN
-├── WRITEUP.md                 ← Product argument and architectural rationale
-├── ORIGIN.md                  ← Authentic problem provenance
-├── LICENSE · PUBLIC_RELEASE_MANIFEST.txt
-│
-├── autonomy-gate/             ← Runtime source; upload only the 16 files listed above
-│   ├── identity.md · rules.md · examples.md · README.md
-│   └── reference/             ← Operating contracts, criteria, risk classification,
-│       │                        precedents, disposition and tool-selection rules
-│       └── templates/         ← Six artifact templates
-│
+├── README.md                ← This file (GitHub landing page)
+├── WRITEUP.md               ← Origin story and architectural rationale
+├── JUDGE_GUIDE.md           ← Falsifiable test prompts per RULE-NN and GATE-NN
 ├── examples/
 │   ├── README.md
-│   ├── receipts/              ← Three canonical receipts: autonomous (BUILD_READY),
-│   │                            supervised (BLOCKED_FOR_EVIDENCE), refusal (NOT_APPLICABLE)
-│   └── trial-audit-output.md  ← Historical evidence (may use earlier terminology)
+│   └── trial-audit-output.md  ← Three complete Gate runs with sources
+├── docs/
+│   └── AUTONOMY_GATE_FIELD_MANUAL.pdf
 │
-├── adapters/                  ← Claude Project, Claude Code, Cowork, ChatGPT, Codex setup
-├── docs/                      ← Operator documentation; not required for judging
-│                                (START_HERE.md, OWNER_MANUAL.md, field manual PDF)
-└── testing/                   ← Release suite: run python3 testing/run_release_suite.py
+├── autonomy-gate/           ← Runtime source; upload only the 14 files listed above
+│   ├── identity.md
+│   ├── rules.md
+│   ├── examples.md
+│   ├── README.md
+│   └── reference/
+│       ├── README.md
+│       ├── autonomy-criteria.md
+│       ├── surface-capability-matrix.md
+│       ├── risk-classification.md
+│       ├── precedents.md
+│       └── templates/
+│           ├── README.md
+│           ├── template-automation-architecture.md
+│           ├── template-project-setup.md
+│           ├── template-cowork-config.md
+│           ├── template-control-plan.md
+│           ├── template-stabilization-plan.md
+│           └── template-governance-memo.md
 ```
