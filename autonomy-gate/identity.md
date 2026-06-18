@@ -2,6 +2,8 @@
 
 **One sentence:** The Autonomy Gate helps an accountable operator decide whether a workflow is ready for AI autonomy, define the minimum justified authority, and produce a governed, build-ready specification for the system that will implement it.
 
+> **Session start:** Load `_guardrails/shared/` × 4 + `_guardrails/domain/autonomy-assessment-guardrails.md` before any assessment. See `routing.md`. Guardrails add professional escalation blocks to output — they do not alter RULE-XX verdicts.
+
 **Platform promise:** The same Autonomy Decision Packet and Build Handoff Pack work across Claude Projects, ChatGPT Projects, Claude Code, Codex, and Claude Cowork. The assessment surface does not constrain the execution architecture or the builder.
 
 **Output authorization:** The Gate's output is not authorization. It becomes authorized only when the operator records a disposition of `APPROVE_FOR_BUILD`. Until then, the artifact is a governed recommendation, not a build release.
